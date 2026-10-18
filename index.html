@@ -389,6 +389,49 @@
   .hb-play .go{white-space:nowrap;font-size:18px;padding:12px 8px}
   .hb-see{white-space:nowrap}
   @media (max-width:600px){.hb-top .acct .who,.hb-top .sb.adm{display:none}.hb-top{gap:10px}.hb-play .go{font-size:16.5px}}
+  .avp{max-width:1000px;width:100%;height:min(700px,100%);padding:0;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);overflow:hidden}
+  .avprev{position:relative;background:linear-gradient(#f4f7fb,#dce3ec);min-height:220px}
+  .avprev canvas{position:absolute;inset:0;width:100%!important;height:100%!important;touch-action:none;cursor:grab}
+  #aveRand{position:absolute;left:12px;bottom:12px;z-index:2;background:#fff;border-color:#cfd5dc;color:#191b1f;font-weight:800}
+  .avhint{position:absolute;right:12px;bottom:16px;z-index:2;font-size:12.5px;font-weight:700;color:#6b7280;pointer-events:none}
+  .avside{display:flex;flex-direction:column;min-width:0;min-height:0}
+  .avside .head{display:flex;align-items:center;gap:8px;padding:10px 10px 0 14px}
+  .avbody{flex:1;overflow:auto;padding:2px 16px 18px;-webkit-overflow-scrolling:touch;touch-action:pan-y}
+  .sws{display:flex;flex-wrap:wrap;gap:8px}
+  .sw{width:34px;height:34px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px #d0d6dd;cursor:pointer;position:relative;padding:0;flex:0 0 34px}
+  .sw.on{box-shadow:0 0 0 3px #1d77f0}
+  .sw.none{background:#fff;color:#9aa0a8;font-weight:900;font-size:14px}
+  .sw.pick{background-image:conic-gradient(red,yellow,lime,cyan,blue,magenta,red)!important;overflow:hidden}
+  .sw.pick input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+  .avchips{display:flex;flex-wrap:wrap;gap:7px}
+  .avchip{background:#f3f5f8;border:1px solid #e3e7ec;border-radius:999px;padding:7px 14px;font-weight:800;font-size:14.5px;cursor:pointer;color:#191b1f;font-family:inherit;position:relative;white-space:nowrap}
+  .avchip.on{background:#eaf3ff;border-color:#1d77f0;color:#1d77f0}
+  .avchip.sz{display:flex;align-items:center;justify-content:center;width:42px;padding:7px 0;min-height:36px}
+  .avchip.sz i{background:currentColor;border-radius:50%;display:block}
+  .avchip.file{overflow:hidden}
+  .avchip.file input{position:absolute;inset:0;opacity:0;cursor:pointer}
+  .avtiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:9px}
+  .avtiles.big{grid-template-columns:repeat(auto-fill,minmax(108px,1fr))}
+  .avtile{background:#f3f5f8;border:1px solid #e3e7ec;border-radius:10px;padding:6px 6px 7px;cursor:pointer;text-align:center;font-family:inherit;color:#191b1f;position:relative;min-width:0}
+  .avtile i{display:flex;align-items:center;justify-content:center;aspect-ratio:1;border-radius:7px;background:#e3e8ee;overflow:hidden;font-style:normal;font-size:38px;font-weight:300;color:#1d77f0}
+  .avtiles.big .avtile i{aspect-ratio:3/4}
+  .avtile img{width:100%;height:100%;object-fit:cover;display:block}
+  .avtile span{display:block;font-weight:800;font-size:13.5px;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .avtile.on{border-color:#1d77f0;box-shadow:inset 0 0 0 1px #1d77f0}
+  .avtile.on span{color:#1d77f0}
+  .avtile.make i{background:#eaf3ff;border:2px dashed #9cc4fb}
+  .avtile .x{position:absolute;right:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#fff;color:#d93a3a;font-size:11px;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+  .avempty{padding:30px 10px;text-align:center}
+  .avempty p{font-size:17px;margin-bottom:12px}
+  .tsp{max-width:430px}
+  .tswrap{display:flex;justify-content:center;margin:10px 0 4px}
+  #tsCan{width:min(280px,66vw);height:min(280px,66vw);image-rendering:pixelated;border-radius:12px;background:repeating-conic-gradient(#e9edf2 0 25%,#fff 0 50%) 0 0/16px 16px;box-shadow:0 0 0 1px #d6dbe1;touch-action:none;cursor:crosshair}
+  .tsp .avchips,.tsp .sws{margin-top:8px;justify-content:center}
+  .tsp .fld{margin-top:10px}
+  #tsText{margin-top:8px}
+  .hub .av-edit .ph{display:flex;align-items:center;justify-content:center;background:#eaf3ff;color:#1d77f0}
+  .hub .av-edit .ph svg.i{width:34px;height:34px}
+  @media (max-width:760px){.avp{grid-template-columns:minmax(0,1fr);grid-template-rows:36vh minmax(0,1fr);height:100%}.ov.lt#avMenu{padding:0}.avp{border-radius:0}}
   @media (max-width:430px){.ib{width:37px;height:37px}#topR{gap:4px}#hp{width:118px}#hp .num{font-size:24px}#stats,#roomChip{font-size:12.5px}}
   @media (max-width:520px){#edInfo{max-width:calc(100vw - 230px)}#edInfo .t{font-size:17px}#edInfo .s{font-size:12px}}
   @media (min-width:860px){.main{max-width:780px}.maps{grid-template-columns:repeat(4,1fr)}.pause,.over{max-width:460px}}
@@ -611,6 +654,29 @@
     <div class="head"><div class="tabs" id="wsTabs"></div><div class="ib" id="wsClose"></div></div>
     <div id="wsSearch"><input id="wsQ" maxlength="32" placeholder="Search maps" autocomplete="off" spellcheck="false"></div>
     <div class="wsbody" id="wsBody"></div>
+  </div>
+</div>
+<div class="ov hidden lt" id="avMenu">
+  <div class="panel avp">
+    <div class="avprev" id="avePrev"><button class="sb" id="aveRand">RANDOMIZE</button><span class="avhint">Drag to turn</span></div>
+    <div class="avside">
+      <div class="head"><div class="tabs" id="aveTabs"></div><div class="ib" id="aveClose"></div></div>
+      <div class="avbody" id="aveBody"></div>
+    </div>
+  </div>
+</div>
+<div class="ov hidden lt" id="tsMenu">
+  <div class="panel pause tsp">
+    <h2>T-SHIRT MAKER</h2>
+    <p class="foot" style="margin-top:4px">Draw on the shirt front. Empty parts show the shirt color.</p>
+    <div class="tswrap"><canvas id="tsCan" width="128" height="128"></canvas></div>
+    <div class="avchips" id="tsTools"></div>
+    <div class="sws" id="tsCols"></div>
+    <div class="joinrow hidden" id="tsText"><input id="tsTextIn" maxlength="20" placeholder="Type, then tap the shirt" autocomplete="off"></div>
+    <div class="avchips"><button class="avchip" id="tsUndo">UNDO</button><button class="avchip" id="tsClear">CLEAR</button><label class="avchip file">UPLOAD IMAGE<input type="file" id="tsFile" accept="image/*"></label></div>
+    <label class="fld">NAME<input id="tsName" maxlength="20" placeholder="My design" autocomplete="off"></label>
+    <button class="go" id="tsSave">SAVE DESIGN</button>
+    <button class="go ghost" id="tsCancel">CANCEL</button>
   </div>
 </div>
 <div class="toast" id="toast"></div>
@@ -2407,6 +2473,15 @@ const STYLE = {
 
 function styleFor(key) {
   if (STYLE[key]) return STYLE[key];
+  if (key && /^o_[0-9a-f]{6}_[0-9a-f]{6}_[0-9a-f]{6}$/.test(key)) {
+    const [, a, b, c] = key.split("_");
+    return STYLE[key] = {
+      head: cmat(parseInt(a, 16)),
+      skin: cmat(parseInt(a, 16)),
+      shirt: cmat(parseInt(b, 16)),
+      pants: cmat(parseInt(c, 16))
+    };
+  }
   if (key && key.startsWith("z_") && ZT[key.slice(2)]) return ZT[key.slice(2)].style;
   return STYLE.dummy;
 }
@@ -3489,9 +3564,9 @@ function killPlayer() {
   vel.y += 2;
   deathPos.copy(player.position);
   if (isAuth()) {
-    deathRag = makeRagdoll(player.position.clone(), facing, styleFor(curAvatar.rag), {
+    deathRag = makeRagdoll(player.position.clone(), facing, styleFor(avRag()), {
       vel: vel,
-      styleKey: curAvatar.rag
+      styleKey: avRag()
     });
     corpses.push(deathRag);
   } else {
@@ -3500,7 +3575,7 @@ function killPlayer() {
       p: r3a(player.position),
       v: r3a(vel),
       f: q3(facing),
-      rag: curAvatar.rag
+      rag: avRag()
     });
   }
   SD.stats.deaths++;
@@ -4568,6 +4643,16 @@ function uiBlocked() {
 }
 
 addEventListener("keydown", e => {
+  if (e.code === "Escape" && !$("tsMenu").classList.contains("hidden")) {
+    e.preventDefault();
+    closeTsMaker();
+    return;
+  }
+  if (e.code === "Escape" && !$("avMenu").classList.contains("hidden")) {
+    e.preventDefault();
+    closeAvEditor();
+    return;
+  }
   if (e.code === "Escape" && !$("adminMenu").classList.contains("hidden")) {
     e.preventDefault();
     closeAdmin();
@@ -5183,6 +5268,10 @@ if (SD.settings.sens) {
 $("avGrid").addEventListener("click", e => {
   const c = e.target.closest(".av");
   if (!c) return;
+  if (c.dataset.edit) {
+    openAvEditor();
+    return;
+  }
   setAvatar(c.dataset.a);
 });
 
@@ -5291,6 +5380,13 @@ function makeTemplate(gltf, o) {
 }
 
 const AVATARS = [ {
+  id: "custom",
+  name: "My Avatar",
+  tpl: "base",
+  custom: true,
+  mat: null,
+  rag: "player"
+}, {
   id: "mannequin",
   name: "Mannequin",
   tpl: "base",
@@ -5348,6 +5444,7 @@ const AVATARS = [ {
 let curAvatar = AVATARS[0], pModel = null;
 
 function buildAvatarModel(A) {
+  if (A.custom) return buildCustomModel(null);
   const T = TEMPL[A.tpl];
   const m = SkeletonUtils.clone(T.model);
   const mat = A.mat ? A.mat() : null;
@@ -5384,6 +5481,12 @@ function setAvatar(id) {
   SD.settings.avatar = A.id;
   persist();
   renderAvatars();
+  if (NET.on && NET.ch) {
+    sendLook(true);
+    try {
+      NET.ch.track(myMeta(NET.host));
+    } catch (e) {}
+  }
 }
 
 async function loadCharacter() {
@@ -5417,14 +5520,14 @@ async function loadCharacter() {
     console.warn("sunny failed", e);
     AVATARS.splice(AVATARS.findIndex(a => a.id === "sunny"), 1);
   }
-  setAvatar(SD.settings.avatar || "mannequin");
+  setAvatar(SD.settings.avatar || "custom");
 }
 
 function renderAvatars() {
   renderHubMe();
   const g = $("avGrid");
   if (!g) return;
-  g.innerHTML = AVATARS.map(a => `<div class="av ${a.id === curAvatar.id ? "on" : ""}" data-a="${a.id}">${thumbs["av_" + a.id] ? `<img src="${thumbs["av_" + a.id]}" alt="">` : '<div class="ph"></div>'}<span>${a.name}</span></div>`).join("");
+  g.innerHTML = AVATARS.map(a => `<div class="av ${a.id === curAvatar.id ? "on" : ""}" data-a="${a.id}">${thumbs["av_" + a.id] ? `<img src="${thumbs["av_" + a.id]}" alt="">` : '<div class="ph"></div>'}<span>${a.name}</span></div>`).join("") + `<div class="av av-edit" data-edit="1"><div class="ph"><svg class="i" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16zM13.5 6.5l4 4"/></svg></div><span>Customize</span></div>`;
 }
 
 function makeThumbs() {
@@ -6117,7 +6220,10 @@ function applySave(r) {
       [ ...$("modeSeg").children ].forEach(x => x.classList.toggle("on", x.dataset.m === mode));
     }
   }
-  if (SD.settings.avatar && TEMPL.base && SD.settings.avatar !== curAvatar.id) setAvatar(SD.settings.avatar);
+  if (SD.settings.avatar && TEMPL.base && (SD.settings.avatar !== curAvatar.id || curAvatar.custom)) {
+    setAvatar(SD.settings.avatar);
+    if (curAvatar.custom) renderAvThumb();
+  }
   renderMaps();
   renderStats();
   renderAvatars();
@@ -6144,6 +6250,10 @@ function sendTo(id, k, d) {
 
 function onDirect(p) {
   if (!p || p.to !== NET.id) return;
+  if (p.k === "lookreq") {
+    sendLook(true);
+    return;
+  }
   if (p.k === "hit") hurtPlayer(p.dmg, V(...p.kn || [ 0, 0, 0 ]));
 }
 
@@ -6157,7 +6267,7 @@ function myMeta(host) {
   return {
     id: NET.id,
     name: NET.name,
-    av: curAvatar.id,
+    av: curAvId(),
     at: NET.joinedAt,
     host: !!host,
     u: user ? user.name : "",
@@ -6217,6 +6327,9 @@ async function openRoom(code, asHost) {
   ch.on("broadcast", {
     event: "rtc"
   }, m => vcSignal(m.payload));
+  ch.on("broadcast", {
+    event: "look"
+  }, m => onLook(m.payload));
   ch.on("presence", {
     event: "sync"
   }, () => onPresence(ch.presenceState()));
@@ -6430,6 +6543,7 @@ function onPresence(st) {
       setTag(Rm, Rm.name);
     }
     if (isNew && NET.mapReady) chatSys(`${m.name} joined`);
+    if (isNew) after(.3, () => sendLook(true));
   }
   for (const [id, Rm] of [ ...NET.peers ]) if (!ids.has(id)) {
     if (NET.mapReady) chatSys(`${Rm.name} left`);
@@ -6546,6 +6660,30 @@ function setTag(Rm, name) {
 }
 
 function setRemoteAvatar(Rm, av) {
+  if (String(av).startsWith("custom:")) {
+    if (!TEMPL.base) return;
+    if (Rm.look && "custom:" + Rm.look.h === av) {
+      if (Rm.rig) {
+        Rm.holder.remove(Rm.rig.model);
+        Rm.rig.mixer.stopAllAction();
+      }
+      const m = buildCustomModel(Rm.look);
+      Rm.holder.add(m);
+      Rm.rig = makeRig(m, TEMPL.base);
+      Rm.av = av;
+      return;
+    }
+    if (!Rm.lookAsk || now - Rm.lookAsk > 2) {
+      Rm.lookAsk = now;
+      sendTo(Rm.id, "lookreq", {});
+    }
+    if (Rm.rig) {
+      Rm.av = av;
+      return;
+    }
+    av = "mannequin";
+  }
+  if (!AVATARS.some(a => a.id === av && !a.custom)) av = "mannequin";
   const A = AVATARS.find(a => a.id === av) || AVATARS[0];
   if (!TEMPL[A.tpl]) return;
   if (Rm.rig) {
@@ -6666,7 +6804,7 @@ function sendState() {
   send("st", {
     i: NET.id,
     n: NET.name,
-    a: curAvatar.id,
+    a: curAvId(),
     p: [ q2(player.position.x), q2(player.position.y), q2(player.position.z) ],
     f: q3(facing),
     s: q2(state === "play" ? curSpeed : 0),
@@ -12599,6 +12737,1238 @@ $("pauseRoom").addEventListener("click", e => {
 
 vcUI();
 
+const AV_SKINS = [ "f5d5b8", "eac39f", "d9a77c", "c08a5b", "a06a42", "7c4a2a", "5a321b", "d9c2a3", "f0c02d", "8fb8a8", "c9cdd3", "1c1e23" ];
+
+const AV_COLS = [ "f2f2f2", "9aa0a8", "3a3d44", "1a1b1f", "d93a3a", "ee7a22", "f2c230", "3aa655", "1f7a4a", "2fb3c9", "2f6fd0", "1d3f8f", "8a4fd6", "e76fb3", "8a5a35", "c9b28a" ];
+
+const AV_SHIRTS = [ [ "none", "None" ], [ "tank", "Tank top" ], [ "tee", "T-shirt" ], [ "long", "Long sleeve" ] ];
+
+const AV_PANTS = [ [ "none", "None" ], [ "shorts", "Shorts" ], [ "pants", "Pants" ] ];
+
+const AV_HATS = [ [ "none", "None" ], [ "cap", "Cap" ], [ "beanie", "Beanie" ], [ "tophat", "Top Hat" ], [ "cowboy", "Cowboy" ], [ "crown", "Crown" ], [ "party", "Party Hat" ], [ "headphones", "Headphones" ], [ "spiky", "Spiky Hair" ], [ "horns", "Horns" ], [ "halo", "Halo" ] ];
+
+const AV_FACEWEAR = [ [ "none", "None" ], [ "shades", "Shades" ], [ "glasses", "Glasses" ], [ "mask", "Mask" ] ];
+
+const AV_BACK = [ [ "none", "None" ], [ "backpack", "Backpack" ], [ "cape", "Cape" ], [ "wings", "Wings" ], [ "jetpack", "Jetpack" ] ];
+
+const AV_NECK = [ [ "none", "None" ], [ "scarf", "Scarf" ], [ "chain", "Gold Chain" ] ];
+
+const AV_FACES = [ [ "none", "Blank" ], [ "classic", "Classic" ], [ "happy", "Happy" ], [ "grin", "Grin" ], [ "cool", "Cool" ], [ "angry", "Angry" ], [ "wow", "Surprised" ], [ "sleepy", "Sleepy" ], [ "smug", "Smug" ] ];
+
+const AV_DESIGNS = [ [ "p:z", "Z Logo" ], [ "p:heart", "Heart" ], [ "p:star", "Star" ], [ "p:flame", "Flame" ], [ "p:skull", "Skull" ], [ "p:stripes", "Stripes" ], [ "p:bolt", "Bolt" ], [ "p:smile", "Smiley" ] ];
+
+const AV_DEFAULT = {
+  skin: "eac39f",
+  shirt: "tee",
+  sc: "2f6fd0",
+  pants: "pants",
+  pc: "3a3d44",
+  shoes: "1a1b1f",
+  hat: "none",
+  hc: "d93a3a",
+  face: "classic",
+  fw: "none",
+  back: "none",
+  neck: "none",
+  design: "none"
+};
+
+function avOutfit() {
+  const o = Object.assign({}, AV_DEFAULT, SD.settings.outfit || {});
+  return o;
+}
+
+function avClean(o) {
+  const hex = (v, d) => /^[0-9a-f]{6}$/i.test(String(v)) ? String(v).toLowerCase() : d;
+  const pick = (v, list, d) => list.some(x => x[0] === v) ? v : d;
+  return {
+    skin: hex(o.skin, AV_DEFAULT.skin),
+    shirt: pick(o.shirt, AV_SHIRTS, "tee"),
+    sc: hex(o.sc, AV_DEFAULT.sc),
+    pants: pick(o.pants, AV_PANTS, "pants"),
+    pc: hex(o.pc, AV_DEFAULT.pc),
+    shoes: o.shoes === "none" ? "none" : hex(o.shoes, AV_DEFAULT.shoes),
+    hat: pick(o.hat, AV_HATS, "none"),
+    hc: hex(o.hc, AV_DEFAULT.hc),
+    face: pick(o.face, AV_FACES, "classic"),
+    fw: pick(o.fw, AV_FACEWEAR, "none"),
+    back: pick(o.back, AV_BACK, "none"),
+    neck: pick(o.neck, AV_NECK, "none"),
+    design: typeof o.design === "string" && /^(none|p:[a-z]+|u:[a-z0-9]+)$/.test(o.design) ? o.design : "none"
+  };
+}
+
+const avHash = o => {
+  const s = JSON.stringify(avClean(o)) + (o.design && o.design.startsWith("u:") ? (avShirtImg(o.design) || "").length : "");
+  let h = 2166136261;
+  for (let i = 0; i < s.length; i++) {
+    h ^= s.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return (h >>> 0).toString(36);
+};
+
+const avShirts = () => Array.isArray(SD.shirts) ? SD.shirts : SD.shirts = [];
+
+const avShirtImg = id => {
+  const s = avShirts().find(x => "u:" + x.id === id);
+  return s ? s.img : null;
+};
+
+const AV_REG = {
+  head: 0,
+  torso: 1,
+  waist: 2,
+  uarm: 3,
+  larm: 4,
+  hand: 5,
+  uleg: 6,
+  lleg: 7,
+  foot: 8
+};
+
+function avRegionOf(name) {
+  const n = name.toLowerCase();
+  if (/^(head|neck)/.test(n)) return AV_REG.head;
+  if (/^(hip|chest|ktf)/.test(n)) return AV_REG.torso;
+  if (/^wiest/.test(n)) return AV_REG.waist;
+  if (/^upperarm/.test(n)) return AV_REG.uarm;
+  if (/^lowerarm/.test(n)) return AV_REG.larm;
+  if (/^upperleg/.test(n)) return AV_REG.uleg;
+  if (/^lowerleg/.test(n)) return AV_REG.lleg;
+  if (/^(foot|toose[lr]?$|hellikk)/.test(n)) return AV_REG.foot;
+  return AV_REG.hand;
+}
+
+function avPrep(T) {
+  let sm;
+  T.model.traverse(o => {
+    if (o.isSkinnedMesh) sm = o;
+  });
+  if (!sm) return;
+  T.model.updateMatrixWorld(true);
+  sm.skeleton.update();
+  const g = sm.geometry, si = g.attributes.skinIndex, sw = g.attributes.skinWeight, pos = g.attributes.position, n = pos.count;
+  const bones = sm.skeleton.bones, reg = new Uint8Array(n);
+  const boxes = {};
+  const v = new THREE.Vector3, gb = {};
+  for (let i = 0; i < n; i++) {
+    let best = 0, bw = -1;
+    for (let k = 0; k < 4; k++) {
+      const w = sw.getComponent(i, k);
+      if (w > bw) {
+        bw = w;
+        best = si.getComponent(i, k);
+      }
+    }
+    const bn = bones[best] ? bones[best].name : "", r = avRegionOf(bn);
+    reg[i] = r;
+    const key = /^head/i.test(bn) ? "head" : /^neck/i.test(bn) ? "neck" : r === AV_REG.torso ? "torso" : null;
+    if (key) {
+      v.fromBufferAttribute(pos, i);
+      (gb[key] || (gb[key] = new THREE.Box3)).expandByPoint(v);
+      sm.getVertexPosition(i, v);
+      v.applyMatrix4(sm.matrixWorld);
+      (boxes[key] || (boxes[key] = new THREE.Box3)).expandByPoint(v);
+    }
+  }
+  T.av = {
+    reg: reg,
+    boxes: boxes,
+    gb: gb,
+    armX: (() => {
+      let mn = 1e9, mx = -1e9;
+      for (let i = 0; i < n; i++) if (reg[i] === AV_REG.uarm) {
+        const x = Math.abs(pos.getX(i));
+        mn = Math.min(mn, x);
+        mx = Math.max(mx, x);
+      }
+      return mn + (mx - mn) * .45;
+    })(),
+    legY: (() => {
+      let mn = 1e9, mx = -1e9;
+      for (let i = 0; i < n; i++) if (reg[i] === AV_REG.uleg) {
+        const y = pos.getY(i);
+        mn = Math.min(mn, y);
+        mx = Math.max(mx, y);
+      }
+      return mn + (mx - mn) * .55;
+    })()
+  };
+}
+
+const avTexCache = new Map;
+
+function avCanvasTex(key, draw) {
+  if (avTexCache.has(key)) return avTexCache.get(key);
+  const c = document.createElement("canvas");
+  c.width = c.height = 128;
+  const g = c.getContext("2d");
+  draw(g, 128);
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  t.anisotropy = 4;
+  avTexCache.set(key, t);
+  return t;
+}
+
+function avFaceDraw(id) {
+  return (g, S) => {
+    g.fillStyle = "#16161a";
+    g.strokeStyle = "#16161a";
+    g.lineCap = "round";
+    g.lineJoin = "round";
+    const eye = (x, y, r) => {
+      g.beginPath();
+      g.arc(x, y, r, 0, 7);
+      g.fill();
+    };
+    const L = 44, R = 84, Y = 56;
+    if (id === "none") return;
+    if (id === "classic") {
+      eye(L, Y, 7);
+      eye(R, Y, 7);
+      g.lineWidth = 5;
+      g.beginPath();
+      g.arc(64, 72, 20, .2 * Math.PI, .8 * Math.PI);
+      g.stroke();
+    } else if (id === "happy") {
+      g.lineWidth = 6;
+      g.beginPath();
+      g.arc(L, Y + 4, 9, 1.1 * Math.PI, 1.9 * Math.PI);
+      g.stroke();
+      g.beginPath();
+      g.arc(R, Y + 4, 9, 1.1 * Math.PI, 1.9 * Math.PI);
+      g.stroke();
+      g.beginPath();
+      g.moveTo(42, 78);
+      g.quadraticCurveTo(64, 104, 86, 78);
+      g.closePath();
+      g.fill();
+    } else if (id === "grin") {
+      eye(L, Y, 7);
+      eye(R, Y, 7);
+      g.beginPath();
+      g.moveTo(38, 76);
+      g.quadraticCurveTo(64, 108, 90, 76);
+      g.closePath();
+      g.fill();
+      g.fillStyle = "#fff";
+      g.fillRect(46, 77, 36, 7);
+    } else if (id === "cool") {
+      g.beginPath();
+      g.moveTo(28, 48);
+      g.lineTo(100, 48);
+      g.lineTo(96, 64);
+      g.quadraticCurveTo(84, 72, 70, 62);
+      g.lineTo(58, 62);
+      g.quadraticCurveTo(44, 72, 32, 64);
+      g.closePath();
+      g.fill();
+      g.lineWidth = 5;
+      g.beginPath();
+      g.moveTo(50, 84);
+      g.quadraticCurveTo(70, 92, 84, 80);
+      g.stroke();
+    } else if (id === "angry") {
+      eye(L, Y + 4, 6);
+      eye(R, Y + 4, 6);
+      g.lineWidth = 6;
+      g.beginPath();
+      g.moveTo(30, 40);
+      g.lineTo(54, 50);
+      g.moveTo(98, 40);
+      g.lineTo(74, 50);
+      g.stroke();
+      g.beginPath();
+      g.arc(64, 96, 16, 1.2 * Math.PI, 1.8 * Math.PI);
+      g.stroke();
+    } else if (id === "wow") {
+      eye(L, Y, 8);
+      eye(R, Y, 8);
+      g.lineWidth = 5;
+      g.beginPath();
+      g.ellipse(64, 86, 9, 12, 0, 0, 7);
+      g.stroke();
+    } else if (id === "sleepy") {
+      g.lineWidth = 5;
+      g.beginPath();
+      g.moveTo(34, Y);
+      g.lineTo(54, Y);
+      g.moveTo(74, Y);
+      g.lineTo(94, Y);
+      g.stroke();
+      g.beginPath();
+      g.arc(64, 82, 7, 0, 7);
+      g.stroke();
+      g.font = "bold 18px sans-serif";
+      g.fillText("z", 100, 34);
+    } else if (id === "smug") {
+      eye(L, Y, 6);
+      g.lineWidth = 6;
+      g.beginPath();
+      g.moveTo(74, Y);
+      g.lineTo(94, Y - 2);
+      g.stroke();
+      g.lineWidth = 5;
+      g.beginPath();
+      g.moveTo(48, 82);
+      g.quadraticCurveTo(70, 86, 88, 74);
+      g.stroke();
+    }
+  };
+}
+
+function avDesignDraw(id) {
+  return (g, S) => {
+    const c = S / 2;
+    switch (id) {
+     case "p:z":
+      g.fillStyle = "#16161a";
+      g.beginPath();
+      g.arc(c, c, 54, 0, 7);
+      g.fill();
+      g.fillStyle = "#ffd23f";
+      g.font = '900 84px "Barlow Condensed", Impact, sans-serif';
+      g.textAlign = "center";
+      g.textBaseline = "middle";
+      g.fillText("Z", c, c + 4);
+      break;
+
+     case "p:heart":
+      g.fillStyle = "#e5484d";
+      g.beginPath();
+      g.moveTo(c, 104);
+      g.bezierCurveTo(10, 66, 20, 18, c, 40);
+      g.bezierCurveTo(108, 18, 118, 66, c, 104);
+      g.fill();
+      break;
+
+     case "p:star":
+      g.fillStyle = "#ffd23f";
+      g.beginPath();
+      for (let i = 0; i < 10; i++) {
+        const r = i % 2 ? 22 : 54, a = -Math.PI / 2 + i * Math.PI / 5;
+        g.lineTo(c + Math.cos(a) * r, c + 4 + Math.sin(a) * r);
+      }
+      g.closePath();
+      g.fill();
+      g.strokeStyle = "#a77b00";
+      g.lineWidth = 4;
+      g.stroke();
+      break;
+
+     case "p:flame":
+      {
+        const gr = g.createLinearGradient(0, 110, 0, 10);
+        gr.addColorStop(0, "#ff3d00");
+        gr.addColorStop(.6, "#ff9a00");
+        gr.addColorStop(1, "#ffe066");
+        g.fillStyle = gr;
+        g.beginPath();
+        g.moveTo(c, 10);
+        g.bezierCurveTo(100, 50, 106, 80, c, 114);
+        g.bezierCurveTo(22, 80, 30, 54, 48, 40);
+        g.bezierCurveTo(46, 60, 56, 66, 58, 70);
+        g.bezierCurveTo(50, 44, 60, 26, c, 10);
+        g.fill();
+        break;
+      }
+
+     case "p:skull":
+      g.fillStyle = "#f2f2f2";
+      g.beginPath();
+      g.arc(c, 54, 38, 0, 7);
+      g.fill();
+      g.fillRect(c - 22, 76, 44, 26);
+      g.fillStyle = "#16161a";
+      g.beginPath();
+      g.arc(c - 15, 56, 10, 0, 7);
+      g.arc(c + 15, 56, 10, 0, 7);
+      g.fill();
+      g.beginPath();
+      g.moveTo(c, 70);
+      g.lineTo(c - 6, 80);
+      g.lineTo(c + 6, 80);
+      g.fill();
+      for (let i = -2; i <= 2; i++) g.fillRect(c + i * 9 - 1.5, 90, 3, 12);
+      break;
+
+     case "p:stripes":
+      for (let i = 0; i < 6; i++) {
+        g.fillStyle = i % 2 ? "#f2f2f2" : "#2f6fd0";
+        g.fillRect(4, 8 + i * 19, S - 8, 19);
+      }
+      break;
+
+     case "p:bolt":
+      g.fillStyle = "#ffd23f";
+      g.strokeStyle = "#16161a";
+      g.lineWidth = 5;
+      g.beginPath();
+      g.moveTo(72, 8);
+      g.lineTo(28, 70);
+      g.lineTo(60, 70);
+      g.lineTo(50, 120);
+      g.lineTo(100, 52);
+      g.lineTo(68, 52);
+      g.closePath();
+      g.fill();
+      g.stroke();
+      break;
+
+     case "p:smile":
+      g.fillStyle = "#ffd23f";
+      g.beginPath();
+      g.arc(c, c, 52, 0, 7);
+      g.fill();
+      g.fillStyle = "#16161a";
+      g.beginPath();
+      g.arc(c - 18, 50, 7, 0, 7);
+      g.arc(c + 18, 50, 7, 0, 7);
+      g.fill();
+      g.strokeStyle = "#16161a";
+      g.lineWidth = 6;
+      g.beginPath();
+      g.arc(c, 66, 28, .15 * Math.PI, .85 * Math.PI);
+      g.stroke();
+      break;
+    }
+  };
+}
+
+function avDesignTex(id, img) {
+  if (!id || id === "none") return null;
+  if (id.startsWith("p:")) return avCanvasTex("d" + id, avDesignDraw(id));
+  const src = img || avShirtImg(id);
+  if (!src) return null;
+  const key = "u" + src.length + ":" + src.slice(-40);
+  if (avTexCache.has(key)) return avTexCache.get(key);
+  const c = document.createElement("canvas");
+  c.width = c.height = 128;
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  const im = new Image;
+  im.onload = () => {
+    c.getContext("2d").drawImage(im, 0, 0, 128, 128);
+    t.needsUpdate = true;
+  };
+  im.src = src;
+  avTexCache.set(key, t);
+  return t;
+}
+
+function avMaterial(T, o, img) {
+  const m = new THREE.MeshStandardMaterial({
+    vertexColors: true,
+    roughness: .62,
+    metalness: .02
+  });
+  const tb = T.av.gb.torso, hb = T.av.gb.head;
+  const shirtTex = o.shirt !== "none" ? avDesignTex(o.design, img) : null, faceTex = o.face !== "none" ? avCanvasTex("f" + o.face, avFaceDraw(o.face)) : null;
+  const sw = (tb.max.x - tb.min.x) * .36, sh = (tb.max.y - tb.min.y) * .4;
+  const U = {
+    uShirt: {
+      value: shirtTex
+    },
+    uShirtOn: {
+      value: shirtTex ? 1 : 0
+    },
+    uSC: {
+      value: new THREE.Vector2(0, tb.min.y + (tb.max.y - tb.min.y) * .55)
+    },
+    uSH: {
+      value: new THREE.Vector2(Math.min(sw, sh), Math.min(sw, sh))
+    },
+    uFace: {
+      value: faceTex
+    },
+    uFaceOn: {
+      value: faceTex ? 1 : 0
+    },
+    uFC: {
+      value: new THREE.Vector2(0, (hb.min.y + hb.max.y) / 2)
+    },
+    uFH: {
+      value: new THREE.Vector2((hb.max.x - hb.min.x) * .44, (hb.max.y - hb.min.y) * .44)
+    },
+    uFZ: {
+      value: hb.max.z - (hb.max.z - hb.min.z) * .35
+    },
+    uSZ: {
+      value: tb.max.z - (tb.max.z - tb.min.z) * .4
+    }
+  };
+  m.onBeforeCompile = sh => {
+    Object.assign(sh.uniforms, U);
+    sh.vertexShader = sh.vertexShader.replace("#include <common>", "#include <common>\nvarying vec3 vRest; varying vec3 vRestN;").replace("#include <begin_vertex>", "#include <begin_vertex>\nvRest = position; vRestN = normal;");
+    sh.fragmentShader = sh.fragmentShader.replace("#include <common>", "#include <common>\nvarying vec3 vRest; varying vec3 vRestN; uniform sampler2D uShirt; uniform float uShirtOn; uniform vec2 uSC; uniform vec2 uSH; uniform float uSZ; uniform sampler2D uFace; uniform float uFaceOn; uniform vec2 uFC; uniform vec2 uFH; uniform float uFZ;").replace("#include <color_fragment>", `#include <color_fragment>\n  if (uShirtOn > .5 && vRestN.z > .3 && vRest.z > uSZ) { vec2 q = (vRest.xy - uSC) / uSH; if (abs(q.x) < 1. && abs(q.y) < 1.) { vec4 t = texture2D(uShirt, q * .5 + .5); diffuseColor.rgb = mix(diffuseColor.rgb, t.rgb, t.a); } }\n  if (uFaceOn > .5 && vRestN.z > .2 && vRest.z > uFZ) { vec2 q = (vRest.xy - uFC) / uFH; if (abs(q.x) < 1. && abs(q.y) < 1.) { vec4 t = texture2D(uFace, q * .5 + .5); diffuseColor.rgb = mix(diffuseColor.rgb, t.rgb, t.a); } }`);
+  };
+  m.customProgramCacheKey = () => "pz-avatar";
+  return m;
+}
+
+function avColors(T, geo, o) {
+  const reg = T.av.reg, pos = geo.attributes.position, n = reg.length, col = new Float32Array(n * 3), c = new THREE.Color;
+  const skin = new THREE.Color("#" + o.skin), shirt = new THREE.Color("#" + o.sc), pants = new THREE.Color("#" + o.pc), shoe = o.shoes === "none" ? skin : new THREE.Color("#" + o.shoes);
+  for (let i = 0; i < n; i++) {
+    const r = reg[i];
+    c.copy(skin);
+    if (r === AV_REG.torso && o.shirt !== "none") c.copy(shirt); else if (r === AV_REG.uarm && (o.shirt === "long" || o.shirt === "tee" && Math.abs(pos.getX(i)) < T.av.armX)) c.copy(shirt); else if (r === AV_REG.larm && o.shirt === "long") c.copy(shirt); else if (r === AV_REG.waist && o.pants !== "none") c.copy(pants); else if (r === AV_REG.uleg && (o.pants === "pants" || o.pants === "shorts" && pos.getY(i) > T.av.legY)) c.copy(pants); else if (r === AV_REG.lleg && o.pants === "pants") c.copy(pants); else if (r === AV_REG.foot) c.copy(shoe);
+    col[i * 3] = c.r;
+    col[i * 3 + 1] = c.g;
+    col[i * 3 + 2] = c.b;
+  }
+  geo.setAttribute("color", new THREE.BufferAttribute(col, 3));
+}
+
+const avStd = (hex, o = {}) => new THREE.MeshStandardMaterial(Object.assign({
+  color: hex,
+  roughness: .55
+}, o));
+
+function avAcc(kind, id, box, col) {
+  const g = new THREE.Group;
+  if (!box || id === "none") return g;
+  const c = box.getCenter(new THREE.Vector3), sz = box.getSize(new THREE.Vector3);
+  const R = Math.max(sz.x, sz.z) / 2, top = box.max.y, H = sz.y, add = (geo, mat, x, y, z, rx = 0, ry = 0, rz = 0) => {
+    const m = new THREE.Mesh(geo, mat);
+    m.position.set(x, y, z);
+    m.rotation.set(rx, ry, rz);
+    m.castShadow = true;
+    g.add(m);
+    return m;
+  };
+  const hc = new THREE.Color("#" + col).getHex(), mat = avStd(hc), gold = avStd(15909424, {
+    metalness: .8,
+    roughness: .3
+  }), dark = avStd(1447450, {
+    roughness: .3
+  });
+  if (kind === "hat") {
+    const y0 = top - H * .32;
+    switch (id) {
+     case "cap":
+      {
+        const d = add(new THREE.SphereGeometry(R * 1.12, 22, 12, 0, Math.PI * 2, 0, Math.PI / 2), mat, c.x, y0, c.z);
+        d.scale.y = .9;
+        add(new THREE.BoxGeometry(R * 1.5, R * .08, R * 1.1), mat, c.x, y0 + R * .02, box.max.z + R * .35);
+        break;
+      }
+
+     case "beanie":
+      {
+        const d = add(new THREE.SphereGeometry(R * 1.15, 22, 12, 0, Math.PI * 2, 0, Math.PI / 2), mat, c.x, y0 - H * .05, c.z);
+        d.scale.y = 1.15;
+        add(new THREE.CylinderGeometry(R * 1.18, R * 1.18, H * .16, 22), mat, c.x, y0 - H * .05, c.z);
+        add(new THREE.SphereGeometry(R * .28, 12, 10), avStd(15921906), c.x, y0 + R * 1.25, c.z);
+        break;
+      }
+
+     case "tophat":
+      add(new THREE.CylinderGeometry(R * 1.55, R * 1.55, R * .07, 26), mat, c.x, top - H * .06, c.z);
+      add(new THREE.CylinderGeometry(R * .95, R, H * .95, 26), mat, c.x, top + H * .42, c.z);
+      add(new THREE.CylinderGeometry(R * 1.01, R * 1.01, H * .14, 26), dark, c.x, top + H * .05, c.z);
+      break;
+
+     case "cowboy":
+      {
+        const b = add(new THREE.CylinderGeometry(R * 2.1, R * 2.1, R * .06, 30), mat, c.x, top - H * .1, c.z);
+        b.scale.z = .85;
+        add(new THREE.CylinderGeometry(R * .85, R * 1.05, H * .55, 24), mat, c.x, top + H * .16, c.z);
+        break;
+      }
+
+     case "crown":
+      {
+        add(new THREE.CylinderGeometry(R * 1.02, R * 1.02, H * .22, 24, 1, true), gold, c.x, top + H * .02, c.z).material.side = THREE.DoubleSide;
+        for (let i = 0; i < 6; i++) {
+          const a = i / 6 * Math.PI * 2;
+          add(new THREE.ConeGeometry(R * .18, H * .3, 6), gold, c.x + Math.cos(a) * R, top + H * .27, c.z + Math.sin(a) * R);
+        }
+        add(new THREE.SphereGeometry(R * .14, 10, 8), avStd(15026253, {
+          roughness: .2
+        }), c.x, top + H * .05, box.max.z + R * .05);
+        break;
+      }
+
+     case "party":
+      {
+        add(new THREE.ConeGeometry(R * .6, H * 1.05, 20), mat, c.x, top + H * .45, c.z, 0, 0, -.12);
+        add(new THREE.SphereGeometry(R * .16, 10, 8), avStd(15921906), c.x - H * .12, top + H * .98, c.z);
+        break;
+      }
+
+     case "headphones":
+      {
+        add(new THREE.TorusGeometry(R * 1.18, R * .1, 8, 26, Math.PI), mat, c.x, c.y + H * .05, c.z);
+        for (const s of [ -1, 1 ]) add(new THREE.CylinderGeometry(R * .38, R * .38, R * .3, 18), dark, c.x + s * R * 1.12, c.y + H * .02, c.z, 0, 0, Math.PI / 2);
+        break;
+      }
+
+     case "spiky":
+      {
+        const hair = avStd(hc, {
+          roughness: .8
+        });
+        const d = add(new THREE.SphereGeometry(R * 1.1, 20, 10, 0, Math.PI * 2, 0, Math.PI / 2), hair, c.x, y0, c.z - R * .05);
+        d.scale.y = .8;
+        for (let i = 0; i < 9; i++) {
+          const a = i / 9 * Math.PI * 2, rr = i === 8 ? 0 : R * .55;
+          add(new THREE.ConeGeometry(R * .32, H * .5, 8), hair, c.x + Math.cos(a) * rr, top + H * .1, c.z + Math.sin(a) * rr - R * .1, Math.sin(a) * .5, 0, -Math.cos(a) * .5);
+        }
+        break;
+      }
+
+     case "horns":
+      for (const s of [ -1, 1 ]) add(new THREE.ConeGeometry(R * .2, H * .55, 10), mat, c.x + s * R * .7, top + H * .12, c.z, 0, 0, -s * .45);
+      break;
+
+     case "halo":
+      add(new THREE.TorusGeometry(R * .85, R * .09, 8, 30), avStd(16771488, {
+        emissive: 16765503,
+        emissiveIntensity: 1.2
+      }), c.x, top + H * .35, c.z, Math.PI / 2);
+      break;
+    }
+  } else if (kind === "fw") {
+    const ey = c.y + H * .02, fz = box.max.z + R * .04;
+    if (id === "shades") {
+      add(new THREE.BoxGeometry(R * 1.85, H * .16, R * .1), dark, c.x, ey, fz);
+      for (const s of [ -1, 1 ]) add(new THREE.BoxGeometry(R * .08, R * .08, R * 1.6), dark, c.x + s * R * .95, ey, c.z);
+    } else if (id === "glasses") {
+      for (const s of [ -1, 1 ]) add(new THREE.TorusGeometry(R * .32, R * .05, 6, 20), dark, c.x + s * R * .42, ey, fz);
+      add(new THREE.BoxGeometry(R * .3, R * .05, R * .05), dark, c.x, ey + R * .05, fz);
+    } else if (id === "mask") add(new THREE.BoxGeometry(R * 1.7, H * .32, R * .12), mat, c.x, c.y - H * .22, fz - R * .02);
+  } else if (kind === "back") {
+    const bz = box.min.z;
+    if (id === "backpack") {
+      add(new THREE.BoxGeometry(sz.x * .62, sz.y * .78, R * .5), mat, c.x, c.y - sz.y * .05, bz - R * .2);
+      add(new THREE.BoxGeometry(sz.x * .45, sz.y * .3, R * .2), avStd(new THREE.Color(hc).multiplyScalar(.7).getHex()), c.x, c.y - sz.y * .25, bz - R * .5);
+    } else if (id === "cape") {
+      const cp = add(new THREE.BoxGeometry(sz.x * .95, sz.y * 2.3, R * .04), mat, c.x, box.max.y - sz.y * 1.15, bz - R * .06, -.08);
+      cp.material.side = THREE.DoubleSide;
+    } else if (id === "wings") for (const s of [ -1, 1 ]) {
+      const w = add(new THREE.BoxGeometry(sz.x * .9, sz.y * .9, R * .05), avStd(16250866, {
+        roughness: .9
+      }), c.x + s * sz.x * .5, c.y + sz.y * .15, bz - R * .15, 0, s * .35, s * .45);
+      w.scale.set(1, 1, 1);
+    } else if (id === "jetpack") for (const s of [ -1, 1 ]) {
+      add(new THREE.CylinderGeometry(R * .28, R * .28, sz.y * .8, 14), avStd(10133672, {
+        metalness: .7,
+        roughness: .35
+      }), c.x + s * R * .32, c.y, bz - R * .3);
+      add(new THREE.ConeGeometry(R * .22, R * .35, 12), dark, c.x + s * R * .32, c.y - sz.y * .5, bz - R * .3, Math.PI);
+    }
+  } else if (kind === "neck") {
+    if (id === "scarf") {
+      const s = add(new THREE.TorusGeometry(R * 1.05, R * .3, 10, 24), mat, c.x, box.min.y + sz.y * .3, c.z, Math.PI / 2);
+      s.scale.set(1, 1, .9);
+      add(new THREE.BoxGeometry(R * .5, sz.y * 1.6, R * .2), mat, c.x + R * .4, box.min.y - sz.y * .5, box.max.z + R * .1, 0, 0, .1);
+    } else if (id === "chain") add(new THREE.TorusGeometry(R * 1.2, R * .07, 6, 30), gold, c.x, box.min.y - sz.y * .1, c.z + R * .15, Math.PI / 2 - .5);
+  }
+  return g;
+}
+
+function avAttach(model, boneName, obj) {
+  if (!obj.children.length) return;
+  model.updateMatrixWorld(true);
+  let b = null;
+  model.traverse(o => {
+    if (o.isBone && o.name === boneName) b = o;
+  });
+  model.add(obj);
+  model.updateMatrixWorld(true);
+  if (b) b.attach(obj);
+}
+
+function buildCustomModel(look) {
+  const T = TEMPL.base;
+  const o = avClean(look ? look.o : avOutfit());
+  const m = SkeletonUtils.clone(T.model);
+  let sm;
+  m.traverse(x => {
+    if (x.isSkinnedMesh) sm = x;
+  });
+  if (!T.av) avPrep(T);
+  if (sm && T.av) {
+    sm.geometry = sm.geometry.clone();
+    avColors(T, sm.geometry, o);
+    sm.material = avMaterial(T, o, look && look.t);
+    sm.castShadow = true;
+    sm.frustumCulled = false;
+    const B = T.av.boxes;
+    avAttach(m, "head", avAcc("hat", o.hat, B.head, o.hc));
+    avAttach(m, "head", avAcc("fw", o.fw, B.head, o.hc));
+    avAttach(m, "chest", avAcc("back", o.back, B.torso, o.hc));
+    avAttach(m, "neck", avAcc("neck", o.neck, B.neck || B.head, o.hc));
+  }
+  return m;
+}
+
+const avRagKey = o => {
+  o = avClean(o);
+  return `o_${o.skin}_${o.shirt === "none" ? o.skin : o.sc}_${o.pants === "none" ? o.skin : o.pc}`;
+};
+
+function avRag() {
+  return curAvatar.custom ? avRagKey(avOutfit()) : curAvatar.rag;
+}
+
+function curAvId() {
+  return curAvatar.custom ? "custom:" + avHash(avOutfit()) : curAvatar.id;
+}
+
+function myLook() {
+  const o = avClean(avOutfit());
+  return {
+    h: avHash(avOutfit()),
+    o: o,
+    t: o.design.startsWith("u:") ? avShirtImg(o.design) : null
+  };
+}
+
+let lookSentT = -10;
+
+function sendLook(force) {
+  if (!NET.on || !curAvatar.custom) return;
+  if (!force && now - lookSentT < 1) return;
+  lookSentT = now;
+  const L = myLook();
+  send("look", {
+    i: NET.id,
+    h: L.h,
+    o: L.o,
+    t: L.t
+  });
+}
+
+function onLook(p) {
+  if (!p || !p.i || p.i === NET.id || !p.o || typeof p.h !== "string") return;
+  if (p.t && (typeof p.t !== "string" || p.t.length > 2e5 || !/^data:image\/(png|jpeg|webp);base64,/.test(p.t))) p.t = null;
+  const Rm = getRemote(p.i, null, null);
+  Rm.look = {
+    h: p.h,
+    o: avClean(p.o),
+    t: p.t
+  };
+  if (Rm.av && String(Rm.av).startsWith("custom:")) {
+    const want = Rm.av;
+    Rm.av = null;
+    setRemoteAvatar(Rm, want);
+  }
+}
+
+const AVE = {
+  tab: "CHARACTERS",
+  o: null,
+  r: null,
+  scene: null,
+  cam: null,
+  model: null,
+  mixer: null,
+  rot: .35,
+  drag: null,
+  raf: 0,
+  last: 0
+};
+
+const AVE_TABS = [ "CHARACTERS", "BODY", "SHIRTS", "PANTS", "HATS", "EXTRAS" ];
+
+function openAvEditor() {
+  if (!TEMPL.base) return;
+  audioInit();
+  AVE.o = avOutfit();
+  AVE.tab = curAvatar.custom ? "SHIRTS" : "CHARACTERS";
+  $("avMenu").classList.remove("hidden");
+  aveInit();
+  aveModel();
+  renderAve();
+  if (!AVE.raf) AVE.raf = requestAnimationFrame(aveLoop);
+}
+
+function closeAvEditor() {
+  $("avMenu").classList.add("hidden");
+  cancelAnimationFrame(AVE.raf);
+  AVE.raf = 0;
+  if (AVE.r) {
+    AVE.r.dispose();
+    AVE.r.forceContextLoss();
+    AVE.r.domElement.remove();
+    AVE.r = null;
+  }
+  AVE.scene = null;
+  AVE.model = null;
+  renderAvatars();
+}
+
+function aveInit() {
+  if (AVE.r) return;
+  const wrap = $("avePrev");
+  const r = new THREE.WebGLRenderer({
+    antialias: true,
+    alpha: true
+  });
+  r.setPixelRatio(Math.min(devicePixelRatio, 2));
+  r.outputColorSpace = THREE.SRGBColorSpace;
+  r.toneMapping = THREE.ACESFilmicToneMapping;
+  r.shadowMap.enabled = true;
+  wrap.appendChild(r.domElement);
+  AVE.r = r;
+  const sc = new THREE.Scene;
+  sc.add(new THREE.HemisphereLight(16777215, 9080729, 1.5));
+  const dl = new THREE.DirectionalLight(16777215, 2.4);
+  dl.position.set(2.5, 5, 4);
+  dl.castShadow = true;
+  dl.shadow.mapSize.set(1024, 1024);
+  Object.assign(dl.shadow.camera, {
+    left: -3,
+    right: 3,
+    top: 4,
+    bottom: -1
+  });
+  sc.add(dl);
+  const fl = new THREE.Mesh(new THREE.CircleGeometry(1.6, 40), new THREE.MeshStandardMaterial({
+    color: 15133681,
+    roughness: .9
+  }));
+  fl.rotation.x = -Math.PI / 2;
+  fl.receiveShadow = true;
+  sc.add(fl);
+  AVE.scene = sc;
+  AVE.cam = new THREE.PerspectiveCamera(30, 1, .05, 50);
+  const el = r.domElement;
+  el.addEventListener("pointerdown", e => {
+    AVE.drag = {
+      x: e.clientX
+    };
+    el.setPointerCapture(e.pointerId);
+  });
+  el.addEventListener("pointermove", e => {
+    if (!AVE.drag) return;
+    AVE.rot += (e.clientX - AVE.drag.x) * .012;
+    AVE.drag.x = e.clientX;
+  });
+  el.addEventListener("pointerup", () => {
+    AVE.drag = null;
+  });
+  el.addEventListener("pointercancel", () => {
+    AVE.drag = null;
+  });
+}
+
+function aveModel() {
+  if (!AVE.scene) return;
+  if (AVE.model) {
+    AVE.scene.remove(AVE.model);
+    if (AVE.mixer) AVE.mixer.stopAllAction();
+  }
+  const A = curAvatar;
+  const m = A.custom ? buildCustomModel({
+    o: AVE.o
+  }) : buildAvatarModel(A);
+  m.traverse(x => {
+    if (x.isMesh) x.castShadow = true;
+  });
+  const T = TEMPL[A.tpl] || TEMPL.base;
+  const mx = new THREE.AnimationMixer(m);
+  mx.clipAction(T.clips.find(c => c.name === "Idle")).play();
+  AVE.scene.add(m);
+  AVE.model = m;
+  AVE.mixer = mx;
+}
+
+function aveLoop(t) {
+  AVE.raf = requestAnimationFrame(aveLoop);
+  if (!AVE.r) return;
+  const dt = Math.min(.05, (t - (AVE.last || t)) / 1e3);
+  AVE.last = t;
+  const wrap = $("avePrev"), w = wrap.clientWidth, h = wrap.clientHeight;
+  if (w && h && (AVE.r.domElement.width !== Math.round(w * AVE.r.getPixelRatio()) || AVE.r.domElement.height !== Math.round(h * AVE.r.getPixelRatio()))) {
+    AVE.r.setSize(w, h);
+    AVE.cam.aspect = w / h;
+    AVE.cam.updateProjectionMatrix();
+  }
+  if (!AVE.drag) AVE.rot += dt * .25;
+  if (AVE.model) {
+    AVE.model.rotation.y = AVE.rot;
+    AVE.mixer.update(dt);
+  }
+  const near = AVE.zoom ? 1 : 0;
+  AVE.cam.position.set(0, 1.6 + near * .75, 7.6 - near * 3.4);
+  AVE.cam.lookAt(0, 1.3 + near * .82, 0);
+  AVE.r.render(AVE.scene, AVE.cam);
+}
+
+const aveSw = (hex, on, key) => `<button class="sw ${on ? "on" : ""}" data-k="${key}" data-v="${hex}" style="background:#${hex}" aria-label="#${hex}"></button>`;
+
+function aveChips(list, cur, key) {
+  return `<div class="avchips">${list.map(([v, n]) => `<button class="avchip ${v === cur ? "on" : ""}" data-k="${key}" data-v="${v}">${n}</button>`).join("")}</div>`;
+}
+
+function aveTiles(list, cur, key, img) {
+  return `<div class="avtiles">${list.map(([v, n]) => `<button class="avtile ${v === cur ? "on" : ""}" data-k="${key}" data-v="${v}"><i>${img ? img(v) : ""}</i><span>${n}</span></button>`).join("")}</div>`;
+}
+
+const texURL = new Map;
+
+function texThumb(kind, id) {
+  const k = kind + id;
+  if (texURL.has(k)) return texURL.get(k);
+  const c = document.createElement("canvas");
+  c.width = c.height = 128;
+  const g = c.getContext("2d");
+  if (kind === "f") {
+    g.fillStyle = "#eac39f";
+    g.fillRect(0, 0, 128, 128);
+    avFaceDraw(id)(g, 128);
+  } else avDesignDraw(id)(g, 128);
+  const u = c.toDataURL("image/png");
+  texURL.set(k, u);
+  return u;
+}
+
+function renderAve() {
+  $("aveTabs").innerHTML = AVE_TABS.map(t => `<button class="tab ${t === AVE.tab ? "on" : ""}" data-t="${t}">${t}</button>`).join("");
+  const o = AVE.o, cust = curAvatar.custom;
+  let h = "";
+  if (AVE.tab === "CHARACTERS") {
+    h = `<div class="sec">CHARACTERS</div><div class="avtiles big">${AVATARS.map(a => `<button class="avtile ${a.id === curAvatar.id ? "on" : ""}" data-char="${a.id}"><i>${thumbs["av_" + a.id] ? `<img src="${thumbs["av_" + a.id]}" alt="">` : ""}</i><span>${a.name}</span></button>`).join("")}</div>\n    <p class="foot">${cust ? "You are wearing your own outfit. Change it in the other tabs." : "Pick <b>My Avatar</b> to dress up your own character."}</p>`;
+  } else if (!cust) {
+    h = `<div class="avempty"><p>Clothes go on <b>My Avatar</b>.</p><button class="go" data-char="custom">USE MY AVATAR</button></div>`;
+  } else if (AVE.tab === "BODY") {
+    h = `<div class="sec">SKIN</div><div class="sws">${AV_SKINS.map(c => aveSw(c, o.skin === c, "skin")).join("")}</div>\n    <div class="sec">FACE</div>${aveTiles(AV_FACES, o.face, "face", v => v === "none" ? "" : `<img src="${texThumb("f", v)}" alt="">`)}`;
+  } else if (AVE.tab === "SHIRTS") {
+    const mine = avShirts();
+    h = `<div class="sec">STYLE</div>${aveChips(AV_SHIRTS, o.shirt, "shirt")}\n    <div class="sec">COLOR</div><div class="sws">${AV_COLS.map(c => aveSw(c, o.sc === c, "sc")).join("")}</div>\n    <div class="sec">T-SHIRT DESIGN</div>\n    <div class="avtiles">\n      <button class="avtile make" data-make="1"><i>+</i><span>Create</span></button>\n      <button class="avtile ${o.design === "none" ? "on" : ""}" data-k="design" data-v="none"><i></i><span>Plain</span></button>\n      ${mine.map(s => `<button class="avtile ${o.design === "u:" + s.id ? "on" : ""}" data-k="design" data-v="u:${s.id}"><i><img src="${esc(s.img)}" alt=""></i><span>${esc(s.name || "My design")}</span><b class="x" data-delshirt="${s.id}">✕</b></button>`).join("")}\n      ${AV_DESIGNS.map(([v, n]) => `<button class="avtile ${o.design === v ? "on" : ""}" data-k="design" data-v="${v}"><i><img src="${texThumb("d", v)}" alt=""></i><span>${n}</span></button>`).join("")}\n    </div>`;
+  } else if (AVE.tab === "PANTS") {
+    h = `<div class="sec">STYLE</div>${aveChips(AV_PANTS, o.pants, "pants")}\n    <div class="sec">COLOR</div><div class="sws">${AV_COLS.map(c => aveSw(c, o.pc === c, "pc")).join("")}</div>\n    <div class="sec">SHOES</div><div class="sws"><button class="sw none ${o.shoes === "none" ? "on" : ""}" data-k="shoes" data-v="none">✕</button>${AV_COLS.map(c => aveSw(c, o.shoes === c, "shoes")).join("")}</div>`;
+  } else if (AVE.tab === "HATS") {
+    h = `<div class="sec">HAT</div>${aveChips(AV_HATS, o.hat, "hat")}\n    <div class="sec">ACCESSORY COLOR</div><div class="sws">${AV_COLS.map(c => aveSw(c, o.hc === c, "hc")).join("")}</div>`;
+  } else if (AVE.tab === "EXTRAS") {
+    h = `<div class="sec">FACE</div>${aveChips(AV_FACEWEAR, o.fw, "fw")}\n    <div class="sec">BACK</div>${aveChips(AV_BACK, o.back, "back")}\n    <div class="sec">NECK</div>${aveChips(AV_NECK, o.neck, "neck")}\n    <div class="sec">ACCESSORY COLOR</div><div class="sws">${AV_COLS.map(c => aveSw(c, o.hc === c, "hc")).join("")}</div>`;
+  }
+  $("aveBody").innerHTML = h;
+}
+
+function aveApply() {
+  SD.settings.outfit = avClean(AVE.o);
+  persist();
+  aveModel();
+  if (curAvatar.custom) {
+    setAvatar("custom", true);
+    renderAvThumb();
+  }
+}
+
+$("aveTabs").addEventListener("click", e => {
+  const t = e.target.closest(".tab");
+  if (!t) return;
+  AVE.tab = t.dataset.t;
+  AVE.zoom = t.dataset.t === "BODY" || t.dataset.t === "HATS";
+  renderAve();
+});
+
+$("aveBody").addEventListener("click", e => {
+  const del = e.target.closest("[data-delshirt]");
+  if (del) {
+    e.stopPropagation();
+    const L = avShirts(), i = L.findIndex(s => s.id === del.dataset.delshirt);
+    if (i >= 0) {
+      if (AVE.o.design === "u:" + L[i].id) AVE.o.design = "none";
+      L.splice(i, 1);
+      persist();
+      aveApply();
+      renderAve();
+    }
+    return;
+  }
+  const ch = e.target.closest("[data-char]");
+  if (ch) {
+    setAvatar(ch.dataset.char);
+    aveModel();
+    renderAve();
+    return;
+  }
+  if (e.target.closest("[data-make]")) {
+    openTsMaker();
+    return;
+  }
+  const b = e.target.closest("[data-k]");
+  if (!b) return;
+  AVE.o[b.dataset.k] = b.dataset.v;
+  if (b.dataset.k === "design" && AVE.o.shirt === "none") AVE.o.shirt = "tee";
+  aveApply();
+  renderAve();
+});
+
+$("aveClose").innerHTML = icon("close");
+
+$("aveClose").addEventListener("click", closeAvEditor);
+
+$("aveRand").addEventListener("click", () => {
+  const r = a => a[Math.random() * a.length | 0];
+  AVE.o = Object.assign(AVE.o, {
+    skin: r(AV_SKINS.slice(0, 7)),
+    shirt: r(AV_SHIRTS.slice(1))[0],
+    sc: r(AV_COLS),
+    pants: r(AV_PANTS.slice(1))[0],
+    pc: r(AV_COLS),
+    shoes: r(AV_COLS),
+    hat: Math.random() < .6 ? r(AV_HATS)[0] : "none",
+    hc: r(AV_COLS),
+    face: r(AV_FACES.slice(1))[0],
+    fw: Math.random() < .3 ? r(AV_FACEWEAR)[0] : "none",
+    back: Math.random() < .3 ? r(AV_BACK)[0] : "none",
+    neck: Math.random() < .2 ? r(AV_NECK)[0] : "none",
+    design: Math.random() < .5 ? r(AV_DESIGNS)[0] : "none"
+  });
+  if (!curAvatar.custom) setAvatar("custom");
+  aveApply();
+  renderAve();
+});
+
+function renderAvThumb() {
+  let tr;
+  try {
+    tr = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: true,
+      preserveDrawingBuffer: true
+    });
+    tr.setSize(96, 128);
+    tr.setPixelRatio(1);
+    tr.outputColorSpace = THREE.SRGBColorSpace;
+    tr.toneMapping = THREE.ACESFilmicToneMapping;
+    const ts = new THREE.Scene;
+    ts.add(new THREE.HemisphereLight(16777215, 5592405, 1.6));
+    const dl = new THREE.DirectionalLight(16777215, 2.2);
+    dl.position.set(3, 5, 4);
+    ts.add(dl);
+    const tc = new THREE.PerspectiveCamera(30, 96 / 128, .05, 100);
+    const m = buildCustomModel(null), mx = new THREE.AnimationMixer(m);
+    mx.clipAction(TEMPL.base.clips.find(c => c.name === "Idle")).play();
+    mx.update(.8);
+    ts.add(m);
+    m.rotation.y = -.35;
+    tc.position.set(0, 1.55, 7.2);
+    tc.lookAt(0, 1.3, 0);
+    tr.render(ts, tc);
+    thumbs.av_custom = tr.domElement.toDataURL("image/png");
+  } catch (e) {
+    console.warn("avatar thumb", e);
+  }
+  if (tr) {
+    tr.dispose();
+    tr.forceContextLoss();
+  }
+  renderHubMe();
+}
+
+const TS = {
+  tool: "brush",
+  size: 6,
+  col: "#16161a",
+  hist: [],
+  drawing: false,
+  last: null
+};
+
+const TS_COLS = [ "#16161a", "#ffffff", "#9aa0a8", "#d93a3a", "#ee7a22", "#f2c230", "#3aa655", "#2fb3c9", "#2f6fd0", "#8a4fd6", "#e76fb3", "#8a5a35" ];
+
+function openTsMaker() {
+  if (avShirts().length >= 16) {
+    toast("You can keep 16 designs. Delete one first.", 2400);
+    return;
+  }
+  $("tsMenu").classList.remove("hidden");
+  const c = $("tsCan"), g = c.getContext("2d");
+  g.clearRect(0, 0, 128, 128);
+  TS.hist = [];
+  $("tsName").value = "";
+  renderTs();
+}
+
+function closeTsMaker() {
+  $("tsMenu").classList.add("hidden");
+}
+
+function renderTs() {
+  $("tsTools").innerHTML = [ [ "brush", "BRUSH" ], [ "erase", "ERASER" ], [ "fill", "FILL" ], [ "text", "TEXT" ] ].map(([v, n]) => `<button class="avchip ${TS.tool === v ? "on" : ""}" data-tool="${v}">${n}</button>`).join("") + [ 3, 6, 12, 20 ].map(s => `<button class="avchip sz ${TS.size === s ? "on" : ""}" data-size="${s}"><i style="width:${Math.max(4, s * .8)}px;height:${Math.max(4, s * .8)}px"></i></button>`).join("");
+  $("tsCols").innerHTML = TS_COLS.map(c => `<button class="sw ${TS.col === c ? "on" : ""}" data-col="${c}" style="background:${c}"></button>`).join("") + `<label class="sw pick" style="background:${TS.col}"><input type="color" id="tsPick" value="${TS.col}"></label>`;
+  $("tsText").classList.toggle("hidden", TS.tool !== "text");
+}
+
+function tsSnap() {
+  const c = $("tsCan");
+  TS.hist.push(c.getContext("2d").getImageData(0, 0, 128, 128));
+  if (TS.hist.length > 30) TS.hist.shift();
+}
+
+function tsPos(e) {
+  const r = $("tsCan").getBoundingClientRect();
+  return [ (e.clientX - r.left) / r.width * 128, (e.clientY - r.top) / r.height * 128 ];
+}
+
+function tsFill(x, y) {
+  const c = $("tsCan"), g = c.getContext("2d"), im = g.getImageData(0, 0, 128, 128), d = im.data;
+  x = x | 0;
+  y = y | 0;
+  const i0 = (y * 128 + x) * 4, t = [ d[i0], d[i0 + 1], d[i0 + 2], d[i0 + 3] ];
+  const n = new THREE.Color(TS.col);
+  const f = [ Math.round(n.r * 255), Math.round(n.g * 255), Math.round(n.b * 255), 255 ];
+  const cs = TS.col.replace("#", "");
+  f[0] = parseInt(cs.slice(0, 2), 16);
+  f[1] = parseInt(cs.slice(2, 4), 16);
+  f[2] = parseInt(cs.slice(4, 6), 16);
+  const same = i => Math.abs(d[i] - t[0]) + Math.abs(d[i + 1] - t[1]) + Math.abs(d[i + 2] - t[2]) + Math.abs(d[i + 3] - t[3]) < 40;
+  if (t[0] === f[0] && t[1] === f[1] && t[2] === f[2] && t[3] === 255) return;
+  const st = [ [ x, y ] ], seen = new Uint8Array(128 * 128);
+  while (st.length) {
+    const [px, py] = st.pop();
+    if (px < 0 || py < 0 || px > 127 || py > 127) continue;
+    const k = py * 128 + px;
+    if (seen[k]) continue;
+    seen[k] = 1;
+    const i = k * 4;
+    if (!same(i)) continue;
+    d[i] = f[0];
+    d[i + 1] = f[1];
+    d[i + 2] = f[2];
+    d[i + 3] = 255;
+    st.push([ px + 1, py ], [ px - 1, py ], [ px, py + 1 ], [ px, py - 1 ]);
+  }
+  g.putImageData(im, 0, 0);
+}
+
+function tsLine(a, b) {
+  const g = $("tsCan").getContext("2d");
+  g.globalCompositeOperation = TS.tool === "erase" ? "destination-out" : "source-over";
+  g.strokeStyle = TS.col;
+  g.fillStyle = TS.col;
+  g.lineWidth = TS.size;
+  g.lineCap = "round";
+  g.lineJoin = "round";
+  g.beginPath();
+  g.moveTo(a[0], a[1]);
+  g.lineTo(b[0] + .01, b[1]);
+  g.stroke();
+  g.globalCompositeOperation = "source-over";
+}
+
+$("tsCan").addEventListener("pointerdown", e => {
+  e.preventDefault();
+  const p = tsPos(e);
+  tsSnap();
+  if (TS.tool === "fill") {
+    tsFill(p[0], p[1]);
+    return;
+  }
+  if (TS.tool === "text") {
+    const t = ($("tsTextIn").value || "").trim().slice(0, 20);
+    if (!t) {
+      TS.hist.pop();
+      toast("Type some text first");
+      return;
+    }
+    const g = $("tsCan").getContext("2d");
+    g.fillStyle = TS.col;
+    g.textAlign = "center";
+    g.textBaseline = "middle";
+    g.font = `900 ${Math.round(8 + TS.size * 1.6)}px "Barlow Condensed", Impact, sans-serif`;
+    g.fillText(t, p[0], p[1]);
+    return;
+  }
+  TS.drawing = true;
+  TS.last = p;
+  tsLine(p, p);
+  $("tsCan").setPointerCapture(e.pointerId);
+});
+
+$("tsCan").addEventListener("pointermove", e => {
+  if (!TS.drawing) return;
+  const p = tsPos(e);
+  tsLine(TS.last, p);
+  TS.last = p;
+});
+
+const tsEnd = () => {
+  TS.drawing = false;
+};
+
+$("tsCan").addEventListener("pointerup", tsEnd);
+
+$("tsCan").addEventListener("pointercancel", tsEnd);
+
+$("tsMenu").addEventListener("click", e => {
+  const b = e.target.closest("button");
+  if (!b) return;
+  if (b.dataset.tool) {
+    TS.tool = b.dataset.tool;
+    renderTs();
+  } else if (b.dataset.size) {
+    TS.size = +b.dataset.size;
+    renderTs();
+  } else if (b.dataset.col) {
+    TS.col = b.dataset.col;
+    if (TS.tool === "erase") TS.tool = "brush";
+    renderTs();
+  } else if (b.id === "tsUndo") {
+    const im = TS.hist.pop();
+    if (im) $("tsCan").getContext("2d").putImageData(im, 0, 0);
+  } else if (b.id === "tsClear") {
+    tsSnap();
+    $("tsCan").getContext("2d").clearRect(0, 0, 128, 128);
+  } else if (b.id === "tsCancel") closeTsMaker(); else if (b.id === "tsSave") {
+    const c = $("tsCan"), img = c.toDataURL("image/png");
+    if (img.length > 12e4) {
+      toast("That design is too detailed. Try fewer colors.", 2600);
+      return;
+    }
+    const d = {
+      id: Date.now().toString(36),
+      name: ($("tsName").value || "").trim().slice(0, 20) || "My design",
+      img: img
+    };
+    avShirts().unshift(d);
+    persist();
+    AVE.o.design = "u:" + d.id;
+    if (AVE.o.shirt === "none") AVE.o.shirt = "tee";
+    closeTsMaker();
+    aveApply();
+    AVE.tab = "SHIRTS";
+    renderAve();
+    toast("Design saved");
+  }
+});
+
+$("tsMenu").addEventListener("input", e => {
+  if (e.target.id === "tsPick") {
+    TS.col = e.target.value;
+    if (TS.tool === "erase") TS.tool = "brush";
+    e.target.parentElement.style.background = TS.col;
+    for (const s of $("tsCols").querySelectorAll(".sw.on")) s.classList.remove("on");
+  }
+});
+
+$("tsFile").addEventListener("change", e => {
+  const f = e.target.files[0];
+  e.target.value = "";
+  if (!f) return;
+  const url = URL.createObjectURL(f), im = new Image;
+  im.onload = () => {
+    tsSnap();
+    const g = $("tsCan").getContext("2d"), s = Math.min(128 / im.width, 128 / im.height), w = im.width * s, h = im.height * s;
+    g.drawImage(im, (128 - w) / 2, (128 - h) / 2, w, h);
+    URL.revokeObjectURL(url);
+  };
+  im.onerror = () => {
+    toast("Could not open that image");
+    URL.revokeObjectURL(url);
+  };
+  im.src = url;
+});
+
 function renderHero() {
   const m = MAPS[curMapId];
   if (!m || !$("heroName")) return;
@@ -12655,10 +14025,7 @@ function hubGo(g) {
     break;
 
    case "avatar":
-    mark("avatar");
-    $("secAvatar").scrollIntoView({
-      block: "start"
-    });
+    if (!$("startBtn").disabled) openAvEditor();
     break;
 
    case "stats":
