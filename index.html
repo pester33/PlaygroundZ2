@@ -14,7 +14,7 @@
 <meta name="apple-mobile-web-app-title" content="Playground Z">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{--panel:rgba(15,16,19,.86);--line:rgba(255,255,255,.14);--txt:#ece8df;--dim:#9b978e;--acc:#f5a524;--red:#e5484d;--ice:#6cc4ff}
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
@@ -248,6 +248,147 @@
   .vrow span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .vrow i{font-style:normal;font-size:12px;color:#3ad06b;letter-spacing:.1em;font-weight:700}
   .vrow .sb{padding:3px 8px;font-size:12.5px}
+  .hub{position:fixed;inset:0;z-index:10;display:grid;grid-template-columns:236px minmax(0,1fr);grid-template-rows:54px minmax(0,1fr);background:#fff;color:#191b1f;font-family:'Nunito',system-ui,sans-serif;touch-action:auto}
+  .hub svg.i{width:22px;height:22px}
+  .hb-top{grid-column:1/-1;display:flex;align-items:center;gap:16px;padding:0 16px 0 18px;padding-left:calc(18px + env(safe-area-inset-left));padding-right:calc(16px + env(safe-area-inset-right));background:linear-gradient(#2f8dff,#1d77f0);color:#fff;box-shadow:0 1px 4px rgba(0,40,120,.25);position:relative;z-index:2}
+  .hb-logo{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:27px;letter-spacing:.02em;white-space:nowrap;text-shadow:0 1px 0 rgba(0,0,0,.15)}
+  .hb-logo b{color:#ffd23f}
+  .hb-links{display:flex;gap:2px}
+  .hb-links button{background:none;border:0;color:#fff;font-weight:700;font-size:16px;padding:7px 14px;border-radius:7px;cursor:pointer}
+  .hb-links button:hover{background:rgba(255,255,255,.16)}
+  .hb-search{flex:1;max-width:460px;display:flex;align-items:center;gap:8px;background:rgba(0,30,90,.22);border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:0 10px;height:34px;cursor:text}
+  .hb-search svg.i{width:18px;height:18px;opacity:.85}
+  .hb-search input{flex:1;min-width:0;background:none;border:0;color:#fff;font:inherit;font-weight:600;font-size:15px;outline:none;user-select:text;-webkit-user-select:text}
+  .hb-search input::placeholder{color:rgba(255,255,255,.75)}
+  .hb-top .acct{margin:0 0 0 auto;gap:8px}
+  .hb-top .acct .who{color:#fff;font-size:15px;letter-spacing:.02em;font-weight:800}
+  .hb-top .acct .who.dim{color:rgba(255,255,255,.8)}
+  .hb-top .sb{border-color:rgba(255,255,255,.7);color:#fff;font-weight:800;letter-spacing:.03em;border-radius:7px;padding:6px 12px}
+  .hb-top .sb.save{background:#fff;color:#1d77f0;border-color:#fff}
+  .hb-top .sb.adm{background:#ffd23f;color:#3a2a00;border-color:#ffd23f}
+  .hb-side{background:#e1efff;padding:12px 10px;overflow:auto;display:flex;flex-direction:column;gap:3px;border-right:1px solid #cfe2fb}
+  .hb-side button{display:flex;align-items:center;gap:13px;background:none;border:0;border-radius:9px;padding:10px 12px;font-weight:700;font-size:16.5px;color:#191b1f;cursor:pointer;text-align:left;font-family:inherit}
+  .hb-side button:hover{background:#d2e7ff}
+  .hb-side button.on{background:#c2deff}
+  .hb-me{display:flex;align-items:center;gap:11px;padding:6px 10px 14px;margin-bottom:4px;border-bottom:1px solid #cfe2fb;font-weight:800;font-size:17px;min-width:0}
+  .hb-me img,.hb-me i{width:40px;height:40px;border-radius:50%;object-fit:cover;object-position:50% 10%;background:#fff;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.15);flex:0 0 40px;display:block}
+  .hb-me span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .hb-me small{display:block;font-size:12.5px;color:#5b6573;font-weight:700}
+  .hb-main{overflow:auto;padding:24px 34px 40px;-webkit-overflow-scrolling:touch;touch-action:pan-y;scroll-behavior:smooth}
+  .hb-main h1{font-size:34px;font-weight:800;margin-bottom:14px;letter-spacing:-.01em}
+  .hb-main section{margin-bottom:28px}
+  .hb-hero{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:18px}
+  .hb-feat{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px;background:#f3f5f8;border:1px solid #e5e9ee;border-radius:14px;padding:14px}
+  .hb-feat .pv{aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:#dfe3e8;position:relative;align-self:start}
+  .hb-feat .pv img{width:100%;height:100%;object-fit:cover;display:block}
+  .hb-feat .pv i{position:absolute;display:block}
+  .hb-feat .info{display:flex;flex-direction:column;min-width:0}
+  .hb-kick{font-size:12px;font-weight:900;letter-spacing:.12em;color:#1d77f0}
+  .hb-feat h2{font-size:30px;font-weight:900;line-height:1.05;margin:4px 0 4px;word-break:break-word}
+  .hb-feat p{color:#4b5563;font-size:15px;font-weight:600;margin-bottom:12px}
+  .hub .seg{gap:8px}
+  .hub .seg button{background:#fff;border:1px solid #d6dbe1;color:#191b1f;font-size:16px;font-weight:800;letter-spacing:.03em;border-radius:9px;padding:8px 11px;font-family:inherit}
+  .hub .seg button small{color:#6b7280;font-weight:600;font-size:12.5px;letter-spacing:0}
+  .hub .seg button.on{border-color:#1d77f0;color:#1d77f0;background:#eaf3ff;box-shadow:inset 0 0 0 1px #1d77f0}
+  .hb-play{display:grid;grid-template-columns:1.2fr 1fr;gap:10px;margin-top:auto;padding-top:12px}
+  .hub .go{margin:0;background:#00a862;color:#fff;border-radius:9px;font-family:inherit;font-weight:900;font-size:19px;letter-spacing:.03em;padding:12px;box-shadow:0 2px 0 #00824c}
+  .hub .go:hover:not(:disabled){filter:brightness(1.06)}
+  .hub .go.alt{background:#fff;color:#1d77f0;border:2px solid #1d77f0;box-shadow:none}
+  .hub .go.ghost{background:#fff;color:#191b1f;border:1px solid #d6dbe1;font-size:16.5px;box-shadow:none}
+  .hb-card{border:1px solid #e5e9ee;border-radius:14px;padding:14px 14px 12px;background:#fff}
+  .hb-ct{font-weight:900;font-size:18px;margin-bottom:10px}
+  .hub .stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0}
+  .hub .stats span{background:#f3f5f8;border-radius:9px;padding:10px 11px;font-size:11.5px;color:#6b7280;font-weight:800;letter-spacing:.05em;display:flex;flex-direction:column;gap:2px}
+  .hub .stats b{font-size:25px;color:#191b1f;font-weight:900;margin:0;letter-spacing:0}
+  .hb-row{display:flex;align-items:center;justify-content:space-between;margin:0 0 12px}
+  .hb-row h3{font-size:22px;font-weight:800}
+  .hb-see{display:flex;align-items:center;gap:4px;background:none;border:0;color:#191b1f;font-weight:800;font-size:15px;cursor:pointer;font-family:inherit}
+  .hb-see svg.i{width:18px;height:18px}
+  .hub .avatars{gap:22px;padding:2px 2px 6px}
+  .hub .av{flex:0 0 92px;background:none;border:0;padding:0;text-align:center;border-radius:0}
+  .hub .av img,.hub .av .ph{width:92px;height:92px;aspect-ratio:auto;border-radius:50%;object-fit:cover;object-position:50% 8%;background:#eef1f4;border:3px solid #fff;box-shadow:0 0 0 1px #e1e5ea}
+  .hub .av span{font-weight:700;font-size:15px;color:#191b1f;letter-spacing:0;margin-top:6px}
+  .hub .av.on img,.hub .av.on .ph{box-shadow:0 0 0 3px #00a862}
+  .hub .av.on span{color:#00a862;font-weight:900}
+  .hub .maps,.hb-ws{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:18px}
+  .hub .map,.hb-wsc{background:none;border:0;border-radius:10px;text-align:left;padding:0;cursor:pointer;font-family:inherit;color:inherit;min-width:0}
+  .hub .map .pv,.hb-wsc .pv{border-radius:10px;aspect-ratio:16/9;background:#dfe3e8;position:relative;overflow:hidden}
+  .hb-wsc .pv img{width:100%;height:100%;object-fit:cover;display:block}
+  .hub .map .nm,.hb-wsc .nm{padding:8px 1px 0;font-size:17px;font-weight:800;letter-spacing:0;color:#191b1f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hub .map .ds{color:#6b7280;font-weight:700;font-size:13px;letter-spacing:0;white-space:normal}
+  .hub .map:hover .pv,.hb-wsc:hover .pv{filter:brightness(1.05)}
+  .hub .map.on .pv{box-shadow:0 0 0 3px #1d77f0}
+  .hub .map.on .nm{color:#1d77f0}
+  .hb-wsc .ct{display:flex;align-items:center;gap:12px;color:#6b7280;font-weight:700;font-size:13px;padding:2px 1px}
+  .hb-wsc .ct span{display:flex;align-items:center;gap:4px}
+  .hb-wsc .ct svg.i{width:15px;height:15px}
+  .hb-wsc em{position:absolute;left:7px;top:7px;background:#ffd23f;color:#3a2a00;font-style:normal;font-weight:900;font-size:11px;letter-spacing:.08em;padding:2px 7px;border-radius:5px}
+  .hb-create{display:flex;align-items:center;justify-content:space-between;gap:18px;background:linear-gradient(135deg,#eaf3ff,#f6faff);border:1px solid #d6e6fb;border-radius:14px;padding:18px 20px}
+  .hb-create h3{font-size:21px;font-weight:900}
+  .hb-create p{color:#4b5563;font-weight:600;font-size:15px;margin-top:2px}
+  .hb-create .row2{margin:0;flex:0 0 340px}
+  .hub .news{background:#fff7e0;border-color:#f3d27a;color:#4a3700;margin:0 0 16px}
+  .hub .news b{color:#b7791f}
+  .hub .foot{color:#6b7280;font-weight:600}
+  .hub .foot b{color:#191b1f}
+  .ov.lt{background:rgba(16,28,52,.38);font-family:'Nunito',system-ui,sans-serif}
+  .lt .panel{background:#fff;color:#191b1f;border-color:#e3e7ec;box-shadow:0 16px 50px rgba(0,20,60,.22);border-radius:14px}
+  .lt h2,.lt .wsdet h3{color:#191b1f;font-weight:900;letter-spacing:.01em}
+  .lt .foot,.lt .sec,.lt .kicker,.lt .dt,.lt .empty,.lt .wsdet .by,.lt .admfiles,.lt .tile small{color:#6b7280}
+  .lt .foot b,.lt .wsdet .by b{color:#191b1f}
+  .lt .sec{font-weight:800}
+  .lt .opt,.lt .room-row,.lt .admrow,.lt .tpl button,.lt .wscard,.lt .slot-row{background:#f3f5f8;border-color:#e3e7ec;color:#191b1f;font-family:inherit}
+  .lt .opt b,.lt .wsdet .feat{color:#1d77f0}
+  .lt .opt.danger{color:#d93a3a}
+  .lt .fld{color:#6b7280;font-weight:800}
+  .lt .fld input,.lt #wsSearch input,.lt .joinrow input{background:#fff;color:#191b1f;border-color:#cfd5dc;font-family:inherit}
+  .lt .fld input:focus,.lt #wsSearch input:focus,.lt .joinrow input:focus{border-color:#1d77f0}
+  .lt .go{background:#1d77f0;color:#fff;font-family:inherit;font-weight:900;letter-spacing:.03em;border-radius:9px}
+  .lt .go.ghost{background:#fff;color:#191b1f;border:1px solid #cfd5dc}
+  .lt .go.alt{background:#fff;color:#1d77f0;border:2px solid #1d77f0}
+  .lt .wsdet .go:not(.alt){background:#00a862}
+  .lt .tab{color:#6b7280;font-family:inherit;font-weight:800}
+  .lt .tab.on{color:#191b1f;border-bottom-color:#1d77f0}
+  .lt .sb{border-color:#cfd5dc;color:#191b1f;font-family:inherit}
+  .lt .sb.save{color:#1d77f0;border-color:#1d77f0}
+  .lt .sb.del{color:#d93a3a}
+  .lt .ib{background:#f3f5f8;border-color:#e3e7ec;color:#191b1f}
+  .lt .err{color:#d93a3a}
+  .lt .wsdet .ds{color:#374151}
+  .lt .wscard .ct,.lt .wsdet .ct{color:#4b5563}
+  .lt .wscard .by{color:#6b7280}
+  .lt .wscard em{background:#ffd23f;color:#3a2a00}
+  .lt .wscard .pv,.lt .wsdet .pv,.lt .admrow img{background:#dfe3e8}
+  .lt .room-row .nm,.lt .admrow .nm,.lt .wscard .nm{color:#191b1f}
+  @media (max-width:980px){.hb-hero{grid-template-columns:1fr}.hub .stats{grid-template-columns:repeat(4,1fr)}}
+  @media (max-width:860px){
+    .hub{grid-template-columns:minmax(0,1fr);grid-template-rows:52px auto minmax(0,1fr)}
+    .hb-links{display:none}
+    .hb-side{flex-direction:row;overflow-x:auto;padding:7px 8px;gap:5px;border-right:0;border-bottom:1px solid #cfe2fb;scrollbar-width:none;touch-action:pan-x}
+    .hb-side::-webkit-scrollbar{display:none}
+    .hb-me{display:none}
+    .hb-side button{flex:0 0 auto;padding:7px 12px;font-size:15px;gap:7px;white-space:nowrap}
+    .hb-side svg.i{width:18px;height:18px}
+    .hb-main{padding:16px 14px 30px}
+    .hb-feat{grid-template-columns:1fr}
+    .hb-create{flex-direction:column;align-items:stretch}
+    .hb-create .row2{flex:none}
+  }
+  @media (max-width:600px){
+    .hb-search{display:none}
+    .hb-logo{font-size:23px}
+    .hb-main h1{font-size:26px;margin-bottom:10px}
+    .hub .maps,.hb-ws{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .hub .map .nm,.hb-wsc .nm{font-size:15.5px}
+    .hub .stats{grid-template-columns:1fr 1fr}
+    .hub .av{flex-basis:76px}.hub .av img,.hub .av .ph{width:76px;height:76px}
+    .hb-feat h2{font-size:26px}
+  }
+  body.inmenu .hub.hidden{display:grid!important}
+  .ov.lt{z-index:11}
+  .hb-play .go{white-space:nowrap;font-size:18px;padding:12px 8px}
+  .hb-see{white-space:nowrap}
+  @media (max-width:600px){.hb-top .acct .who,.hb-top .sb.adm{display:none}.hb-top{gap:10px}.hb-play .go{font-size:16.5px}}
   @media (max-width:430px){.ib{width:37px;height:37px}#topR{gap:4px}#hp{width:118px}#hp .num{font-size:24px}#stats,#roomChip{font-size:12.5px}}
   @media (max-width:520px){#edInfo{max-width:calc(100vw - 230px)}#edInfo .t{font-size:17px}#edInfo .s{font-size:12px}}
   @media (min-width:860px){.main{max-width:780px}.maps{grid-template-columns:repeat(4,1fr)}.pause,.over{max-width:460px}}
@@ -300,35 +441,60 @@
   </div>
 </div>
 
-<div class="ov" id="mainMenu">
-  <div class="panel main">
+<div class="hub" id="mainMenu">
+  <header class="hb-top">
+    <div class="hb-logo">PLAYGROUND <b>Z</b></div>
+    <nav class="hb-links"><button data-go="home">Play</button><button data-go="ws">Workshop</button><button data-go="maker">Create</button><button data-go="online">Online</button></nav>
+    <label class="hb-search"><svg class="i" viewBox="0 0 24 24"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4"/></svg><input id="hubQ" maxlength="32" placeholder="Search the Workshop" autocomplete="off" spellcheck="false" enterkeyhint="search"></label>
     <div class="acct" id="acct"></div>
+  </header>
+  <aside class="hb-side" id="hubSide">
+    <div class="hb-me" id="hubMe"></div>
+    <button class="on" data-go="home"><svg class="i" viewBox="0 0 24 24"><path d="M3.5 11L12 3.5l8.5 7.5M6 9.5V20h12V9.5M10 20v-5h4v5"/></svg>Home</button>
+    <button data-go="avatar"><svg class="i" viewBox="0 0 24 24"><path d="M12 3.5a4 4 0 1 1 0 8 4 4 0 0 1 0-8zM4.5 20.5c.8-4 3.8-6 7.5-6s6.7 2 7.5 6"/></svg>Avatar</button>
+    <button data-go="online"><svg class="i" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3 12h18M12 3c2.5 2.6 3.7 5.6 3.7 9s-1.2 6.4-3.7 9c-2.5-2.6-3.7-5.6-3.7-9S9.5 5.6 12 3z"/></svg>Play Online</button>
+    <button data-go="maker"><svg class="i" viewBox="0 0 24 24"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9zM12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg>Map Maker</button>
+    <button data-go="ws"><svg class="i" viewBox="0 0 24 24"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></svg>Workshop</button>
+    <button data-go="stats"><svg class="i" viewBox="0 0 24 24"><path d="M5 20V11M12 20V4M19 20v-6"/></svg>Stats</button>
+    <button data-go="admin" class="hidden" id="hubAdmin"><svg class="i" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/></svg>Admin Panel</button>
+  </aside>
+  <main class="hb-main" id="hubMain">
     <div class="news hidden" id="newsBar"></div>
-    <div class="kicker">PHYSICS SANDBOX</div>
-    <h1>PLAYGROUND <span>Z</span></h1>
-    <div class="sec">AVATAR</div>
-    <div class="avatars" id="avGrid"></div>
-    <div class="sec">MAP</div>
-    <div class="maps" id="mapGrid"></div>
-    <div class="sec">MODE</div>
-    <div class="seg" id="modeSeg">
-      <button data-m="sandbox" class="on">SANDBOX<small>Spawn anything. No rules.</small></button>
-      <button data-m="survival">SURVIVAL<small>Hold out against the waves.</small></button>
-    </div>
-    <div class="row2">
-      <button class="go" id="startBtn" disabled>LOADING</button>
-      <button class="go alt" id="onlineBtn" disabled>PLAY ONLINE</button>
-    </div>
-    <div class="row2 sm">
-      <button class="go ghost" id="makerBtn" disabled>MAP MAKER</button>
-      <button class="go ghost" id="wsBtn" disabled>WORKSHOP</button>
-    </div>
-    <div class="stats" id="menuStats"></div>
+    <h1>Home</h1>
+    <section class="hb-hero">
+      <div class="hb-feat">
+        <div class="pv" id="heroPv"></div>
+        <div class="info">
+          <div class="hb-kick" id="heroKick">SELECTED MAP</div>
+          <h2 id="heroName">Flatgrass</h2>
+          <p id="heroDesc"></p>
+          <div class="seg" id="modeSeg">
+            <button data-m="sandbox" class="on">SANDBOX<small>Spawn anything. No rules.</small></button>
+            <button data-m="survival">SURVIVAL<small>Hold out against the waves.</small></button>
+          </div>
+          <div class="hb-play">
+            <button class="go" id="startBtn" disabled>LOADING</button>
+            <button class="go alt" id="onlineBtn" disabled>PLAY ONLINE</button>
+          </div>
+        </div>
+      </div>
+      <div class="hb-card" id="secStats"><div class="hb-ct">Your Stats</div><div class="stats" id="menuStats"></div></div>
+    </section>
+    <section id="secAvatar"><div class="hb-row"><h3>Avatar</h3></div><div class="avatars" id="avGrid"></div></section>
+    <section><div class="hb-row"><h3>Maps</h3></div><div class="maps" id="mapGrid"></div></section>
+    <section id="secWs" class="hidden"><div class="hb-row"><h3>Popular in the Workshop</h3><button class="hb-see" data-go="ws">See All <svg class="i" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div><div class="hb-ws" id="hubWs"></div></section>
+    <section class="hb-create">
+      <div><h3>Build your own map</h3><p>Make it in the Map Maker, then publish it so everyone can play it.</p></div>
+      <div class="row2 sm">
+        <button class="go ghost" id="makerBtn" disabled>MAP MAKER</button>
+        <button class="go ghost" id="wsBtn" disabled>WORKSHOP</button>
+      </div>
+    </section>
     <div class="foot" id="menuFoot"></div>
-  </div>
+  </main>
 </div>
 
-<div class="ov hidden" id="loginMenu">
+<div class="ov hidden lt" id="loginMenu">
   <div class="panel pause">
     <h2>ACCOUNT</h2>
     <p class="foot" style="margin-top:4px">Pick a username and password. No email needed. Your progress follows you to any device.</p>
@@ -343,7 +509,7 @@
   </div>
 </div>
 
-<div class="ov hidden" id="onlineMenu">
+<div class="ov hidden lt" id="onlineMenu">
   <div class="panel pause">
     <h2>ONLINE</h2>
     <div class="opts">
@@ -408,7 +574,7 @@
     <button class="go ghost" id="slotsBack">BACK</button>
   </div>
 </div>
-<div class="ov hidden" id="mkMenu">
+<div class="ov hidden lt" id="mkMenu">
   <div class="panel pause">
     <h2>MAP MAKER</h2>
     <p class="foot" style="margin-top:4px" id="mkNote"></p>
@@ -440,7 +606,7 @@
   </div>
 </div>
 
-<div class="ov hidden" id="wsMenu">
+<div class="ov hidden lt" id="wsMenu">
   <div class="panel spawn wsp">
     <div class="head"><div class="tabs" id="wsTabs"></div><div class="ib" id="wsClose"></div></div>
     <div id="wsSearch"><input id="wsQ" maxlength="32" placeholder="Search maps" autocomplete="off" spellcheck="false"></div>
@@ -4208,6 +4374,7 @@ function toMenu() {
   buildMap(curMapId);
   renderStats();
   renderMaps();
+  hubWs();
 }
 
 const r3 = v => [ +v.x.toFixed(3), +v.y.toFixed(3), +v.z.toFixed(3) ];
@@ -4946,6 +5113,7 @@ $("keysHelp").innerHTML = (isTouch ? "Left side: move. Drag anywhere else: look.
 const mapShots = {};
 
 function renderMaps() {
+  renderHero();
   $("mapGrid").innerHTML = Object.entries(MAPS).filter(([id, m]) => !m.draft && (!m.ws || id === curMapId)).map(([id, m]) => `<button class="map ${id === curMapId ? "on" : ""}${CUSTOM.has(id) && CUSTOM.get(id).loading && !CUSTOM.get(id).data ? " busy" : ""}" data-id="${esc(id)}"><div class="pv">${mapShots[id] ? `<img src="${esc(mapShots[id])}" alt="" onerror="this.remove()">` : m.pv}</div><div class="nm">${esc(m.name.toUpperCase())}<span class="ds">${esc(m.desc)}${m.custom && m.hidden ? " · hidden" : ""}</span></div></button>`).join("");
 }
 
@@ -4992,6 +5160,7 @@ $("modeSeg").addEventListener("click", e => {
   SD.settings.mode = mode;
   persist();
   renderStats();
+  renderHero();
   [ ...$("modeSeg").children ].forEach(x => x.classList.toggle("on", x === b));
 });
 
@@ -5252,6 +5421,7 @@ async function loadCharacter() {
 }
 
 function renderAvatars() {
+  renderHubMe();
   const g = $("avGrid");
   if (!g) return;
   g.innerHTML = AVATARS.map(a => `<div class="av ${a.id === curAvatar.id ? "on" : ""}" data-a="${a.id}">${thumbs["av_" + a.id] ? `<img src="${thumbs["av_" + a.id]}" alt="">` : '<div class="ph"></div>'}<span>${a.name}</span></div>`).join("");
@@ -5722,6 +5892,8 @@ function getSB() {
 const uMail = u => `${u}@players.playgroundz.app`;
 
 function renderAcct() {
+  renderHubMe();
+  $("hubAdmin").classList.toggle("hidden", !isAdmin());
   $("acct").innerHTML = user ? `${isAdmin() ? '<button class="sb adm" data-a="adm">ADMIN</button>' : ""}<span class="who">${esc(user.name.toUpperCase())}</span><button class="sb" data-a="out">LOG OUT</button>` : `<span class="who dim">GUEST</span><button class="sb save" data-a="in">LOG IN</button>`;
 }
 
@@ -5861,6 +6033,7 @@ async function initAuth() {
       if (!document.hidden) fetchNews();
     }, 9e4);
     if (String(SD.settings.map || "").startsWith("w:") && state === "menu") pickMap(SD.settings.map, true);
+    hubWs(true);
     s.auth.onAuthStateChange((ev, session) => {
       if (ev === "SIGNED_OUT") {
         if (user) setUser(null);
@@ -12426,6 +12599,124 @@ $("pauseRoom").addEventListener("click", e => {
 
 vcUI();
 
+function renderHero() {
+  const m = MAPS[curMapId];
+  if (!m || !$("heroName")) return;
+  $("heroPv").innerHTML = mapShots[curMapId] ? `<img src="${esc(mapShots[curMapId])}" alt="">` : m.pv || "";
+  $("heroName").textContent = m.name;
+  $("heroKick").textContent = m.ws ? "WORKSHOP MAP" : m.custom ? "COMMUNITY MAP" : "SELECTED MAP";
+  const bw = (SD.stats.bestWave || {})[curMapId];
+  $("heroDesc").textContent = (m.desc || "") + (mode === "survival" && bw ? ` Best wave here: ${bw}.` : "");
+}
+
+function renderHubMe() {
+  const el = $("hubMe");
+  if (!el) return;
+  const img = thumbs["av_" + curAvatar.id];
+  el.innerHTML = `${img ? `<img src="${img}" alt="">` : "<i></i>"}<span>${esc(user ? user.name : "Guest")}<small>${esc(curAvatar.name)}</small></span>`;
+}
+
+let hubWsT = 0;
+
+async function hubWs(force) {
+  if (!force && Date.now() - hubWsT < 3e4) return;
+  hubWsT = Date.now();
+  try {
+    const s = await getSB();
+    const r = await s.from("pz_workshop").select(WS_COLS).order("featured", {
+      ascending: false
+    }).order("likes", {
+      ascending: false
+    }).order("plays", {
+      ascending: false
+    }).limit(6);
+    if (r.error) throw r.error;
+    hubWs.rows = r.data || [];
+    const T = n => `<svg class="i" viewBox="0 0 24 24"><path d="${n}"/></svg>`;
+    $("hubWs").innerHTML = hubWs.rows.map(w => `<button class="hb-wsc" data-wid="${esc(w.id)}"><div class="pv">${w.thumb ? `<img src="${esc(w.thumb)}" alt="">` : ""}${w.featured ? "<em>FEATURED</em>" : ""}</div><div class="nm">${esc(w.name)}</div><div class="ct"><span>${T("M7 10v10H4V10zM7 10l4-7c1.5 0 2.5 1 2.2 2.6L12.6 9H18a2 2 0 0 1 2 2.3l-1.2 6.9A2 2 0 0 1 16.8 20H7")}${w.likes || 0}</span><span>${T("M8 5l11 7-11 7z")}${w.plays || 0}</span><span>by ${esc(w.author_name || "someone")}</span></div></button>`).join("");
+    $("secWs").classList.toggle("hidden", !hubWs.rows.length);
+  } catch (e) {
+    $("secWs").classList.add("hidden");
+  }
+}
+
+function hubGo(g) {
+  audioInit();
+  const side = $("hubSide");
+  const mark = k => {
+    for (const b of side.querySelectorAll("button")) b.classList.toggle("on", b.dataset.go === k);
+  };
+  switch (g) {
+   case "home":
+    mark("home");
+    $("hubMain").scrollTo({
+      top: 0
+    });
+    break;
+
+   case "avatar":
+    mark("avatar");
+    $("secAvatar").scrollIntoView({
+      block: "start"
+    });
+    break;
+
+   case "stats":
+    mark("stats");
+    $("secStats").scrollIntoView({
+      block: "center"
+    });
+    break;
+
+   case "online":
+    if (!$("onlineBtn").disabled) openOnline();
+    break;
+
+   case "maker":
+    if (!$("makerBtn").disabled) openMaker();
+    break;
+
+   case "ws":
+    if (!$("wsBtn").disabled) openWorkshop("menu");
+    break;
+
+   case "admin":
+    openAdmin("menu");
+    break;
+  }
+}
+
+$("mainMenu").addEventListener("click", e => {
+  const w = e.target.closest("[data-wid]");
+  if (w) {
+    if ($("wsBtn").disabled) return;
+    const row = (hubWs.rows || []).find(r => r.id === w.dataset.wid);
+    openWorkshop("menu");
+    if (row) {
+      WS.detail = row;
+      renderWs();
+    }
+    return;
+  }
+  const b = e.target.closest("[data-go]");
+  if (!b || b.disabled) return;
+  hubGo(b.dataset.go);
+});
+
+$("hubQ").addEventListener("keydown", e => {
+  if (e.key !== "Enter" || $("wsBtn").disabled) return;
+  const q = e.target.value.trim().slice(0, 32);
+  WS.q = q;
+  $("wsQ").value = q;
+  WS.tab = "POPULAR";
+  e.target.blur();
+  openWorkshop("menu");
+});
+
+renderHero();
+
+renderHubMe();
+
 const clock = new THREE.Clock;
 
 const eye = new THREE.Vector3, focus = new THREE.Vector3;
@@ -12434,6 +12725,7 @@ let hudT = 0;
 
 function loop() {
   requestAnimationFrame(loop);
+  if (document.body.classList.contains("inmenu") !== (state === "menu")) document.body.classList.toggle("inmenu", state === "menu");
   const dt = Math.min(clock.getDelta(), .05);
   if (!paused) {
     now += dt;
