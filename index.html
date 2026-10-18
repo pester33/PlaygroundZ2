@@ -192,7 +192,64 @@
   .news b{color:var(--acc);font-weight:800;letter-spacing:.12em;font-size:13px;white-space:nowrap;padding-top:1px}
   #chatLog b.adm,.plist-names .adm{color:#ffd166}
   .map.busy{opacity:.55}
+  .row2.sm{margin-top:8px}.row2 .go.ghost{margin-top:0}
+  #edInfo{position:absolute;left:calc(12px + env(safe-area-inset-left));top:calc(10px + env(safe-area-inset-top));max-width:calc(100vw - 260px);text-shadow:0 1px 3px rgba(0,0,0,.8)}
+  #edInfo .t{font-size:20px;font-weight:800;letter-spacing:.08em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #edInfo .s{font-size:13px;font-weight:600;letter-spacing:.08em;color:#cfcac0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #edInfo .s b{color:var(--txt);font-weight:800}
+  #edBar{position:absolute;left:calc(8px + env(safe-area-inset-left));right:calc(8px + env(safe-area-inset-right));top:calc(60px + env(safe-area-inset-top));display:flex;gap:6px;align-items:stretch;overflow-x:auto;pointer-events:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch;touch-action:pan-x;scrollbar-width:none}
+  #edBar::-webkit-scrollbar{display:none}
+  #edBar button{background:var(--panel);border:1px solid var(--line);border-radius:7px;color:var(--txt);font-weight:800;font-size:14px;letter-spacing:.06em;padding:0 10px;height:38px;cursor:pointer;white-space:nowrap;flex:0 0 auto}
+  #edBar button:active{border-color:var(--acc);color:var(--acc)}
+  #edBar .eg{display:flex;flex:0 0 auto}
+  #edBar .eg button{border-radius:0;margin-left:-1px}
+  #edBar .eg button:first-child{border-radius:7px 0 0 7px;margin-left:0}
+  #edBar .eg button:last-child{border-radius:0 7px 7px 0}
+  #edBar .eg button.del{color:#ff8a8d}
+  #edBar .brush{display:flex;align-items:center;gap:8px;text-align:left;padding:0 10px 0 5px;border-color:rgba(245,165,36,.6)}
+  #edBar .brush i{width:28px;height:28px;border-radius:5px;display:block;flex:0 0 28px;border:1px solid rgba(255,255,255,.2)}
+  #edBar .brush span{display:flex;flex-direction:column;line-height:1.05;font-size:14px}
+  #edBar .brush small{font-size:11.5px;color:var(--dim);font-weight:700}
+  #edBar .tog{width:30px;padding:0}
+  body:not(.editing) #edInfo,body:not(.editing) #edBar,body.editing #hp,body.editing #viewBtn{display:none}
+  body.editing #toolName{top:calc(112px + env(safe-area-inset-top))}
+  body.editing #throwBtn,body.editing #freezeBtn,body:not(.editing) #downBtn,body:not(.editing) #rotBtn{display:none}
+  .tile small{display:block;font-size:11.5px;color:var(--dim);font-weight:600;letter-spacing:.02em;margin-top:1px}
+  .tpl{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+  .tpl button{background:#191a1f;border:1px solid var(--line);border-radius:8px;padding:9px 6px;font-weight:800;font-size:15px;letter-spacing:.06em;cursor:pointer}
+  .tpl button i{display:block;height:28px;border-radius:5px;margin-bottom:6px}
+  .tpl button:active{border-color:var(--acc);color:var(--acc)}
+  .wsp{max-width:780px;height:min(700px,100%)}
+  #wsSearch{padding:8px 14px 0}
+  #wsSearch input{width:100%;background:#0d0e11;border:1px solid var(--line);border-radius:7px;color:var(--txt);font:inherit;font-size:17px;font-weight:600;padding:8px 11px;outline:none;user-select:text;-webkit-user-select:text;touch-action:auto}
+  #wsSearch input:focus{border-color:var(--acc)}
+  .wsbody{flex:1;overflow:auto;padding:10px 14px 14px;-webkit-overflow-scrolling:touch;touch-action:pan-y}
+  .wsgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+  .wscard{background:#191a1f;border:1px solid var(--line);border-radius:8px;overflow:hidden;text-align:left;padding:0;cursor:pointer;min-width:0}
+  .wscard:active{border-color:var(--acc)}
+  .wscard .pv,.wsdet .pv{aspect-ratio:16/9;background:#23252b;position:relative;overflow:hidden}
+  .wscard .pv img,.wsdet .pv img{width:100%;height:100%;object-fit:cover;display:block}
+  .wscard em{position:absolute;left:6px;top:6px;background:var(--acc);color:#1a1204;font-style:normal;font-weight:800;font-size:11px;letter-spacing:.12em;padding:2px 6px;border-radius:4px}
+  .wscard .nm{font-weight:800;font-size:16.5px;letter-spacing:.03em;padding:6px 9px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .wscard .by{font-size:12.5px;color:var(--dim);padding:0 9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .wscard .ct,.wsdet .ct{display:flex;gap:12px;font-size:13.5px;font-weight:700;padding:3px 9px 8px;color:#cfcac0}
+  .wsdet .pv{border-radius:8px;margin-top:10px}
+  .wsdet h3{font-size:30px;font-weight:800;letter-spacing:.03em;line-height:1.05;margin-top:10px;word-break:break-word}
+  .wsdet .by{color:var(--dim);font-size:14px;margin-top:2px}.wsdet .by b{color:var(--txt)}
+  .wsdet .ds{font-size:16px;line-height:1.4;margin-top:8px;color:#dcd7cd;word-break:break-word}
+  .wsdet .ct{padding:8px 0 0}.wsdet .feat{color:var(--acc)}
+  #vcInd{margin-top:5px;font-size:13px;font-weight:800;letter-spacing:.14em;color:var(--acc)}
+  #vcInd.loud{color:#3ad06b}
+  #micBtn{width:60px;height:60px}
+  body:not(.vc) #micBtn{display:none}
+  #micBtn.on{border-color:#3ad06b;color:#3ad06b}
+  #micBtn.muted{color:#ff8a8d}
+  .vrow{display:flex;align-items:center;gap:8px;margin-top:4px}
+  .vrow span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .vrow i{font-style:normal;font-size:12px;color:#3ad06b;letter-spacing:.1em;font-weight:700}
+  .vrow .sb{padding:3px 8px;font-size:12.5px}
   @media (max-width:430px){.ib{width:37px;height:37px}#topR{gap:4px}#hp{width:118px}#hp .num{font-size:24px}#stats,#roomChip{font-size:12.5px}}
+  @media (max-width:520px){#edInfo{max-width:calc(100vw - 230px)}#edInfo .t{font-size:17px}#edInfo .s{font-size:12px}}
   @media (min-width:860px){.main{max-width:780px}.maps{grid-template-columns:repeat(4,1fr)}.pause,.over{max-width:460px}}
   @media (hover:hover) and (pointer:fine){.slot{width:54px;height:54px}.slot svg.i{width:26px;height:26px}#toolName{top:calc(74px + env(safe-area-inset-top))}}
 </style>
@@ -207,7 +264,9 @@
 </head>
 <body>
 <div id="hud">
-  <div id="hp"><div class="row"><span class="num" id="hpNum">100</span><span class="lbl">HEALTH</span></div><div class="bar"><div class="fill" id="hpFill"></div></div><div id="stats"></div><div id="roomChip"></div></div>
+  <div id="hp"><div class="row"><span class="num" id="hpNum">100</span><span class="lbl">HEALTH</span></div><div class="bar"><div class="fill" id="hpFill"></div></div><div id="stats"></div><div id="roomChip"></div><div id="vcInd" class="hidden">MIC ON</div></div>
+  <div id="edInfo"></div>
+  <div id="edBar"></div>
   <div id="topR">
     <div class="ib" id="spawnBtn" title="Spawn menu (Q)"></div>
     <div class="ib" id="undoBtn" title="Undo (Z)"></div>
@@ -231,8 +290,11 @@
   <div class="row" id="ctx">
     <div class="ab" id="throwBtn"></div>
     <div class="ab" id="freezeBtn"></div>
+    <div class="ab" id="downBtn"></div>
+    <div class="ab" id="rotBtn"></div>
   </div>
   <div class="row">
+    <div class="ab" id="micBtn"></div>
     <div class="ab" id="jumpBtn"></div>
     <div class="ab" id="fireBtn"></div>
   </div>
@@ -256,6 +318,10 @@
     <div class="row2">
       <button class="go" id="startBtn" disabled>LOADING</button>
       <button class="go alt" id="onlineBtn" disabled>PLAY ONLINE</button>
+    </div>
+    <div class="row2 sm">
+      <button class="go ghost" id="makerBtn" disabled>MAP MAKER</button>
+      <button class="go ghost" id="wsBtn" disabled>WORKSHOP</button>
     </div>
     <div class="stats" id="menuStats"></div>
     <div class="foot" id="menuFoot"></div>
@@ -285,7 +351,8 @@
     </div>
     <div class="sec">HOST A ROOM</div>
     <p class="foot" id="hostInfo" style="margin-top:0"></p>
-    <div class="opts"><button class="opt" id="pubToggle">LISTED <b>PUBLIC</b></button></div>
+    <div class="opts"><button class="opt" id="pubToggle">LISTED <b>PUBLIC</b></button><button class="opt" id="voiceToggle">VOICE CHAT <b>PUSH TO TALK</b></button></div>
+    <p class="foot" id="voiceHint" style="margin-top:6px"></p>
     <button class="go" id="createRoom">CREATE ROOM</button>
     <div class="sec">JOIN WITH A CODE</div>
     <div class="joinrow"><input id="ocode" maxlength="5" placeholder="CODE" autocomplete="off" spellcheck="false"><button class="sb save" id="joinCode">JOIN</button></div>
@@ -311,6 +378,9 @@
     <button class="go" id="resumeBtn">RESUME</button>
     <div class="opts">
       <button class="opt hidden" id="optAdmin" style="color:var(--acc)">ADMIN PANEL <b>›</b></button>
+      <button class="opt hidden" id="optVoice">VOICE CHAT <b>PUSH TO TALK</b></button>
+      <button class="opt hidden" id="optProx">VOICE BY DISTANCE <b>ON</b></button>
+      <label class="opt hidden" id="optVoiceVol">VOICE VOLUME <input type="range" id="voiceVol" min="0" max="1.6" step="0.05" value="1"></label>
       <button class="opt" id="optHorde">ZOMBIE HORDE <b>OFF</b></button>
       <button class="opt" id="optView">CAMERA <b>FIRST PERSON</b></button>
       <label class="opt">LOOK SPEED <input type="range" id="sens" min="0.4" max="2.2" step="0.1" value="1"></label>
@@ -338,6 +408,45 @@
     <button class="go ghost" id="slotsBack">BACK</button>
   </div>
 </div>
+<div class="ov hidden" id="mkMenu">
+  <div class="panel pause">
+    <h2>MAP MAKER</h2>
+    <p class="foot" style="margin-top:4px" id="mkNote"></p>
+    <div class="sec">YOUR MAPS</div>
+    <div id="mkList"></div>
+    <div class="sec">START A NEW MAP</div>
+    <div class="tpl" id="mkNew">
+      <button data-tpl="grass"><i style="background:linear-gradient(#9fd3ff 50%,#5a9640 50%)"></i>GRASS</button>
+      <button data-tpl="desert"><i style="background:linear-gradient(#e39478 50%,#d8c08a 50%)"></i>DESERT</button>
+      <button data-tpl="snow"><i style="background:linear-gradient(#7f8ea3 50%,#eef3f7 50%)"></i>SNOW</button>
+      <button data-tpl="void"><i style="background:linear-gradient(#f2a07b,#8b5a8e)"></i>SKY VOID</button>
+      <button data-tpl="night"><i style="background:linear-gradient(#080b13 50%,#2c2e33 50%)"></i>NIGHT</button>
+      <button data-tpl="grid"><i style="background:linear-gradient(#7f8ea3 50%,#86857f 50%)"></i>GRID</button>
+    </div>
+    <button class="go alt" id="mkWs">BROWSE THE WORKSHOP</button>
+    <button class="go ghost" id="mkBack">BACK</button>
+  </div>
+</div>
+
+<div class="ov hidden" id="edMenu">
+  <div class="panel pause" id="edMenuBody"></div>
+</div>
+
+<div class="ov hidden" id="edPal">
+  <div class="panel spawn">
+    <div class="head"><div class="tabs" id="palTabs"></div><div class="ib" id="palClose"></div></div>
+    <div class="grid" id="palGrid"></div>
+    <div class="tip" id="palTip"></div>
+  </div>
+</div>
+
+<div class="ov hidden" id="wsMenu">
+  <div class="panel spawn wsp">
+    <div class="head"><div class="tabs" id="wsTabs"></div><div class="ib" id="wsClose"></div></div>
+    <div id="wsSearch"><input id="wsQ" maxlength="32" placeholder="Search maps" autocomplete="off" spellcheck="false"></div>
+    <div class="wsbody" id="wsBody"></div>
+  </div>
+</div>
 <div class="toast" id="toast"></div>
 
 <div class="ov hidden" id="overMenu">
@@ -361,7 +470,7 @@ import { MTLLoader } from "three/addons/loaders/MTLLoader.js";
 
 import * as SkeletonUtils from "three/addons/utils/SkeletonUtils.js";
 
-import { toCreasedNormals } from "three/addons/utils/BufferGeometryUtils.js";
+import { toCreasedNormals, mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 
 import * as CANNON from "cannon-es";
 
@@ -490,6 +599,50 @@ SD.stats = Object.assign({
   spawned: 0
 }, SD.stats);
 
+const ED = {
+  on: false,
+  testing: false,
+  brush: {
+    kind: "part",
+    shape: "box",
+    size: [ 2, 2, 2 ],
+    rot: [ 0, 0, 0 ]
+  },
+  mat: "concrete",
+  grid: .5,
+  bar: true,
+  undo: [],
+  redo: [],
+  sel: null,
+  carry: null,
+  down: false,
+  cam: null,
+  prevMode: null
+};
+
+if ([ .25, .5, 1, 2, 0 ].includes(SD.settings.edGrid)) ED.grid = SD.settings.edGrid;
+
+if (typeof SD.settings.edMat === "string") ED.mat = SD.settings.edMat;
+
+if (SD.settings.edBar === false) ED.bar = false;
+
+const VC = {
+  mode: "ptt",
+  vol: 1,
+  prox: true,
+  stream: null,
+  track: null,
+  getting: null,
+  held: false,
+  talking: false,
+  selfMute: false,
+  pcs: new Map,
+  pend: new Map,
+  retry: new Map,
+  muted: new Set,
+  out: null
+};
+
 let saveTimer = null, storageOk = true;
 
 function persist(now_, noCloud) {
@@ -530,7 +683,14 @@ const ICON = {
   eye: "M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12zM12 9.2a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6z",
   pause: "M8 5v14M16 5v14",
   close: "M6 6l12 12M18 6L6 18",
-  chat: "M4 5h16v11H9l-5 4z"
+  chat: "M4 5h16v11H9l-5 4z",
+  hand: "M9 11V5.5a1.5 1.5 0 0 1 3 0V11M12 10.5V4.5a1.5 1.5 0 0 1 3 0V11M15 10.5V6.5a1.5 1.5 0 0 1 3 0V14c0 4-2.7 7-6.5 7-3 0-4.6-1.6-6-4l-2-3.6a1.6 1.6 0 0 1 2.7-1.7L9 14",
+  brush: "M14.5 4.5l5 5L11 18l-5-5zM6 13l-2.2 2.2a3 3 0 0 0 4.2 4.2L10 17.5",
+  drop: "M8 8h11v11H8zM5 16V5h11",
+  mic: "M12 3a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3zM5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21",
+  micoff: "M12 3a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3zM5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M4 4l16 16",
+  rot: "M20 12a8 8 0 1 1-2.3-5.6M20 4v4h-4",
+  down: "M5 9l7 7 7-7"
 };
 
 const icon = (n, extra = "") => `<svg class="i" viewBox="0 0 24 24"><path d="${ICON[n]}"/></svg>${extra}`;
@@ -1018,7 +1178,8 @@ const M = {
   stat: new CANNON.Material("stat"),
   actor: new CANNON.Material("actor"),
   prop: new CANNON.Material("prop"),
-  bouncy: new CANNON.Material("bouncy")
+  bouncy: new CANNON.Material("bouncy"),
+  ice: new CANNON.Material("ice")
 };
 
 const cm = (a, b, f, r) => world.addContactMaterial(new CANNON.ContactMaterial(a, b, {
@@ -1043,6 +1204,12 @@ cm(M.bouncy, M.stat, .4, .78);
 cm(M.bouncy, M.prop, .4, .7);
 
 cm(M.bouncy, M.bouncy, .4, .8);
+
+cm(M.actor, M.ice, 0, 0);
+
+cm(M.prop, M.ice, .03, .05);
+
+cm(M.bouncy, M.ice, .03, .6);
 
 const G = {
   PLAYER: 1,
@@ -3046,7 +3213,7 @@ function resetPlayer() {
   const jit = NET.on ? 2.5 : 0;
   player.position.set(s[0] + rand(-jit, jit), s[1] + .1, s[2] + rand(-jit, jit));
   player.velocity.setZero();
-  yaw = 0;
+  yaw = curMap.spawnYaw || 0;
   lookPitch = -.12;
   facing = yaw + Math.PI;
   playerRoot.visible = true;
@@ -3127,7 +3294,7 @@ function animatePlayer(dt, speed, onGround) {
 }
 
 function hurtPlayer(dmg, knock) {
-  if (state !== "play" || dmg <= 0 || ADM.god) return;
+  if (state !== "play" || dmg <= 0 || ADM.god || ED.on) return;
   hp -= dmg;
   lastHurt = now;
   if (knock) {
@@ -3290,6 +3457,10 @@ function setTool(id) {
 
 function primary() {
   if (state !== "play" || cd > 0 || uiBlocked()) return;
+  if (ED.on) {
+    edPrimary();
+    return;
+  }
   switch (tool) {
    case "hands":
     punch();
@@ -3326,6 +3497,10 @@ function primary() {
 
 function secondary() {
   if (uiBlocked()) return;
+  if (ED.on) {
+    edSecondary();
+    return;
+  }
   if (grab.body) throwGrab(); else if (tool === "spawn") openSpawn();
 }
 
@@ -3712,6 +3887,10 @@ function balloonTool() {
 
 function undo() {
   if (uiBlocked()) return;
+  if (ED.on) {
+    edUndo();
+    return;
+  }
   act("undo");
   sfx.remove();
 }
@@ -4009,6 +4188,7 @@ function startGame() {
   document.body.classList.add("playing");
   setTool(mode === "survival" ? "hands" : "hands");
   banner(curMap.name.toUpperCase(), mode === "survival" ? "survive" : "sandbox", 1800);
+  if (String(curMapId).startsWith("w:")) wsCountPlay(curMapId);
   wantLock();
 }
 
@@ -4018,11 +4198,16 @@ function toMenu() {
   state = "menu";
   paused = false;
   document.body.classList.remove("playing");
+  if (document.pointerLockElement) {
+    suppressPause = true;
+    document.exitPointerLock();
+  }
   $("pauseMenu").classList.add("hidden");
   $("overMenu").classList.add("hidden");
   $("mainMenu").classList.remove("hidden");
   buildMap(curMapId);
   renderStats();
+  renderMaps();
 }
 
 const r3 = v => [ +v.x.toFixed(3), +v.y.toFixed(3), +v.z.toFixed(3) ];
@@ -4212,13 +4397,23 @@ addEventListener("pagehide", () => {
 const keys = {};
 
 function uiBlocked() {
-  return paused || chatOpen || !$("pauseMenu").classList.contains("hidden") || !$("slotsMenu").classList.contains("hidden") || !$("adminMenu").classList.contains("hidden");
+  return paused || chatOpen || !$("pauseMenu").classList.contains("hidden") || !$("slotsMenu").classList.contains("hidden") || !$("adminMenu").classList.contains("hidden") || !$("edPal").classList.contains("hidden") || !$("edMenu").classList.contains("hidden");
 }
 
 addEventListener("keydown", e => {
   if (e.code === "Escape" && !$("adminMenu").classList.contains("hidden")) {
     e.preventDefault();
     closeAdmin();
+    return;
+  }
+  if (e.code === "Escape" && !$("edPal").classList.contains("hidden")) {
+    e.preventDefault();
+    edClosePal();
+    return;
+  }
+  if (e.code === "Escape" && !$("edMenu").classList.contains("hidden")) {
+    e.preventDefault();
+    if (ED.view && ED.view !== "main") renderEdMenu("main"); else edCloseMenu();
     return;
   }
   if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "SELECT")) return;
@@ -4232,7 +4427,12 @@ addEventListener("keydown", e => {
     if (e.code === "KeyQ" || e.code === "Escape") closeSpawn();
     return;
   }
-  if (NET.on && (e.code === "Enter" || e.code === "KeyT") && !uiBlocked()) {
+  if (NET.on && e.code === "KeyT" && !uiBlocked()) {
+    e.preventDefault();
+    vcTalk(true);
+    return;
+  }
+  if (NET.on && e.code === "Enter" && !uiBlocked()) {
     e.preventDefault();
     openChat();
     return;
@@ -4243,6 +4443,11 @@ addEventListener("keydown", e => {
     return;
   }
   if (state !== "play" || uiBlocked()) return;
+  if (ED.on) {
+    if (e.code === "Space") e.preventDefault();
+    edKey(e);
+    return;
+  }
   switch (e.code) {
    case "Space":
     jumpBuf = .15;
@@ -4292,13 +4497,14 @@ addEventListener("keydown", e => {
     break;
 
    default:
-    if (/^Digit[1-6]$/.test(e.code)) setTool(TOOLS[+e.code.slice(5) - 1].id);
+    if (/^Digit[1-6]$/.test(e.code)) setTool(curTools()[+e.code.slice(5) - 1].id);
   }
 });
 
 addEventListener("keyup", e => {
   keys[e.code] = false;
   if (e.code === "Tab") showPlist(false);
+  if (e.code === "KeyT") vcTalk(false);
 });
 
 addEventListener("blur", () => {
@@ -4415,9 +4621,13 @@ document.addEventListener("mouseup", e => {
 
 document.addEventListener("wheel", e => {
   if (document.pointerLockElement !== cvs && !(lockFailed && e.target === cvs) || state !== "play" || uiBlocked()) return;
+  if (ED.on) {
+    edAdjust("rot", 1, e.deltaY > 0 ? 1 : -1);
+    return;
+  }
   if (grab.body) grab.dist = clamp(grab.dist - Math.sign(e.deltaY) * .8, 2, 18); else {
-    const i = TOOLS.findIndex(t => t.id === tool);
-    setTool(TOOLS[(i + (e.deltaY > 0 ? 1 : -1) + TOOLS.length) % TOOLS.length].id);
+    const T = curTools(), i = T.findIndex(t => t.id === tool);
+    setTool(T[(i + (e.deltaY > 0 ? 1 : -1) + T.length) % T.length].id);
   }
 }, {
   passive: true
@@ -4527,7 +4737,7 @@ btn("spawnBtn", () => openSpawn());
 
 btn("undoBtn", () => undo());
 
-btn("viewBtn", () => setView(!firstPerson));
+btn("viewBtn", () => ED.on ? edToggleBar() : setView(!firstPerson));
 
 btn("pauseBtn", () => openPause());
 
@@ -4551,9 +4761,13 @@ $("throwBtn").innerHTML = icon("throw") + "THROW";
 
 $("freezeBtn").innerHTML = icon("snow") + "FREEZE";
 
+$("downBtn").innerHTML = icon("down") + "DOWN";
+
+$("rotBtn").innerHTML = icon("rot") + "TURN";
+
 function renderHotbar() {
-  $("hotbar").innerHTML = TOOLS.map((t, i) => `<div class="slot ${t.id === tool ? "on" : ""}" data-t="${t.id}">${icon(t.icon)}<span class="k">${i + 1}</span></div>`).join("");
-  $("fireBtn").innerHTML = icon(TOOLS.find(t => t.id === tool).icon);
+  $("hotbar").innerHTML = curTools().map((t, i) => `<div class="slot ${t.id === tool ? "on" : ""}" data-t="${t.id}">${icon(t.icon)}<span class="k">${i + 1}</span></div>`).join("");
+  $("fireBtn").innerHTML = icon((curTools().find(t => t.id === tool) || curTools()[0]).icon);
 }
 
 $("hotbar").addEventListener("pointerdown", e => {
@@ -4567,7 +4781,7 @@ $("hotbar").addEventListener("pointerdown", e => {
 let toolTextKey = "", toolFadeT = null;
 
 function updateToolText() {
-  const t = TOOLS.find(x => x.id === tool);
+  const t = curTools().find(x => x.id === tool) || curTools()[0];
   const hint = t.hint(), key = t.name + hint;
   if (key !== toolTextKey) {
     toolTextKey = key;
@@ -4577,7 +4791,7 @@ function updateToolText() {
     clearTimeout(toolFadeT);
     toolFadeT = setTimeout(() => $("toolName").classList.add("fade"), 3500);
   }
-  $("ctx").classList.toggle("hidden", !(tool === "grab" && grab.body));
+  $("ctx").classList.toggle("hidden", !(ED.on || tool === "grab" && grab.body));
 }
 
 let bannerTimer;
@@ -4628,6 +4842,10 @@ const spawnOpen = () => !$("spawnMenu").classList.contains("hidden");
 
 function openSpawn() {
   if (state !== "play") return;
+  if (ED.on) {
+    edOpenPal();
+    return;
+  }
   renderSpawnMenu();
   $("spawnMenu").classList.remove("hidden");
   if (document.pointerLockElement) {
@@ -4649,13 +4867,18 @@ $("spawnMenu").addEventListener("pointerdown", e => {
 
 function openPause() {
   if (state !== "play" && state !== "dead") return;
+  if (ED.on) {
+    edOpenMenu();
+    return;
+  }
   paused = !NET.on;
   fireHeld = false;
   mdrag = null;
   $("optHorde").innerHTML = mode === "survival" ? "ZOMBIE HORDE <b>WAVES</b>" : `ZOMBIE HORDE <b>${(isAuth() ? horde : NET.horde) ? "ON" : "OFF"}</b>`;
   setView(firstPerson);
   renderPauseRoom();
-  $("optMenu").textContent = NET.on ? "LEAVE ROOM" : "CHANGE MAP OR MODE";
+  $("optMenu").textContent = ED.testing ? "BACK TO EDITOR" : NET.on ? "LEAVE ROOM" : "CHANGE MAP OR MODE";
+  vcUI();
   $("optClear").classList.toggle("hidden", !isAuth());
   $("optAdmin").classList.toggle("hidden", !isAdmin());
   $("optFull").innerHTML = `FULL SCREEN <b>${document.fullscreenElement ? "ON" : "OFF"}</b>`;
@@ -4705,7 +4928,12 @@ $("optFull").onclick = () => {
   }).catch(() => toast("Full screen is not allowed here"));
 };
 
-$("optMenu").onclick = () => toMenu();
+$("optMenu").onclick = () => {
+  if (ED.testing) {
+    closePause();
+    edBackFromTest();
+  } else toMenu();
+};
 
 $("optAdmin").onclick = () => openAdmin("pause");
 
@@ -4713,12 +4941,12 @@ $("retryBtn").onclick = () => startGame();
 
 $("overMenuBtn").onclick = () => toMenu();
 
-$("keysHelp").innerHTML = (isTouch ? "Left side: move. Drag anywhere else: look. Hotbar picks a tool, FIRE uses it." : "<b>WASD</b> move · <b>Shift</b> walk · <b>Space</b> jump · <b>1–6</b> or wheel: tools · <b>Click</b> use · <b>Right-click</b> throw · <b>F</b> freeze · <b>E</b> punch · <b>Q</b> spawn menu · <b>Z</b> undo · <b>V</b> camera · <b>Enter</b> chat · <b>Tab</b> players") + "<br>Launcher model and rig: Senthilkumar.";
+$("keysHelp").innerHTML = (isTouch ? "Left side: move. Drag anywhere else: look. Hotbar picks a tool, FIRE uses it." : "<b>WASD</b> move · <b>Shift</b> walk · <b>Space</b> jump · <b>1–6</b> or wheel: tools · <b>Click</b> use · <b>Right-click</b> throw · <b>F</b> freeze · <b>E</b> punch · <b>Q</b> spawn menu · <b>Z</b> undo · <b>V</b> camera · <b>Enter</b> chat · <b>T</b> hold to talk · <b>Tab</b> players") + "<br>Launcher model and rig: Senthilkumar.";
 
 const mapShots = {};
 
 function renderMaps() {
-  $("mapGrid").innerHTML = Object.entries(MAPS).filter(([id, m]) => !m.draft).map(([id, m]) => `<button class="map ${id === curMapId ? "on" : ""}${CUSTOM.has(id) && CUSTOM.get(id).loading && !CUSTOM.get(id).data ? " busy" : ""}" data-id="${esc(id)}"><div class="pv">${mapShots[id] ? `<img src="${esc(mapShots[id])}" alt="" onerror="this.remove()">` : m.pv}</div><div class="nm">${esc(m.name.toUpperCase())}<span class="ds">${esc(m.desc)}${m.custom && m.hidden ? " · hidden" : ""}</span></div></button>`).join("");
+  $("mapGrid").innerHTML = Object.entries(MAPS).filter(([id, m]) => !m.draft && (!m.ws || id === curMapId)).map(([id, m]) => `<button class="map ${id === curMapId ? "on" : ""}${CUSTOM.has(id) && CUSTOM.get(id).loading && !CUSTOM.get(id).data ? " busy" : ""}" data-id="${esc(id)}"><div class="pv">${mapShots[id] ? `<img src="${esc(mapShots[id])}" alt="" onerror="this.remove()">` : m.pv}</div><div class="nm">${esc(m.name.toUpperCase())}<span class="ds">${esc(m.desc)}${m.custom && m.hidden ? " · hidden" : ""}</span></div></button>`).join("");
 }
 
 function selectMap(id) {
@@ -4730,9 +4958,11 @@ function selectMap(id) {
   renderStats();
 }
 
+const needsLoad = id => String(id).startsWith("c:") && !(CUSTOM.get(id) || {}).data || String(id).startsWith("w:") && !(MAPS[id] && MAPS[id].wsData);
+
 function pickMap(id, quiet) {
-  if (!MAPS[id]) return;
-  if (!id.startsWith("c:") || (CUSTOM.get(id) || {}).data) {
+  if (!MAPS[id] && !String(id).startsWith("w:")) return;
+  if (!needsLoad(id)) {
     selectMap(id);
     return;
   }
@@ -5155,14 +5385,35 @@ function grounded(b, h = .15) {
 
 let curSpeed = 0, onGround = true;
 
+let lavaT = 0;
+
 function updatePlayer(dt) {
   onGround = grounded(player);
+  const gmk = !ED.on && onGround && groundRR.body ? groundRR.body.mk : null;
+  if (gmk === "lava" && state === "play") {
+    lavaT -= dt;
+    if (lavaT <= 0) {
+      lavaT = .25;
+      hurtPlayer(9, V(0, 3, 0));
+      emit(player.position, 7, {
+        colors: [ 16738816, 16765503, 5901568 ],
+        speed: 3,
+        up: 1.6,
+        life: .5,
+        size: .14
+      });
+    }
+  } else lavaT = 0;
+  if (gmk === "bounce" && (!player.padT || now - player.padT > .4)) {
+    player.padT = now;
+    launch(player);
+  }
   const v = player.velocity;
   let ix = joy.x, iy = -joy.y;
-  if (keys.KeyW || keys.ArrowUp) iy += 1;
-  if (keys.KeyS || keys.ArrowDown) iy -= 1;
-  if (keys.KeyD || keys.ArrowRight) ix += 1;
-  if (keys.KeyA || keys.ArrowLeft) ix -= 1;
+  if (keys.KeyW || !ED.on && keys.ArrowUp) iy += 1;
+  if (keys.KeyS || !ED.on && keys.ArrowDown) iy -= 1;
+  if (keys.KeyD || !ED.on && keys.ArrowRight) ix += 1;
+  if (keys.KeyA || !ED.on && keys.ArrowLeft) ix -= 1;
   if (uiBlocked()) ix = iy = 0;
   let mag = Math.hypot(ix, iy);
   if (mag > 1) {
@@ -5174,25 +5425,25 @@ function updatePlayer(dt) {
   const dX = Math.cos(yaw) * ix - Math.sin(yaw) * iy, dZ = -Math.sin(yaw) * ix - Math.cos(yaw) * iy;
   const dl = Math.hypot(dX, dZ), want = mag < .08 ? 0 : mag * 6 * ADM.speed;
   const tx = dl ? dX / dl * want : 0, tz = dl ? dZ / dl * want : 0;
-  if (ADM.fly && isAdmin()) {
+  if (ED.on || ADM.fly && isAdmin()) {
     const sp = 13 * ADM.speed * (keys.ShiftLeft || keys.ShiftRight ? .35 : 1), cp = Math.cos(lookPitch);
     const fx = -Math.sin(yaw) * cp, fy = Math.sin(lookPitch), fz = -Math.cos(yaw) * cp, rx = Math.cos(yaw), rz = -Math.sin(yaw);
     let ux = (fx * iy + rx * ix) * sp, uy = fy * iy * sp, uz = (fz * iy + rz * ix) * sp;
     if (!uiBlocked()) {
       if (keys.Space || jumpHeld) uy += sp * .8;
-      if (keys.ControlLeft || keys.ControlRight || keys.KeyC) uy -= sp * .8;
+      if (keys.ControlLeft || keys.ControlRight || keys.KeyC || ED.down) uy -= sp * .8;
     }
     const kf = 1 - Math.exp(-10 * dt);
     v.x += (ux - v.x) * kf;
     v.y += (uy - v.y) * kf;
     v.z += (uz - v.z) * kf;
     v.y -= world.gravity.y * dt;
-    player.collisionResponse = !ADM.noclip;
+    player.collisionResponse = !(ED.on || ADM.noclip);
     onGround = false;
     jumpBuf = 0;
   } else {
     if (!player.collisionResponse) player.collisionResponse = true;
-    const k = 1 - Math.exp(-(onGround ? 14 : 3.5) * dt);
+    const k = 1 - Math.exp(-(onGround ? gmk === "ice" ? 1.4 : 14 : 3.5) * dt);
     v.x += (tx - v.x) * k;
     v.z += (tz - v.z) * k;
   }
@@ -5609,6 +5860,7 @@ async function initAuth() {
     setInterval(() => {
       if (!document.hidden) fetchNews();
     }, 9e4);
+    if (String(SD.settings.map || "").startsWith("w:") && state === "menu") pickMap(SD.settings.map, true);
     s.auth.onAuthStateChange((ev, session) => {
       if (ev === "SIGNED_OUT") {
         if (user) setUser(null);
@@ -5736,7 +5988,8 @@ function myMeta(host) {
     at: NET.joinedAt,
     host: !!host,
     u: user ? user.name : "",
-    ad: isAdmin() ? 1 : 0
+    ad: isAdmin() ? 1 : 0,
+    vc: VC.mode !== "off" && vcOk() ? 1 : 0
   };
 }
 
@@ -5788,6 +6041,9 @@ async function openRoom(code, asHost) {
   }, () => {
     if (NET.host) NET.fullT = 0;
   });
+  ch.on("broadcast", {
+    event: "rtc"
+  }, m => vcSignal(m.payload));
   ch.on("presence", {
     event: "sync"
   }, () => onPresence(ch.presenceState()));
@@ -5855,6 +6111,8 @@ async function hostRoom() {
   $("onlineMenu").classList.add("hidden");
   $("oerr").textContent = "";
   startGame();
+  vcUI();
+  if (VC.mode === "open") vcMic().catch(() => {});
   chatSys(`Room ${NET.code} is open. Share the code to play together.`);
   if (NET.isPublic) lobbyJoin().then(lobbyAnnounce).catch(() => {}); else lobbyLeave();
 }
@@ -5905,7 +6163,7 @@ async function joinRoom(code) {
 }
 
 function enterWorld(map, md) {
-  if (map && String(map).startsWith("c:") && !(CUSTOM.get(map) || {}).data) {
+  if (map && needsLoad(map)) {
     if (NET.mapLoading === map) return;
     NET.mapLoading = map;
     $("oerr").textContent = "Loading the room map…";
@@ -5939,6 +6197,8 @@ function enterWorld(map, md) {
   banner(curMap.name.toUpperCase(), `room ${NET.code}`, 1800);
   chatSys(`You joined room ${NET.code}.`);
   lobbyLeave();
+  vcUI();
+  if (VC.mode === "open") vcMic().catch(() => {});
 }
 
 async function leaveRoom() {
@@ -5948,6 +6208,8 @@ async function leaveRoom() {
   for (const Rm of [ ...NET.peers.values() ]) removeRemote(Rm);
   for (const a of [ ...GR.keys() ]) coreDrop(a);
   clearLocalGrab();
+  vcCloseAll();
+  vcStopMic();
   Object.assign(NET, {
     on: false,
     host: false,
@@ -5955,8 +6217,10 @@ async function leaveRoom() {
     mapReady: false,
     mapLoading: null,
     hostId: null,
-    count: 1
+    count: 1,
+    metas: []
   });
+  vcUI();
   NET.fxQ.length = 0;
   NET.delQ.length = 0;
   document.body.classList.remove("online");
@@ -5982,6 +6246,7 @@ function onPresence(st) {
     const m = st[k] && st[k][0];
     if (m && m.id) metas.push(m);
   }
+  NET.metas = metas;
   const ids = new Set(metas.map(m => m.id));
   for (const m of metas) if (m.id !== NET.id) {
     const isNew = !NET.peers.has(m.id);
@@ -6010,6 +6275,7 @@ function onPresence(st) {
     NET.fullT = Math.min(NET.fullT, .2);
   }
   if (!$("plist").classList.contains("hidden")) showPlist(true);
+  vcSync();
 }
 
 function promote() {
@@ -6120,6 +6386,7 @@ function setRemoteAvatar(Rm, av) {
 }
 
 function removeRemote(Rm) {
+  vcClose(Rm.id, true);
   scene.remove(Rm.root);
   if (Rm.rig) Rm.rig.mixer.stopAllAction();
   if (Rm.body) world.removeBody(Rm.body);
@@ -6639,6 +6906,7 @@ function openOnline() {
   $("oname").value = SD.settings.name || (user ? user.name : "") || "Guest" + (Math.random() * 9e3 + 1e3 | 0);
   $("hostInfo").textContent = `Uses the map and mode picked on the main menu: ${curMap.name}, ${mode === "survival" ? "Survival" : "Sandbox"}.`;
   $("pubToggle").innerHTML = `LISTED <b>${NET.isPublic ? "PUBLIC" : "PRIVATE"}</b>`;
+  vcUI();
   $("roomList").innerHTML = '<div class="empty">Looking for rooms…</div>';
   lobbyJoin().then(renderRooms).catch(() => {
     $("roomList").innerHTML = '<div class="empty">Could not reach the server.</div>';
@@ -6745,7 +7013,16 @@ function showPlist(on) {
 }
 
 function renderPauseRoom() {
-  $("pauseRoom").innerHTML = NET.on ? plistHTML() : "";
+  if (!NET.on) {
+    $("pauseRoom").innerHTML = "";
+    return;
+  }
+  const me = `<div class="vrow"><span class="${isAdmin() ? "adm" : NET.host ? "host" : ""}">${isAdmin() ? "★ " : ""}${esc(NET.name)} (you)${NET.host ? " · host" : ""}</span></div>`;
+  const rows = [ ...NET.peers.values() ].map(Rm => {
+    const r = VC.pcs.get(Rm.id), on = r && r.pc.connectionState === "connected", mu = VC.muted.has(Rm.id);
+    return `<div class="vrow"><span class="${Rm.adm ? "adm" : Rm.id === NET.hostId ? "host" : ""}">${Rm.adm ? "★ " : ""}${esc(Rm.name)}${Rm.id === NET.hostId ? " · host" : ""}</span>${VC.mode !== "off" ? `${on ? "<i>VOICE</i>" : ""}<button class="sb ${mu ? "del" : ""}" data-mute="${esc(Rm.id)}">${mu ? "UNMUTE" : "MUTE"}</button>` : ""}</div>`;
+  }).join("");
+  $("pauseRoom").innerHTML = `<div class="roominfo">ROOM <b>${NET.code}</b></div><div class="plist-names">${me}${rows}</div>`;
 }
 
 const STORE = SB_URL + "/storage/v1/object/public/pz-maps/";
@@ -8106,7 +8383,15 @@ function stubDef(r) {
   };
 }
 
+function wsEnsure(id) {
+  if (MAPS[id] && MAPS[id].wsData) return Promise.resolve(true);
+  return wsGetData({
+    id: id.slice(2)
+  }).then(() => true);
+}
+
 function ensureMap(id) {
+  if (id && String(id).startsWith("w:")) return wsEnsure(id);
   if (!id || !String(id).startsWith("c:")) return Promise.resolve(true);
   let C = CUSTOM.get(id);
   if (C && C.data) return Promise.resolve(true);
@@ -9121,6 +9406,3026 @@ async function admAction(a, b) {
   }
 }
 
+const MK_D2R = Math.PI / 180;
+
+const MK_LIMIT = {
+  p: 1500,
+  it: 150,
+  zs: 24
+};
+
+const MKT = {
+  dirt: ctex(256, 256, (g, w, h) => speckle(g, w, h, "#7a5a3c", .35, 3500, 3)),
+  sand: ctex(256, 256, (g, w, h) => speckle(g, w, h, "#d8c08a", .22, 4e3)),
+  snow: ctex(256, 256, (g, w, h) => speckle(g, w, h, "#eef3f7", .1, 2500)),
+  brick: ctex(256, 256, (g, w, h) => {
+    g.fillStyle = "#8a8378";
+    g.fillRect(0, 0, w, h);
+    const bh = 32, bw = 64;
+    for (let r = 0; r < h / bh; r++) for (let c = -1; c < w / bw + 1; c++) {
+      const x = c * bw + (r % 2 ? bw / 2 : 0);
+      g.fillStyle = `hsl(${8 + rand(-4, 4)},${45 + rand(-8, 8)}%,${36 + rand(-6, 6)}%)`;
+      g.fillRect(x + 2, r * bh + 2, bw - 4, bh - 4);
+    }
+  }),
+  ice: ctex(256, 256, (g, w, h) => {
+    const gr = g.createLinearGradient(0, 0, w, h);
+    gr.addColorStop(0, "#c4e8ff");
+    gr.addColorStop(1, "#8fd0f7");
+    g.fillStyle = gr;
+    g.fillRect(0, 0, w, h);
+    g.strokeStyle = "rgba(255,255,255,.55)";
+    g.lineWidth = 2;
+    for (let i = 0; i < 14; i++) {
+      g.beginPath();
+      const x = rand(0, w), y = rand(0, h);
+      g.moveTo(x, y);
+      g.lineTo(x + rand(-60, 60), y + rand(-60, 60));
+      g.stroke();
+    }
+  }),
+  lava: ctex(256, 256, (g, w, h) => {
+    g.fillStyle = "#5a0d00";
+    g.fillRect(0, 0, w, h);
+    for (let i = 0; i < 70; i++) {
+      const x = rand(0, w), y = rand(0, h), r = rand(8, 30);
+      const gr = g.createRadialGradient(x, y, 0, x, y, r);
+      gr.addColorStop(0, "#ffd23f");
+      gr.addColorStop(.5, "#ff6a00");
+      gr.addColorStop(1, "rgba(255,60,0,0)");
+      g.fillStyle = gr;
+      g.fillRect(x - r, y - r, r * 2, r * 2);
+    }
+  }),
+  bounce: ctex(128, 128, (g, w, h) => {
+    g.fillStyle = "#1d1f24";
+    g.fillRect(0, 0, w, h);
+    g.strokeStyle = "#f5a524";
+    g.lineWidth = 10;
+    for (let i = 0; i < 3; i++) {
+      const y = 30 + i * 32;
+      g.beginPath();
+      g.moveTo(24, y + 18);
+      g.lineTo(64, y - 6);
+      g.lineTo(104, y + 18);
+      g.stroke();
+    }
+    g.strokeStyle = "#555";
+    g.lineWidth = 6;
+    g.strokeRect(3, 3, w - 6, h - 6);
+  }),
+  metal: ctex(256, 256, (g, w, h) => {
+    speckle(g, w, h, "#7d828a", .12, 1500);
+    g.strokeStyle = "rgba(0,0,0,.35)";
+    g.lineWidth = 3;
+    g.strokeRect(2, 2, w - 4, h - 4);
+    g.fillStyle = "rgba(0,0,0,.35)";
+    [ [ 16, 16 ], [ w - 16, 16 ], [ 16, h - 16 ], [ w - 16, h - 16 ] ].forEach(([x, y]) => {
+      g.beginPath();
+      g.arc(x, y, 5, 0, 7);
+      g.fill();
+    });
+  })
+};
+
+const mkCol = hex => {
+  const m = new THREE.MeshStandardMaterial({
+    color: hex,
+    roughness: .65
+  });
+  m.userData.tile = 4;
+  return m;
+};
+
+const MK_MATS = [ {
+  id: "grass",
+  name: "Grass",
+  make: () => smat(TX.grass, 4)
+}, {
+  id: "dirt",
+  name: "Dirt",
+  make: () => smat(MKT.dirt, 4)
+}, {
+  id: "sand",
+  name: "Sand",
+  make: () => smat(MKT.sand, 4)
+}, {
+  id: "snow",
+  name: "Snow",
+  make: () => smat(MKT.snow, 4)
+}, {
+  id: "rock",
+  name: "Rock",
+  make: () => smat(TX.rock, 4)
+}, {
+  id: "concrete",
+  name: "Concrete",
+  make: () => smat(TX.concrete, 4)
+}, {
+  id: "brick",
+  name: "Brick",
+  make: () => smat(MKT.brick, 3)
+}, {
+  id: "wood",
+  name: "Wood",
+  make: () => smat(TX.wood, 3)
+}, {
+  id: "metal",
+  name: "Metal",
+  make: () => smat(MKT.metal, 2, {
+    metalness: .45,
+    roughness: .45
+  })
+}, {
+  id: "asphalt",
+  name: "Asphalt",
+  make: () => smat(TX.asphalt, 4)
+}, {
+  id: "dev",
+  name: "Grid",
+  make: () => smat(TX.dev, 4)
+}, {
+  id: "devO",
+  name: "Orange Grid",
+  make: () => smat(TX.devO, 4)
+}, {
+  id: "white",
+  name: "White",
+  css: "#e8e6e1",
+  make: () => mkCol(15263457)
+}, {
+  id: "black",
+  name: "Black",
+  css: "#25262b",
+  make: () => mkCol(2434603)
+}, {
+  id: "red",
+  name: "Red",
+  css: "#d93a3a",
+  make: () => mkCol(14236218)
+}, {
+  id: "orange",
+  name: "Orange",
+  css: "#ee7a22",
+  make: () => mkCol(15628834)
+}, {
+  id: "yellow",
+  name: "Yellow",
+  css: "#f2c230",
+  make: () => mkCol(15909424)
+}, {
+  id: "green",
+  name: "Green",
+  css: "#3aa655",
+  make: () => mkCol(3843669)
+}, {
+  id: "blue",
+  name: "Blue",
+  css: "#2f6fd0",
+  make: () => mkCol(3108816)
+}, {
+  id: "purple",
+  name: "Purple",
+  css: "#8a4fd6",
+  make: () => mkCol(9064406)
+}, {
+  id: "glass",
+  name: "Glass",
+  css: "linear-gradient(135deg,#cfeaff,#7fb6dd)",
+  glass: true,
+  make: () => {
+    const m = new THREE.MeshStandardMaterial({
+      color: 13626111,
+      roughness: .05,
+      metalness: .1,
+      transparent: true,
+      opacity: .3,
+      depthWrite: false
+    });
+    m.userData.tile = 4;
+    return m;
+  }
+}, {
+  id: "ice",
+  name: "Ice",
+  phys: "ice",
+  tip: "Slippery",
+  make: () => smat(MKT.ice, 4, {
+    roughness: .15
+  })
+}, {
+  id: "lava",
+  name: "Lava",
+  phys: "lava",
+  tip: "Hurts",
+  make: () => smat(MKT.lava, 4, {
+    emissive: 16734720,
+    emissiveMap: MKT.lava,
+    emissiveIntensity: 1.3
+  })
+}, {
+  id: "bounce",
+  name: "Bounce",
+  phys: "bounce",
+  tip: "Launches you",
+  make: () => smat(MKT.bounce, 2, {
+    emissive: 3810304,
+    emissiveIntensity: .5
+  })
+}, {
+  id: "invis",
+  name: "Invisible",
+  css: "repeating-linear-gradient(45deg,#6cc4ff55 0 6px,transparent 6px 12px)",
+  invis: true,
+  tip: "Hidden wall",
+  make: () => {
+    const m = new THREE.MeshBasicMaterial({
+      color: 7128319,
+      transparent: true,
+      opacity: .2,
+      depthWrite: false
+    });
+    m.userData.tile = 4;
+    return m;
+  }
+} ];
+
+const MK_MAT = Object.fromEntries(MK_MATS.map(m => [ m.id, m ]));
+
+const MK_FLOORS = [ "grass", "sand", "snow", "dirt", "rock", "concrete", "dev", "asphalt", "ice", "lava", "none" ];
+
+const mkMatCache = {};
+
+function mkMaterial(id) {
+  const d = MK_MAT[id] || MK_MAT.concrete;
+  return mkMatCache[d.id] || (mkMatCache[d.id] = d.make());
+}
+
+const MK_SHAPES = [ {
+  id: "box",
+  t: "box",
+  name: "Block",
+  size: [ 2, 2, 2 ]
+}, {
+  id: "floor",
+  t: "box",
+  name: "Floor",
+  size: [ 4, .5, 4 ]
+}, {
+  id: "wall",
+  t: "box",
+  name: "Wall",
+  size: [ 4, 3, .5 ]
+}, {
+  id: "beam",
+  t: "box",
+  name: "Beam",
+  size: [ .5, .5, 4 ]
+}, {
+  id: "ramp",
+  t: "ramp",
+  name: "Ramp",
+  size: [ 2, 1, 4 ]
+}, {
+  id: "stairs",
+  t: "stairs",
+  name: "Stairs",
+  size: [ 2, 2, 4 ]
+}, {
+  id: "cyl",
+  t: "cyl",
+  name: "Pillar",
+  size: [ 1, 4, 1 ]
+}, {
+  id: "disc",
+  t: "cyl",
+  name: "Platform",
+  size: [ 4, .5, 4 ]
+}, {
+  id: "ball",
+  t: "ball",
+  name: "Ball",
+  size: [ 2, 2, 2 ]
+} ];
+
+const WEDGE_F = [ [ 0, 3, 2, 1 ], [ 3, 4, 5, 2 ], [ 0, 1, 5, 4 ], [ 0, 4, 3 ], [ 1, 2, 5 ] ];
+
+const wedgeVerts = (hx, hy, hz) => [ [ -hx, -hy, hz ], [ hx, -hy, hz ], [ hx, -hy, -hz ], [ -hx, -hy, -hz ], [ -hx, hy, -hz ], [ hx, hy, -hz ] ];
+
+function mkProjUV(g, tile) {
+  const p = g.attributes.position, n = g.attributes.normal, uv = new Float32Array(p.count * 2);
+  for (let i = 0; i < p.count; i++) {
+    const ax = Math.abs(n.getX(i)), ay = Math.abs(n.getY(i)), az = Math.abs(n.getZ(i));
+    let u, v;
+    if (ay >= ax && ay >= az) {
+      u = p.getX(i);
+      v = p.getZ(i);
+    } else if (ax >= az) {
+      u = p.getZ(i);
+      v = p.getY(i);
+    } else {
+      u = p.getX(i);
+      v = p.getY(i);
+    }
+    uv[i * 2] = u / tile;
+    uv[i * 2 + 1] = v / tile;
+  }
+  g.setAttribute("uv", new THREE.BufferAttribute(uv, 2));
+  return g;
+}
+
+function mkWedgeGeo(sx, sy, sz) {
+  const V = wedgeVerts(sx / 2, sy / 2, sz / 2), pos = [];
+  for (const f of WEDGE_F) for (let k = 1; k < f.length - 1; k++) for (const i of [ f[0], f[k], f[k + 1] ]) pos.push(...V[i]);
+  const g = new THREE.BufferGeometry;
+  g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
+  g.computeVertexNormals();
+  return g;
+}
+
+function mkStairsGeo(sx, sy, sz) {
+  const n = clamp(Math.round(sy / .3), 2, 32), parts = [];
+  for (let i = 0; i < n; i++) {
+    const h = sy * (i + 1) / n, d = sz / n;
+    const b = new THREE.BoxGeometry(sx, h, d).toNonIndexed();
+    b.translate(0, -sy / 2 + h / 2, sz / 2 - d * (i + .5));
+    parts.push(b);
+  }
+  const g = mergeGeometries(parts);
+  parts.forEach(p => p.dispose());
+  return g;
+}
+
+function mkGeo(t, s, tile) {
+  let g;
+  if (t === "ramp") g = mkProjUV(mkWedgeGeo(s[0], s[1], s[2]), tile); else if (t === "stairs") g = mkProjUV(mkStairsGeo(s[0], s[1], s[2]), tile); else if (t === "cyl") {
+    g = new THREE.CylinderGeometry(s[0] / 2, s[0] / 2, s[1], 28).toNonIndexed();
+    const uv = g.attributes.uv, side = 28 * 6;
+    for (let i = 0; i < uv.count; i++) {
+      if (i < side) uv.setXY(i, uv.getX(i) * Math.PI * s[0] / tile, uv.getY(i) * s[1] / tile); else uv.setXY(i, uv.getX(i) * s[0] / tile, uv.getY(i) * s[0] / tile);
+    }
+  } else if (t === "ball") {
+    g = new THREE.SphereGeometry(s[0] / 2, 28, 18).toNonIndexed();
+    const uv = g.attributes.uv;
+    for (let i = 0; i < uv.count; i++) uv.setXY(i, uv.getX(i) * Math.PI * s[0] / tile, uv.getY(i) * Math.PI * s[0] / 2 / tile);
+  } else g = mkProjUV(new THREE.BoxGeometry(s[0], s[1], s[2]).toNonIndexed(), tile);
+  for (const k of Object.keys(g.attributes)) if (k !== "position" && k !== "normal" && k !== "uv") g.deleteAttribute(k);
+  g.clearGroups();
+  return g;
+}
+
+function mkShape(t, s) {
+  if (t === "box") return new CANNON.Box(V3(s[0] / 2, s[1] / 2, s[2] / 2));
+  if (t === "cyl") return new CANNON.Cylinder(s[0] / 2, s[0] / 2, s[1], 14);
+  if (t === "ball") return new CANNON.Sphere(s[0] / 2);
+  return new CANNON.ConvexPolyhedron({
+    vertices: wedgeVerts(s[0] / 2, s[1] / 2, s[2] / 2).map(v => V3(v[0], v[1], v[2])),
+    faces: WEDGE_F
+  });
+}
+
+const mkQuat = (rx, ry, rz) => (new THREE.Quaternion).setFromEuler(new THREE.Euler(rx * MK_D2R, ry * MK_D2R, rz * MK_D2R, "YXZ"));
+
+const mkSize = p => [ p[8], p[9], p[10] ];
+
+function mkBlank(tpl) {
+  const T = {
+    grass: [ "grass", "day" ],
+    desert: [ "sand", "sunset" ],
+    snow: [ "snow", "overcast" ],
+    void: [ "none", "sunset" ],
+    night: [ "asphalt", "night" ],
+    grid: [ "dev", "overcast" ]
+  }[tpl] || [ "grass", "day" ];
+  const D = {
+    v: 1,
+    env: {
+      sky: T[1],
+      floor: T[0],
+      size: 120,
+      horde: 0
+    },
+    sp: [ 0, 0, 0, 0 ],
+    p: [],
+    it: [],
+    zs: []
+  };
+  if (T[0] === "none") D.p.push([ "box", "concrete", 0, -.25, 0, 0, 0, 0, 12, .5, 12 ]);
+  return D;
+}
+
+function mkClean(D) {
+  const q = v => Math.round(v * 100) / 100;
+  return {
+    v: 1,
+    env: {
+      sky: LIGHT[D.env.sky] ? D.env.sky : "day",
+      floor: MK_FLOORS.includes(D.env.floor) ? D.env.floor : "grass",
+      size: clamp(Math.round(+D.env.size || 120), 40, 400),
+      horde: D.env.horde ? 1 : 0
+    },
+    sp: (D.sp || [ 0, 0, 0, 0 ]).map(q),
+    p: D.p.slice(0, MK_LIMIT.p).map(p => [ p[0], p[1], q(p[2]), q(p[3]), q(p[4]), Math.round(p[5]), Math.round(p[6]), Math.round(p[7]), q(p[8]), q(p[9]), q(p[10]) ]),
+    it: (D.it || []).slice(0, MK_LIMIT.it).map(i => [ i[0], q(i[1]), q(i[2]), q(i[3]), Math.round(i[4] || 0) ]),
+    zs: (D.zs || []).slice(0, MK_LIMIT.zs).map(z => [ q(z[0]), q(z[1]), q(z[2]) ])
+  };
+}
+
+function mkValid(D) {
+  if (!D || typeof D !== "object" || !Array.isArray(D.p) || !D.env) return false;
+  const T = new Set([ "box", "ramp", "stairs", "cyl", "ball" ]);
+  return D.p.every(p => Array.isArray(p) && p.length === 11 && T.has(p[0]) && p.slice(2).every(Number.isFinite) && p[8] > 0 && p[9] > 0 && p[10] > 0);
+}
+
+function mkFloor(D, noBody) {
+  const env = D.env || {}, size = clamp(+env.size || 120, 40, 400);
+  if (env.floor === "none") return null;
+  const mesh = slab(size, 2, size, 0, 0, 0, mkMaterial(env.floor), {
+    noBody: noBody
+  });
+  if (!noBody) {
+    const b = mapBodies[mapBodies.length - 1];
+    const ph = (MK_MAT[env.floor] || {}).phys;
+    if (ph === "ice") b.material = M.ice;
+    b.mk = ph || null;
+  }
+  return mesh;
+}
+
+function mkBuildPlay(D) {
+  mkFloor(D, false);
+  const groups = new Map, m4 = new THREE.Matrix4, pos = new THREE.Vector3, one = new THREE.Vector3(1, 1, 1);
+  for (const p of D.p) {
+    const s = mkSize(p), md = MK_MAT[p[1]] || MK_MAT.concrete, q = mkQuat(p[5], p[6], p[7]);
+    pos.set(p[2], p[3], p[4]);
+    if (!md.invis) {
+      const g = mkGeo(p[0], s, mkMaterial(md.id).userData.tile || 4);
+      g.applyMatrix4(m4.compose(pos, q, one));
+      if (!groups.has(md.id)) groups.set(md.id, []);
+      groups.get(md.id).push(g);
+    }
+    const body = new CANNON.Body({
+      mass: 0,
+      material: md.phys === "ice" ? M.ice : md.phys === "bounce" ? M.bouncy : M.stat,
+      collisionFilterGroup: G.STATIC,
+      collisionFilterMask: ALL
+    });
+    body.addShape(mkShape(p[0], s));
+    body.position.set(pos.x, pos.y, pos.z);
+    body.quaternion.set(q.x, q.y, q.z, q.w);
+    body.mk = md.phys || null;
+    world.addBody(body);
+    mapBodies.push(body);
+  }
+  for (const [id, list] of groups) {
+    for (let i = 0; i < list.length; i += 400) {
+      const chunk = list.slice(i, i + 400), g = mergeGeometries(chunk);
+      chunk.forEach(c => c.dispose());
+      const mesh = new THREE.Mesh(g, mkMaterial(id));
+      mesh.castShadow = !MK_MAT[id].glass;
+      mesh.receiveShadow = true;
+      mapGroup.add(mesh);
+    }
+  }
+}
+
+function mkBounds(D) {
+  const size = clamp(+(D.env || {}).size || 120, 40, 400);
+  let lo = 0, hi = 8;
+  for (const p of D.p) {
+    const r = Math.max(p[8], p[9], p[10]) / 2;
+    lo = Math.min(lo, p[3] - r);
+    hi = Math.max(hi, p[3] + r);
+  }
+  return {
+    size: size,
+    lo: lo,
+    hi: hi
+  };
+}
+
+function makerDef(id, D, meta = {}) {
+  const env = D.env || {}, L = LIGHT[env.sky] || LIGHT.day, B = mkBounds(D);
+  const m = {
+    name: meta.name || "Untitled map",
+    desc: meta.desc || (meta.author ? "by " + meta.author : "Workshop map"),
+    maker: true,
+    ws: id.startsWith("w:"),
+    draft: id.startsWith("m:"),
+    pv: '<i style="inset:0;background:#23252b"></i>',
+    sky: L.sky,
+    fog: [ Math.max(70, B.size * .7), Math.max(220, B.size * 2.2) ],
+    hemi: L.hemi,
+    sun: L.sun,
+    sunDir: L.sunDir,
+    exp: L.exp,
+    killY: Math.min(-30, B.lo - 30),
+    spawn: (D.sp || [ 0, 0, 0 ]).slice(0, 3),
+    spawnYaw: ((D.sp || [])[3] || 0) * MK_D2R,
+    horde: !!env.horde,
+    zSpawns: (D.zs || []).length ? D.zs : [ [ 0, 0, 0 ] ],
+    build() {
+      mkBuildPlay(D);
+      if (!(D.zs || []).length) m.zSpawns = customZombieSpawns(m.spawn, new THREE.Box3(new THREE.Vector3(-B.size / 2, B.lo - 2, -B.size / 2), new THREE.Vector3(B.size / 2, B.hi + 10, B.size / 2)));
+    },
+    populate() {
+      for (const it of D.it || []) {
+        if (!ITEM_BY_ID[it[0]]) continue;
+        try {
+          spawnItem(it[0], V(it[1], it[2], it[3]), (it[4] || 0) * MK_D2R);
+        } catch (e) {
+          console.warn("item", e);
+        }
+      }
+    }
+  };
+  return m;
+}
+
+function mkItemVisual(id) {
+  const it = ITEM_BY_ID[id];
+  let obj;
+  try {
+    if (PD[id]) obj = PD[id].mesh(); else if (id === "dummy") obj = ragPreview(STYLE.dummy); else if (id === "sunnydoll") obj = ragPreview(STYLE.sunny); else if (it && it.zombie && zBase) {
+      obj = SkeletonUtils.clone(zBase);
+      obj.traverse(o => {
+        if (o.isSkinnedMesh) o.material = ZT[it.zombie].mat;
+        if (o.isBone && pushPose[o.name] && ARM_BONES.includes(o.name)) o.quaternion.copy(pushPose[o.name]);
+      });
+      obj.scale.setScalar(ZT[it.zombie].scale);
+      if (id === "horde") {
+        const g = new THREE.Group;
+        g.add(obj);
+        for (const x of [ -1.2, 1.2 ]) {
+          const c = SkeletonUtils.clone(obj);
+          c.position.x = x;
+          g.add(c);
+        }
+        obj = g;
+      }
+    } else if (id === "balloon") {
+      obj = new THREE.Mesh(new THREE.SphereGeometry(.45, 20, 16), new THREE.MeshStandardMaterial({
+        color: 15026253,
+        roughness: .25
+      }));
+      obj.scale.y = 1.15;
+    } else if (id === "dominoes") {
+      obj = new THREE.Group;
+      for (let i = 0; i < 12; i++) {
+        const d = PD.domino.mesh();
+        d.position.set(0, 0, -i * .95);
+        d.rotation.y = Math.PI / 2;
+        obj.add(d);
+      }
+    } else if (id === "stack") {
+      obj = new THREE.Group;
+      for (let i = 0; i < 6; i++) {
+        const c = PD.crate.mesh();
+        c.position.y = i * 1.21;
+        obj.add(c);
+      }
+    } else if (id === "ballpit") {
+      obj = new THREE.Group;
+      [ [ 0, 0, 0 ], [ 1, 0, .2 ], [ .5, .85, 0 ], [ -.6, 0, .6 ], [ .2, 0, 1 ] ].forEach(p => {
+        const b = PD.beach.mesh();
+        b.position.set(...p);
+        obj.add(b);
+      });
+    } else if (id === "tntpile") {
+      obj = new THREE.Group;
+      [ [ 0, 0 ], [ 1, 0 ], [ .5, .86 ] ].forEach(([x, z]) => {
+        const b = PD.tnt.mesh();
+        b.position.set(x - .5, 0, z - .4);
+        obj.add(b);
+      });
+    }
+  } catch (e) {
+    obj = null;
+  }
+  if (!obj) obj = new THREE.Mesh(new THREE.BoxGeometry(.8, .8, .8), cmat(16098596));
+  obj.traverse(o => {
+    if (!o.isMesh) return;
+    o.castShadow = true;
+    o.receiveShadow = true;
+    if (Array.isArray(o.material) && o.geometry && o.geometry.groups.length) {
+      const need = Math.max(...o.geometry.groups.map(g => g.materialIndex)) + 1;
+      if (need > o.material.length) {
+        const a = o.material.slice();
+        while (a.length < need) a.push(a[a.length - 1]);
+        o.material = a;
+      }
+    }
+  });
+  return obj;
+}
+
+function mkMarker(kind) {
+  const g = new THREE.Group, col = kind === "sp" ? 3854443 : 15026253;
+  const mat = new THREE.MeshStandardMaterial({
+    color: col,
+    transparent: true,
+    opacity: .55,
+    emissive: col,
+    emissiveIntensity: .35,
+    depthWrite: false
+  });
+  const body = new THREE.Mesh(new THREE.CylinderGeometry(.4, .4, 1.9, 16), mat);
+  body.position.y = .95;
+  g.add(body);
+  const ring = new THREE.Mesh(new THREE.RingGeometry(.55, .75, 28), new THREE.MeshBasicMaterial({
+    color: col,
+    side: THREE.DoubleSide,
+    transparent: true,
+    opacity: .8
+  }));
+  ring.rotation.x = -Math.PI / 2;
+  ring.position.y = .03;
+  g.add(ring);
+  if (kind === "sp") {
+    const ar = new THREE.Mesh(new THREE.ConeGeometry(.25, .6, 12), mat);
+    ar.rotation.x = -Math.PI / 2;
+    ar.position.set(0, 1.4, -.6);
+    g.add(ar);
+  }
+  return g;
+}
+
+const ED_TOOLS = [ {
+  id: "build",
+  name: "BUILD",
+  icon: "cube",
+  hint: () => `${isTouch ? "FIRE" : "Click"} places ${edBrushName()}  ·  ${isTouch ? "grid button" : "Q"} to pick`
+}, {
+  id: "edit",
+  name: "EDIT",
+  icon: "hand",
+  hint: () => ED.carry ? `${isTouch ? "FIRE" : "Click"} to put it down` : ED.sel ? `${isTouch ? "FIRE" : "Click"} it again to move it · resize with the bar` : `${isTouch ? "FIRE" : "Click"} a piece to select it`
+}, {
+  id: "paint",
+  name: "PAINT",
+  icon: "brush",
+  hint: () => `Paints pieces with ${MK_MAT[ED.mat].name}`
+}, {
+  id: "erase",
+  name: "ERASE",
+  icon: "trash",
+  hint: () => "Deletes what you aim at"
+}, {
+  id: "pick",
+  name: "COPY",
+  icon: "drop",
+  hint: () => "Copies a piece into your brush"
+} ];
+
+function curTools() {
+  return ED.on ? ED_TOOLS : TOOLS;
+}
+
+const GRIDS = [ .25, .5, 1, 2, 0 ];
+
+const edGeoCache = new Map;
+
+function edGeo(t, s, tile) {
+  const k = t + "|" + s.join(",") + "|" + tile;
+  let g = edGeoCache.get(k);
+  if (!g) {
+    g = mkGeo(t, s, tile);
+    edGeoCache.set(k, g);
+  }
+  return g;
+}
+
+const ghostMat = new THREE.MeshBasicMaterial({
+  color: 16098596,
+  transparent: true,
+  opacity: .32,
+  depthWrite: false
+});
+
+const ghostEdge = new THREE.LineBasicMaterial({
+  color: 16765066,
+  transparent: true,
+  opacity: .9
+});
+
+const edRC = new THREE.Raycaster;
+
+edRC.far = 220;
+
+const edV = new THREE.Vector3, edN = new THREE.Vector3, edM3 = new THREE.Matrix3, edQ = new THREE.Quaternion, edE = new THREE.Euler;
+
+function edBrushName() {
+  const b = ED.brush;
+  if (b.kind === "part") return `${(MK_SHAPES.find(s => s.id === b.shape) || MK_SHAPES[0]).name.toLowerCase()} ${b.size.map(fmtN).join("×")}`;
+  if (b.kind === "item") return (ITEM_BY_ID[b.id] || {}).name || "item";
+  return b.kind === "sp" ? "the player spawn" : "a zombie spawn";
+}
+
+const fmtN = v => (Math.round(v * 100) / 100).toString();
+
+function edDef() {
+  return {
+    name: ED.draft.name,
+    desc: "",
+    draft: true,
+    editor: true,
+    pv: "",
+    sky: (LIGHT[ED.D.env.sky] || LIGHT.day).sky,
+    fog: [ 400, 900 ],
+    hemi: (LIGHT[ED.D.env.sky] || LIGHT.day).hemi,
+    sun: (LIGHT[ED.D.env.sky] || LIGHT.day).sun,
+    sunDir: (LIGHT[ED.D.env.sky] || LIGHT.day).sunDir,
+    exp: (LIGHT[ED.D.env.sky] || LIGHT.day).exp,
+    killY: -9999,
+    spawn: ED.D.sp.slice(0, 3),
+    horde: false,
+    zSpawns: [ [ 0, 0, 0 ] ],
+    build() {
+      edBuildScene();
+    },
+    populate() {}
+  };
+}
+
+function edBuildScene() {
+  ED.group = new THREE.Group;
+  mapGroup.add(ED.group);
+  ED.floor = mkFloor(ED.D, true);
+  if (ED.floor) ED.floor.userData.floor = true;
+  const size = clamp(+ED.D.env.size || 120, 40, 400);
+  ED.gridH = new THREE.GridHelper(size, Math.round(size / Math.max(1, ED.grid || 1)), 16777215, 16777215);
+  ED.gridH.material.transparent = true;
+  ED.gridH.material.opacity = ED.D.env.floor === "none" ? .12 : .16;
+  ED.gridH.material.depthWrite = false;
+  ED.gridH.position.y = .015;
+  mapGroup.add(ED.gridH);
+  ED.meshes = ED.D.p.map((p, i) => edPartMesh(p, i));
+  ED.itemObjs = ED.D.it.map((it, i) => edItemObj(it, i));
+  ED.zsObjs = ED.D.zs.map((z, i) => edZsObj(z, i));
+  ED.spObj = mkMarker("sp");
+  ED.spObj.userData = {
+    kind: "sp"
+  };
+  ED.group.add(ED.spObj);
+  edPlaceSp();
+  if (!ED.ghost) {
+    ED.ghost = new THREE.Group;
+    scene.add(ED.ghost);
+  }
+  if (!ED.selBox) {
+    ED.selBox = new THREE.Box3Helper(new THREE.Box3, 16098596);
+    ED.selBox.material.depthTest = false;
+    ED.selBox.renderOrder = 30;
+    scene.add(ED.selBox);
+  }
+  ED.ghostKey = "";
+  ED.selBox.visible = false;
+}
+
+function edPartMesh(p, i) {
+  const md = MK_MAT[p[1]] || MK_MAT.concrete, mat = mkMaterial(md.id);
+  const m = new THREE.Mesh(edGeo(p[0], mkSize(p), mat.userData.tile || 4), mat);
+  m.position.set(p[2], p[3], p[4]);
+  m.quaternion.copy(mkQuat(p[5], p[6], p[7]));
+  m.castShadow = !md.glass && !md.invis;
+  m.receiveShadow = true;
+  m.userData = {
+    kind: "p",
+    i: i
+  };
+  ED.group.add(m);
+  return m;
+}
+
+function edItemObj(it, i) {
+  const o = mkItemVisual(it[0]);
+  const w = new THREE.Group;
+  w.add(o);
+  const h = (ITEM_BY_ID[it[0]] || {}).h || 0;
+  o.position.y = 0;
+  w.position.set(it[1], it[2] - (PD[it[0]] ? 0 : 0), it[3]);
+  w.rotation.y = (it[4] || 0) * MK_D2R;
+  w.userData = {
+    kind: "it",
+    i: i,
+    h: h
+  };
+  ED.group.add(w);
+  return w;
+}
+
+function edZsObj(z, i) {
+  const o = mkMarker("zs");
+  o.position.set(z[0], z[1], z[2]);
+  o.userData = {
+    kind: "zs",
+    i: i
+  };
+  ED.group.add(o);
+  return o;
+}
+
+function edPlaceSp() {
+  const s = ED.D.sp;
+  ED.spObj.position.set(s[0], s[1], s[2]);
+  ED.spObj.rotation.y = (s[3] || 0) * MK_D2R;
+}
+
+function edReindex() {
+  ED.meshes.forEach((m, i) => m.userData.i = i);
+  ED.itemObjs.forEach((o, i) => o.userData.i = i);
+  ED.zsObjs.forEach((o, i) => o.userData.i = i);
+}
+
+function edRefreshPart(i) {
+  const p = ED.D.p[i], m = ED.meshes[i], md = MK_MAT[p[1]] || MK_MAT.concrete, mat = mkMaterial(md.id);
+  m.geometry = edGeo(p[0], mkSize(p), mat.userData.tile || 4);
+  m.material = mat;
+  m.position.set(p[2], p[3], p[4]);
+  m.quaternion.copy(mkQuat(p[5], p[6], p[7]));
+  m.castShadow = !md.glass && !md.invis;
+}
+
+function edRebuild() {
+  const cam = player.position.clone(), y = yaw, lp = lookPitch;
+  ED.sel = null;
+  ED.carry = null;
+  buildMap("m:edit");
+  player.position.copy(cam);
+  player.velocity.setZero();
+  yaw = y;
+  lookPitch = lp;
+  edHud();
+}
+
+function edClearScene() {
+  for (const g of edGeoCache.values()) g.dispose();
+  edGeoCache.clear();
+  if (ED.ghost) {
+    scene.remove(ED.ghost);
+    ED.ghost = null;
+  }
+  if (ED.selBox) {
+    scene.remove(ED.selBox);
+    ED.selBox = null;
+  }
+}
+
+function edEnter(draft, keepCam) {
+  if (NET.on) {
+    toast("Leave the room first");
+    return;
+  }
+  audioInit();
+  if (!ED.prevMode) ED.prevMode = mode;
+  for (const id of [ "mainMenu", "mkMenu", "wsMenu", "pauseMenu", "overMenu", "edMenu", "edPal" ]) $(id).classList.add("hidden");
+  if (!mkValid(draft.d)) draft.d = mkBlank("grass");
+  ED.on = true;
+  ED.testing = false;
+  ED.draft = draft;
+  ED.D = draft.d;
+  ED.sel = null;
+  ED.carry = null;
+  ED.dirty = false;
+  ED.saveT = 20;
+  if (!keepCam) {
+    ED.undo = [];
+    ED.redo = [];
+  }
+  MAPS["m:edit"] = edDef();
+  curMapId = "m:edit";
+  buildMap("m:edit");
+  setGravity(1);
+  WSET.ts = 1;
+  hp = 100;
+  state = "play";
+  paused = false;
+  mode = "sandbox";
+  horde = false;
+  kills = 0;
+  surv.wave = 0;
+  surv.toSpawn = 0;
+  surv.breakT = 0;
+  document.body.classList.add("playing", "editing");
+  if (keepCam && ED.cam) {
+    player.position.set(ED.cam[0], ED.cam[1], ED.cam[2]);
+    yaw = ED.cam[3];
+    lookPitch = ED.cam[4];
+  } else {
+    const s = ED.D.sp;
+    player.position.set(s[0], s[1] + 3, s[2] + 9);
+    yaw = 0;
+    lookPitch = -.3;
+  }
+  player.velocity.setZero();
+  tool = "build";
+  renderHotbar();
+  updateToolText();
+  edHud();
+  banner("MAP MAKER", esc(draft.name), 1500);
+  wantLock();
+}
+
+function edSave(quiet) {
+  if (!ED.draft) return;
+  ED.draft.t = Date.now();
+  ED.draft.d = ED.D;
+  ED.dirty = false;
+  persist(true);
+  if (!quiet) toast(storageOk ? "Saved" : "Could not save on this browser");
+}
+
+function edExit(toList = true) {
+  if (ED.on) {
+    ED.cam = [ player.position.x, player.position.y, player.position.z, yaw, lookPitch ];
+    edSave(true);
+    edThumb();
+  }
+  ED.on = false;
+  ED.testing = false;
+  ED.sel = null;
+  ED.carry = null;
+  document.body.classList.remove("editing");
+  player.collisionResponse = true;
+  edClearScene();
+  delete MAPS["m:edit"];
+  delete MAPS["m:test"];
+  if (ED.prevMode) {
+    mode = ED.prevMode;
+    ED.prevMode = null;
+  }
+  curMapId = MAPS[SD.settings.map] ? SD.settings.map : "flatgrass";
+  for (const id of [ "edMenu", "edPal" ]) $(id).classList.add("hidden");
+  toMenu();
+  if (toList) openMaker();
+}
+
+function edThumb() {
+  if (!ED.draft || !ED.group) return;
+  try {
+    const was = [ ED.ghost && ED.ghost.visible, ED.selBox && ED.selBox.visible, ED.gridH && ED.gridH.visible ];
+    if (ED.ghost) ED.ghost.visible = false;
+    if (ED.selBox) ED.selBox.visible = false;
+    if (ED.gridH) ED.gridH.visible = false;
+    for (const o of ED.zsObjs) o.visible = false;
+    ED.spObj.visible = false;
+    const c = captureShot(camera), s = document.createElement("canvas");
+    s.width = 320;
+    s.height = 180;
+    s.getContext("2d").drawImage(c, 0, 0, 320, 180);
+    ED.draft.thumb = s.toDataURL("image/jpeg", .62);
+    for (const o of ED.zsObjs) o.visible = true;
+    ED.spObj.visible = true;
+    if (ED.ghost) ED.ghost.visible = was[0];
+    if (ED.selBox) ED.selBox.visible = was[1];
+    if (ED.gridH) ED.gridH.visible = was[2];
+    persist(true);
+  } catch (e) {
+    console.warn("thumb", e);
+  }
+}
+
+function edTest() {
+  ED.cam = [ player.position.x, player.position.y, player.position.z, yaw, lookPitch ];
+  edSave(true);
+  edThumb();
+  ED.on = false;
+  ED.testing = true;
+  ED.sel = null;
+  ED.carry = null;
+  document.body.classList.remove("editing");
+  player.collisionResponse = true;
+  edClearScene();
+  $("edMenu").classList.add("hidden");
+  MAPS["m:test"] = makerDef("m:test", mkClean(ED.D), {
+    name: ED.draft.name,
+    desc: "test"
+  });
+  curMapId = "m:test";
+  mode = "sandbox";
+  startGame();
+  horde = !!ED.D.env.horde;
+  hordeT = 4;
+  banner(ED.draft.name.toUpperCase(), "test play · menu to go back", 2e3);
+}
+
+function edBackFromTest() {
+  ED.testing = false;
+  delete MAPS["m:test"];
+  clearEnts();
+  edEnter(ED.draft, true);
+}
+
+function edPush() {
+  ED.undo.push(JSON.stringify(ED.D));
+  if (ED.undo.length > 60) ED.undo.shift();
+  ED.redo.length = 0;
+  ED.dirty = true;
+}
+
+function edUndo() {
+  if (!ED.undo.length) {
+    toast("Nothing to undo");
+    return;
+  }
+  ED.redo.push(JSON.stringify(ED.D));
+  edLoadD(JSON.parse(ED.undo.pop()));
+  sfx.remove();
+}
+
+function edRedo() {
+  if (!ED.redo.length) return;
+  ED.undo.push(JSON.stringify(ED.D));
+  edLoadD(JSON.parse(ED.redo.pop()));
+}
+
+function edLoadD(D) {
+  ED.D = D;
+  ED.draft.d = D;
+  ED.dirty = true;
+  edRebuild();
+}
+
+function edHit(skip) {
+  edRC.setFromCamera({
+    x: 0,
+    y: 0
+  }, camera);
+  const list = [ ED.group ];
+  if (ED.floor) list.push(ED.floor);
+  const hits = edRC.intersectObjects(list, true);
+  for (const h of hits) {
+    let o = h.object;
+    while (o && !o.userData.kind && !o.userData.floor && o.parent && o.parent !== ED.group) o = o.parent;
+    if (!o || skip && o === skip) continue;
+    if (!o.userData.kind && !o.userData.floor) continue;
+    const n = h.face ? edN.copy(h.face.normal).applyMatrix3(edM3.getNormalMatrix(h.object.matrixWorld)).normalize().clone() : new THREE.Vector3(0, 1, 0);
+    return {
+      obj: o,
+      kind: o.userData.kind || "floor",
+      i: o.userData.i,
+      point: h.point.clone(),
+      n: n,
+      dist: h.distance
+    };
+  }
+  return null;
+}
+
+function edHalf(size, rot) {
+  const q = mkQuat(rot[0], rot[1], rot[2]), m = (new THREE.Matrix4).makeRotationFromQuaternion(q).elements;
+  const h = [ size[0] / 2, size[1] / 2, size[2] / 2 ];
+  return [ 0, 1, 2 ].map(r => Math.abs(m[r]) * h[0] + Math.abs(m[r + 4]) * h[1] + Math.abs(m[r + 8]) * h[2]);
+}
+
+function edSnap(c, half, n) {
+  const g = ED.grid;
+  if (!g) return c;
+  const out = c.slice();
+  for (let k = 0; k < 3; k++) {
+    if (Math.abs(n[k]) > .7) continue;
+    out[k] = Math.round((c[k] - half[k]) / g) * g + half[k];
+  }
+  return out;
+}
+
+function edPlacement(hit, size, rot) {
+  const half = edHalf(size, rot);
+  if (!hit) {
+    camera.getWorldDirection(edV);
+    const p = camera.position.clone().addScaledVector(edV, 9);
+    return edSnap([ p.x, p.y, p.z ], half, [ 0, 0, 0 ]);
+  }
+  const n = hit.n;
+  let c;
+  if (Math.abs(n.y) > .7 || Math.abs(n.x) > .7 || Math.abs(n.z) > .7) {
+    const ax = Math.abs(n.y) > .7 ? 1 : Math.abs(n.x) > .7 ? 0 : 2, sg = Math.sign([ n.x, n.y, n.z ][ax]);
+    c = [ hit.point.x, hit.point.y, hit.point.z ];
+    c[ax] += sg * half[ax];
+    c = edSnap(c, half, [ ax === 0 ? 1 : 0, ax === 1 ? 1 : 0, ax === 2 ? 1 : 0 ]);
+  } else {
+    const e = half[0] * Math.abs(n.x) + half[1] * Math.abs(n.y) + half[2] * Math.abs(n.z);
+    c = [ hit.point.x + n.x * e, hit.point.y + n.y * e, hit.point.z + n.z * e ];
+  }
+  return c.map(v => Math.round(v * 100) / 100);
+}
+
+function edPointPlacement(hit, h) {
+  if (!hit) {
+    camera.getWorldDirection(edV);
+    const p = camera.position.clone().addScaledVector(edV, 7);
+    return [ p.x, p.y, p.z ].map(v => Math.round(v * 100) / 100);
+  }
+  const p = hit.point.clone();
+  if (hit.n.y > .5) p.y += h ? h / 2 + .03 : 0; else p.addScaledVector(hit.n, .9);
+  if (ED.grid) {
+    const g = Math.max(.25, ED.grid / 2);
+    p.x = Math.round(p.x / g) * g;
+    p.z = Math.round(p.z / g) * g;
+  }
+  return [ p.x, p.y, p.z ].map(v => Math.round(v * 100) / 100);
+}
+
+function edGhostSet(key, make) {
+  if (ED.ghostKey === key) return;
+  ED.ghostKey = key;
+  for (const c of [ ...ED.ghost.children ]) {
+    ED.ghost.remove(c);
+    c.traverse(o => {
+      if (o.isLineSegments) o.geometry.dispose();
+    });
+  }
+  const o = make();
+  if (o) ED.ghost.add(o);
+}
+
+function edGhostPart(t, size) {
+  const g = edGeo(t, size, 4), m = new THREE.Mesh(g, ghostMat);
+  m.add(new THREE.LineSegments(new THREE.EdgesGeometry(g, 25), ghostEdge));
+  return m;
+}
+
+function edGhostObj(o) {
+  o.traverse(c => {
+    if (c.isMesh) {
+      c.material = ghostMat;
+      c.castShadow = false;
+    }
+  });
+  return o;
+}
+
+function edUpdate(dt) {
+  playerRoot.visible = false;
+  lHold.visible = false;
+  ED.saveT -= dt;
+  if (ED.saveT <= 0) {
+    ED.saveT = 20;
+    if (ED.dirty) edSave(true);
+  }
+  const b = ED.brush, building = tool === "build" && !ED.carry;
+  if (ED.carry) {
+    edCarryUpdate();
+    ED.ghost.visible = false;
+  } else if (building) {
+    const hit = edHit();
+    if (b.kind === "part") {
+      const t = (MK_SHAPES.find(s => s.id === b.shape) || MK_SHAPES[0]).t;
+      edGhostSet(`p|${t}|${b.size}`, () => edGhostPart(t, b.size));
+      const c = edPlacement(hit, b.size, b.rot);
+      ED.ghost.position.set(c[0], c[1], c[2]);
+      ED.ghost.quaternion.copy(mkQuat(b.rot[0], b.rot[1], b.rot[2]));
+      ED.place = c;
+    } else if (b.kind === "item") {
+      edGhostSet("i|" + b.id, () => edGhostObj(mkItemVisual(b.id)));
+      const c = edPointPlacement(hit, (ITEM_BY_ID[b.id] || {}).h || 0);
+      ED.ghost.position.set(c[0], c[1], c[2]);
+      ED.ghost.rotation.set(0, b.rot[1] * MK_D2R, 0);
+      ED.place = c;
+    } else {
+      edGhostSet("m|" + b.kind, () => edGhostObj(mkMarker(b.kind)));
+      const c = edPointPlacement(hit, 0);
+      ED.ghost.position.set(c[0], c[1], c[2]);
+      ED.ghost.rotation.set(0, b.kind === "sp" ? b.rot[1] * MK_D2R : 0, 0);
+      ED.place = c;
+    }
+    ED.ghost.visible = true;
+  } else ED.ghost.visible = false;
+  edSelBox();
+  const hot = !building && !ED.carry && tool !== "build" ? edHit() : null;
+  $("cross").classList.toggle("hot", !!(hot && hot.kind !== "floor"));
+}
+
+function edSelBox() {
+  const o = edSelObj();
+  if (!o) {
+    ED.selBox.visible = false;
+    return;
+  }
+  o.updateMatrixWorld(true);
+  ED.selBox.box.setFromObject(o);
+  ED.selBox.visible = true;
+}
+
+function edSelObj() {
+  const s = ED.carry || ED.sel;
+  if (!s) return null;
+  if (s.kind === "p") return ED.meshes[s.i];
+  if (s.kind === "it") return ED.itemObjs[s.i];
+  if (s.kind === "zs") return ED.zsObjs[s.i];
+  if (s.kind === "sp") return ED.spObj;
+  return null;
+}
+
+function edCarryUpdate() {
+  const s = ED.carry, o = edSelObj();
+  if (!o) {
+    ED.carry = null;
+    return;
+  }
+  const hit = edHit(o);
+  if (s.kind === "p") {
+    const p = ED.D.p[s.i];
+    const c = edPlacement(hit, mkSize(p), [ p[5], p[6], p[7] ]);
+    o.position.set(c[0], c[1], c[2]);
+    s.pos = c;
+  } else {
+    const h = s.kind === "it" ? o.userData.h : 0;
+    const c = edPointPlacement(hit, h);
+    o.position.set(c[0], c[1], c[2]);
+    s.pos = c;
+  }
+}
+
+function edPrimary() {
+  cd = .16;
+  if (ED.carry) {
+    edDrop();
+    return;
+  }
+  if (tool === "build") {
+    edBuild();
+    return;
+  }
+  const hit = edHit();
+  if (tool === "edit") {
+    if (!hit || hit.kind === "floor") {
+      ED.sel = null;
+      updateToolText();
+      edHud();
+      return;
+    }
+    const same = ED.sel && ED.sel.kind === hit.kind && ED.sel.i === hit.i;
+    if (same) {
+      ED.carry = Object.assign({}, ED.sel);
+      ED.carryFrom = JSON.stringify(ED.D);
+      sfx.grab();
+    } else {
+      ED.sel = {
+        kind: hit.kind,
+        i: hit.i
+      };
+      sfx.spawn();
+    }
+    updateToolText();
+    edHud();
+    return;
+  }
+  if (!hit || hit.kind === "floor") return;
+  if (tool === "paint") {
+    if (hit.kind !== "p") {
+      toast("Only pieces can be painted");
+      return;
+    }
+    if (ED.D.p[hit.i][1] === ED.mat) return;
+    edPush();
+    ED.D.p[hit.i][1] = ED.mat;
+    edRefreshPart(hit.i);
+    sfx.spawn();
+    return;
+  }
+  if (tool === "erase") {
+    edDelete({
+      kind: hit.kind,
+      i: hit.i
+    });
+    return;
+  }
+  if (tool === "pick") {
+    if (hit.kind === "p") {
+      const p = ED.D.p[hit.i];
+      const sh = MK_SHAPES.find(s => s.t === p[0]) || MK_SHAPES[0];
+      ED.brush = {
+        kind: "part",
+        shape: sh.id,
+        size: mkSize(p),
+        rot: [ p[5], p[6], p[7] ]
+      };
+      ED.mat = p[1];
+    } else if (hit.kind === "it") ED.brush = {
+      kind: "item",
+      id: ED.D.it[hit.i][0],
+      rot: [ 0, ED.D.it[hit.i][4] || 0, 0 ]
+    }; else ED.brush = {
+      kind: hit.kind,
+      rot: [ 0, 0, 0 ]
+    };
+    setTool("build");
+    sfx.grab();
+    edHud();
+  }
+}
+
+function edSecondary() {
+  if (ED.carry) {
+    const f = ED.carryFrom;
+    ED.carry = null;
+    if (f) edLoadD(JSON.parse(f));
+    return;
+  }
+  const hit = edHit();
+  if (!hit || hit.kind === "floor") return;
+  const t = tool;
+  tool = "pick";
+  edPrimary();
+  if (tool === "pick") tool = t;
+}
+
+function edBuild() {
+  const b = ED.brush, c = ED.place;
+  if (!c) return;
+  if (b.kind === "part") {
+    if (ED.D.p.length >= MK_LIMIT.p) {
+      toast(`Limit is ${MK_LIMIT.p} pieces`);
+      return;
+    }
+    const t = (MK_SHAPES.find(s => s.id === b.shape) || MK_SHAPES[0]).t;
+    edPush();
+    const p = [ t, ED.mat, c[0], c[1], c[2], b.rot[0], b.rot[1], b.rot[2], b.size[0], b.size[1], b.size[2] ];
+    ED.D.p.push(p);
+    ED.meshes.push(edPartMesh(p, ED.D.p.length - 1));
+  } else if (b.kind === "item") {
+    if (ED.D.it.length >= MK_LIMIT.it) {
+      toast(`Limit is ${MK_LIMIT.it} props`);
+      return;
+    }
+    edPush();
+    const it = [ b.id, c[0], c[1], c[2], b.rot[1] ];
+    ED.D.it.push(it);
+    ED.itemObjs.push(edItemObj(it, ED.D.it.length - 1));
+  } else if (b.kind === "zs") {
+    if (ED.D.zs.length >= MK_LIMIT.zs) {
+      toast(`Limit is ${MK_LIMIT.zs} zombie spawns`);
+      return;
+    }
+    edPush();
+    const z = c.slice();
+    ED.D.zs.push(z);
+    ED.zsObjs.push(edZsObj(z, ED.D.zs.length - 1));
+  } else if (b.kind === "sp") {
+    edPush();
+    ED.D.sp = [ c[0], c[1], c[2], b.rot[1] ];
+    edPlaceSp();
+    toast("Player spawn moved");
+  }
+  sfx.spawn();
+  edHud();
+}
+
+function edDrop() {
+  const s = ED.carry;
+  ED.carry = null;
+  if (!s || !s.pos) {
+    updateToolText();
+    return;
+  }
+  ED.undo.push(ED.carryFrom);
+  if (ED.undo.length > 60) ED.undo.shift();
+  ED.redo.length = 0;
+  ED.dirty = true;
+  const c = s.pos;
+  if (s.kind === "p") {
+    const p = ED.D.p[s.i];
+    p[2] = c[0];
+    p[3] = c[1];
+    p[4] = c[2];
+    edRefreshPart(s.i);
+  } else if (s.kind === "it") {
+    const it = ED.D.it[s.i];
+    it[1] = c[0];
+    it[2] = c[1];
+    it[3] = c[2];
+  } else if (s.kind === "zs") ED.D.zs[s.i] = c.slice(); else if (s.kind === "sp") {
+    ED.D.sp = [ c[0], c[1], c[2], ED.D.sp[3] || 0 ];
+    edPlaceSp();
+  }
+  ED.sel = {
+    kind: s.kind,
+    i: s.i
+  };
+  sfx.drop();
+  updateToolText();
+  edHud();
+}
+
+function edDelete(s) {
+  if (!s) return;
+  if (s.kind === "sp") {
+    toast("The player spawn can be moved, not deleted");
+    return;
+  }
+  edPush();
+  if (s.kind === "p") {
+    ED.D.p.splice(s.i, 1);
+    ED.group.remove(ED.meshes[s.i]);
+    ED.meshes.splice(s.i, 1);
+  } else if (s.kind === "it") {
+    ED.D.it.splice(s.i, 1);
+    const o = ED.itemObjs[s.i];
+    ED.group.remove(o);
+    ED.itemObjs.splice(s.i, 1);
+  } else if (s.kind === "zs") {
+    ED.D.zs.splice(s.i, 1);
+    ED.group.remove(ED.zsObjs[s.i]);
+    ED.zsObjs.splice(s.i, 1);
+  }
+  if (ED.sel && ED.sel.kind === s.kind && ED.sel.i === s.i) ED.sel = null; else if (ED.sel && ED.sel.kind === s.kind && ED.sel.i > s.i) ED.sel.i--;
+  edReindex();
+  sfx.remove();
+  edHud();
+  updateToolText();
+}
+
+function edDup() {
+  const s = ED.sel;
+  if (!s) {
+    toast("Select something first");
+    return;
+  }
+  if (s.kind === "p") {
+    if (ED.D.p.length >= MK_LIMIT.p) {
+      toast(`Limit is ${MK_LIMIT.p} pieces`);
+      return;
+    }
+    edPush();
+    const src = ED.D.p[s.i], half = edHalf(mkSize(src), [ src[5], src[6], src[7] ]);
+    camera.getWorldDirection(edV);
+    const rx = Math.cos(yaw), rz = -Math.sin(yaw), ax = Math.abs(rx) > Math.abs(rz) ? 0 : 2, sg = Math.sign(ax === 0 ? rx : rz) || 1;
+    const p = src.slice();
+    p[2 + ax] = Math.round((p[2 + ax] + sg * half[ax] * 2) * 100) / 100;
+    ED.D.p.push(p);
+    ED.meshes.push(edPartMesh(p, ED.D.p.length - 1));
+    ED.sel = {
+      kind: "p",
+      i: ED.D.p.length - 1
+    };
+  } else if (s.kind === "it") {
+    edPush();
+    const it = ED.D.it[s.i].slice();
+    it[1] += 1.5;
+    ED.D.it.push(it);
+    ED.itemObjs.push(edItemObj(it, ED.D.it.length - 1));
+    ED.sel = {
+      kind: "it",
+      i: ED.D.it.length - 1
+    };
+  } else return;
+  sfx.spawn();
+  edHud();
+}
+
+function edTarget() {
+  const s = ED.carry || ED.sel;
+  if (s && s.kind === "p") return {
+    kind: "p",
+    p: ED.D.p[s.i],
+    i: s.i
+  };
+  if (s && s.kind === "it") return {
+    kind: "it",
+    it: ED.D.it[s.i],
+    i: s.i
+  };
+  if (s && s.kind === "sp") return {
+    kind: "sp"
+  };
+  return {
+    kind: "brush"
+  };
+}
+
+function edConstrain(t, s) {
+  s = s.map(v => clamp(Math.round(v * 100) / 100, .1, 200));
+  if (t === "cyl") s[2] = s[0];
+  if (t === "ball") {
+    s[1] = s[0];
+    s[2] = s[0];
+  }
+  return s;
+}
+
+function edAdjust(kind, axis, dir) {
+  const T = edTarget(), step = ED.grid || .25;
+  const needPush = T.kind !== "brush";
+  if (kind === "size") {
+    const t = T.kind === "p" ? T.p[0] : T.kind === "brush" && ED.brush.kind === "part" ? (MK_SHAPES.find(s => s.id === ED.brush.shape) || MK_SHAPES[0]).t : "";
+    if (t === "ball" || t === "cyl" && axis === 2) axis = 0;
+  }
+  if (T.kind === "p") {
+    const p = T.p;
+    if (needPush && !ED.carry) edPush();
+    if (kind === "size") {
+      const s = mkSize(p);
+      s[axis] += dir * step;
+      const c = edConstrain(p[0], s);
+      p[8] = c[0];
+      p[9] = c[1];
+      p[10] = c[2];
+      if (axis === 1 && dir) p[3] = Math.round((p[3] + dir * step / 2) * 100) / 100;
+    } else if (kind === "rot") p[5 + axis] = ((p[5 + axis] + dir * 15) % 360 + 360) % 360; else if (kind === "move") {
+      p[2 + axis] = Math.round((p[2 + axis] + dir * step) * 100) / 100;
+    }
+    edRefreshPart(T.i);
+  } else if (T.kind === "it") {
+    if (kind === "rot" && axis === 1) {
+      if (!ED.carry) edPush();
+      T.it[4] = ((T.it[4] + dir * 15) % 360 + 360) % 360;
+      ED.itemObjs[T.i].rotation.y = T.it[4] * MK_D2R;
+    } else if (kind === "move") {
+      if (!ED.carry) edPush();
+      T.it[1 + axis] = Math.round((T.it[1 + axis] + dir * step) * 100) / 100;
+      ED.itemObjs[T.i].position.set(T.it[1], T.it[2], T.it[3]);
+    } else toast("Props can only be turned");
+  } else if (T.kind === "sp") {
+    if (kind === "rot" && axis === 1) {
+      edPush();
+      ED.D.sp[3] = (((ED.D.sp[3] || 0) + dir * 15) % 360 + 360) % 360;
+      edPlaceSp();
+    }
+  } else {
+    const b = ED.brush;
+    if (b.kind === "part") {
+      const t = (MK_SHAPES.find(s => s.id === b.shape) || MK_SHAPES[0]).t;
+      if (kind === "size") {
+        const s = b.size.slice();
+        s[axis] += dir * step;
+        b.size = edConstrain(t, s);
+      } else if (kind === "rot") b.rot[axis] = ((b.rot[axis] + dir * 15) % 360 + 360) % 360;
+    } else if (kind === "rot" && axis === 1) b.rot[1] = ((b.rot[1] + dir * 15) % 360 + 360) % 360;
+  }
+  edHud();
+  updateToolText();
+}
+
+function edCycleGrid() {
+  const i = GRIDS.indexOf(ED.grid);
+  ED.grid = GRIDS[(i + 1) % GRIDS.length];
+  SD.settings.edGrid = ED.grid;
+  persist();
+  if (ED.gridH) {
+    mapGroup.remove(ED.gridH);
+    ED.gridH.geometry.dispose();
+    const size = clamp(+ED.D.env.size || 120, 40, 400);
+    ED.gridH = new THREE.GridHelper(size, Math.round(size / Math.max(1, ED.grid || 1)), 16777215, 16777215);
+    ED.gridH.material.transparent = true;
+    ED.gridH.material.opacity = .16;
+    ED.gridH.material.depthWrite = false;
+    ED.gridH.position.y = .015;
+    mapGroup.add(ED.gridH);
+  }
+  edHud();
+}
+
+function edKey(e) {
+  const k = e.code, ctrl = e.ctrlKey || e.metaKey;
+  if (/^Digit[1-5]$/.test(k)) {
+    setTool(ED_TOOLS[+k.slice(5) - 1].id);
+    return;
+  }
+  switch (k) {
+   case "KeyQ":
+    edOpenPal();
+    break;
+
+   case "KeyZ":
+    if (e.shiftKey) edRedo(); else edUndo();
+    break;
+
+   case "KeyY":
+    if (ctrl) edRedo();
+    break;
+
+   case "KeyR":
+    edAdjust("rot", 1, e.shiftKey ? -1 : 1);
+    break;
+
+   case "KeyF":
+    edAdjust("rot", 1, -1);
+    break;
+
+   case "KeyT":
+    edAdjust("rot", 0, e.shiftKey ? -1 : 1);
+    break;
+
+   case "KeyG":
+    edAdjust("rot", 2, e.shiftKey ? -1 : 1);
+    break;
+
+   case "ArrowLeft":
+    edAdjust("size", 0, -1);
+    break;
+
+   case "ArrowRight":
+    edAdjust("size", 0, 1);
+    break;
+
+   case "ArrowDown":
+    edAdjust("size", 2, -1);
+    break;
+
+   case "ArrowUp":
+    edAdjust("size", 2, 1);
+    break;
+
+   case "PageUp":
+   case "Equal":
+    edAdjust("size", 1, 1);
+    break;
+
+   case "PageDown":
+   case "Minus":
+    edAdjust("size", 1, -1);
+    break;
+
+   case "KeyB":
+    edDup();
+    break;
+
+   case "KeyN":
+    edCycleGrid();
+    break;
+
+   case "Delete":
+   case "Backspace":
+    if (ED.sel) edDelete(ED.sel);
+    break;
+
+   case "KeyX":
+    ED.sel = null;
+    ED.carry = null;
+    edHud();
+    updateToolText();
+    break;
+
+   case "Tab":
+    e.preventDefault();
+    if (document.pointerLockElement) {
+      suppressPause = true;
+      document.exitPointerLock();
+    } else wantLock();
+    break;
+
+   case "KeyH":
+    edToggleBar();
+    break;
+  }
+  if (k === "Tab" || k.startsWith("Arrow") || k === "PageUp" || k === "PageDown" || k === "Backspace") e.preventDefault();
+}
+
+function edToggleBar() {
+  ED.bar = !ED.bar;
+  SD.settings.edBar = ED.bar;
+  persist();
+  edHud();
+}
+
+function edHud() {
+  if (!ED.on) return;
+  const T = edTarget(), b = ED.brush;
+  let what, size = null;
+  if (T.kind === "p") {
+    const sh = MK_SHAPES.find(s => s.t === T.p[0]) || MK_SHAPES[0];
+    what = `SELECTED ${sh.name.toUpperCase()}`;
+    size = mkSize(T.p);
+  } else if (T.kind === "it") what = `SELECTED ${((ITEM_BY_ID[T.it[0]] || {}).name || "PROP").toUpperCase()}`; else if (T.kind === "sp") what = "SELECTED SPAWN"; else if (b.kind === "part") {
+    what = (MK_SHAPES.find(s => s.id === b.shape) || MK_SHAPES[0]).name.toUpperCase();
+    size = b.size;
+  } else what = b.kind === "item" ? ((ITEM_BY_ID[b.id] || {}).name || "").toUpperCase() : b.kind === "sp" ? "PLAYER SPAWN" : "ZOMBIE SPAWN";
+  const D = ED.D;
+  $("edInfo").innerHTML = `<div class="t">${esc(ED.draft.name.toUpperCase())}</div><div class="s"><b>${D.p.length}</b>/${MK_LIMIT.p} PIECES · <b>${D.it.length}</b> PROPS · GRID <b>${ED.grid || "OFF"}</b></div>`;
+  const sw = matSwatch(T.kind === "p" ? T.p[1] : ED.mat);
+  const sizeBtns = size ? `<span class="eg"><button data-e="s0-">W−</button><button data-e="s0+">W+</button></span><span class="eg"><button data-e="s1-">H−</button><button data-e="s1+">H+</button></span><span class="eg"><button data-e="s2-">L−</button><button data-e="s2+">L+</button></span>` : "";
+  const rotBtns = `<span class="eg"><button data-e="r1-" title="Turn (F)">⟲</button><button data-e="r1+" title="Turn (R)">⟳</button></span>` + (T.kind === "p" || T.kind === "brush" && b.kind === "part" ? `<span class="eg"><button data-e="r0+" title="Tilt (T)">TILT</button><button data-e="r2+" title="Roll (G)">ROLL</button></span>` : "");
+  const selBtns = ED.sel ? `<span class="eg"><button data-e="dup" title="Duplicate (B)">COPY</button><button data-e="del" class="del" title="Delete (Del)">DEL</button><button data-e="done" title="Deselect (X)">DONE</button></span>` : "";
+  const moveBtns = ED.sel && !ED.carry && (T.kind === "p" || T.kind === "it") ? `<span class="eg"><button data-e="m1+">UP</button><button data-e="m1-">DOWN</button></span>` : "";
+  $("edBar").innerHTML = `<button class="brush" data-e="pal"><i style="background:${sw}"></i><span>${esc(what)}${size ? `<small>${size.map(fmtN).join(" × ")}</small>` : ""}</span></button>` + (ED.bar ? rotBtns + sizeBtns + moveBtns + selBtns + `<span class="eg"><button data-e="grid">GRID ${ED.grid || "OFF"}</button><button data-e="undo">UNDO</button></span>` : "") + `<button data-e="bar" class="tog">${ED.bar ? "‹" : "›"}</button>`;
+}
+
+const swatchCache = {};
+
+function matSwatch(id) {
+  if (swatchCache[id]) return swatchCache[id];
+  const d = MK_MAT[id] || MK_MAT.concrete;
+  let css = d.css || "#888";
+  if (!d.css) {
+    try {
+      const img = mkMaterial(id).map.image, c = document.createElement("canvas");
+      c.width = c.height = 40;
+      c.getContext("2d").drawImage(img, 0, 0, Math.min(img.width, 96), Math.min(img.height, 96), 0, 0, 40, 40);
+      css = `url(${c.toDataURL("image/jpeg", .8)}) center/cover`;
+    } catch (e) {}
+  }
+  return swatchCache[id] = css;
+}
+
+$("edBar").addEventListener("pointerdown", e => {
+  e.stopPropagation();
+});
+
+$("edBar").addEventListener("click", e => {
+  const b = e.target.closest("[data-e]");
+  if (!b || !ED.on) return;
+  e.stopPropagation();
+  audioInit();
+  const a = b.dataset.e, m = a.match(/^([srm])(\d)([+-])$/);
+  if (m) {
+    edAdjust(m[1] === "s" ? "size" : m[1] === "r" ? "rot" : "move", +m[2], m[3] === "+" ? 1 : -1);
+    return;
+  }
+  switch (a) {
+   case "pal":
+    edOpenPal();
+    break;
+
+   case "grid":
+    edCycleGrid();
+    break;
+
+   case "undo":
+    edUndo();
+    break;
+
+   case "dup":
+    edDup();
+    break;
+
+   case "del":
+    if (ED.sel) edDelete(ED.sel);
+    break;
+
+   case "done":
+    ED.sel = null;
+    ED.carry = null;
+    edHud();
+    updateToolText();
+    break;
+
+   case "bar":
+    edToggleBar();
+    break;
+  }
+});
+
+const PAL_TABS = [ "SHAPES", "MATERIALS", "PROPS", "SPAWNS" ];
+
+let palTab = "SHAPES";
+
+const shapeThumbs = {};
+
+function makeShapeThumbs() {
+  if (shapeThumbs.box) return;
+  let tr;
+  try {
+    tr = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: true,
+      preserveDrawingBuffer: true
+    });
+    tr.setSize(96, 96);
+    tr.setPixelRatio(1);
+    tr.outputColorSpace = THREE.SRGBColorSpace;
+    tr.toneMapping = THREE.ACESFilmicToneMapping;
+    const ts = new THREE.Scene;
+    ts.add(new THREE.HemisphereLight(16777215, 5592405, 1.6));
+    const dl = new THREE.DirectionalLight(16777215, 2.2);
+    dl.position.set(3, 5, 4);
+    ts.add(dl);
+    const tc = new THREE.PerspectiveCamera(30, 1, .05, 200);
+    for (const sh of MK_SHAPES) {
+      const g = mkGeo(sh.t, sh.size, 2), m = new THREE.Mesh(g, mkMaterial("devO"));
+      m.rotation.y = .5;
+      ts.add(m);
+      const box = (new THREE.Box3).setFromObject(m), c = box.getCenter(new THREE.Vector3), r = box.getSize(new THREE.Vector3).length() / 2;
+      tc.position.copy(c).add(new THREE.Vector3(.85, .65, 1.25).normalize().multiplyScalar(r / Math.sin(THREE.MathUtils.degToRad(15)) * 1.02));
+      tc.lookAt(c);
+      tr.render(ts, tc);
+      shapeThumbs[sh.id] = tr.domElement.toDataURL("image/png");
+      ts.remove(m);
+      g.dispose();
+    }
+  } catch (e) {
+    console.warn("shape thumbs", e);
+  }
+  if (tr) {
+    tr.dispose();
+    tr.forceContextLoss();
+  }
+}
+
+function edOpenPal() {
+  if (!ED.on) return;
+  makeShapeThumbs();
+  renderPal();
+  $("edPal").classList.remove("hidden");
+  if (document.pointerLockElement) {
+    suppressPause = true;
+    document.exitPointerLock();
+  }
+}
+
+function edClosePal() {
+  $("edPal").classList.add("hidden");
+  wantLock();
+}
+
+function renderPal() {
+  $("palTabs").innerHTML = PAL_TABS.map(t => `<button class="tab ${t === palTab ? "on" : ""}" data-c="${t}">${t}</button>`).join("");
+  const b = ED.brush;
+  let h = "";
+  if (palTab === "SHAPES") h = MK_SHAPES.map(s => `<div class="tile ${b.kind === "part" && b.shape === s.id ? "on" : ""}" data-s="${s.id}">${shapeThumbs[s.id] ? `<img src="${shapeThumbs[s.id]}" alt="">` : '<div class="ph"></div>'}<span>${s.name}</span></div>`).join(""); else if (palTab === "MATERIALS") h = MK_MATS.map(m => `<div class="tile ${ED.mat === m.id ? "on" : ""}" data-m="${m.id}"><div class="ph" style="background:${matSwatch(m.id)}"></div><span>${m.name}${m.tip ? `<small>${m.tip}</small>` : ""}</span></div>`).join(""); else if (palTab === "PROPS") h = ITEMS.map(i => `<div class="tile ${b.kind === "item" && b.id === i.id ? "on" : ""}" data-i="${i.id}">${thumbs[i.id] ? `<img src="${thumbs[i.id]}" alt="">` : '<div class="ph"></div>'}<span>${i.name}</span></div>`).join(""); else h = `<div class="tile ${b.kind === "sp" ? "on" : ""}" data-k="sp"><div class="ph" style="background:#3ad06b"></div><span>Player Spawn<small>Where players start</small></span></div><div class="tile ${b.kind === "zs" ? "on" : ""}" data-k="zs"><div class="ph" style="background:#e5484d"></div><span>Zombie Spawn<small>${ED.D.zs.length}/${MK_LIMIT.zs} placed</small></span></div>`;
+  $("palGrid").innerHTML = h;
+  $("palTip").textContent = palTab === "MATERIALS" ? ED.sel && ED.sel.kind === "p" ? "Picking a material also paints the selected piece." : "Pick a material, then build or use PAINT." : palTab === "PROPS" ? "Props spawn when the map starts. Zombies placed here attack right away." : palTab === "SPAWNS" ? "With no zombie spawns, zombies come from around the player spawn." : "Pick a shape, then place it with BUILD. Resize it with the bar at the top.";
+}
+
+$("palTabs").addEventListener("click", e => {
+  const t = e.target.closest(".tab");
+  if (!t) return;
+  palTab = t.dataset.c;
+  renderPal();
+});
+
+$("palGrid").addEventListener("click", e => {
+  const t = e.target.closest(".tile");
+  if (!t) return;
+  if (t.dataset.s) {
+    const s = MK_SHAPES.find(x => x.id === t.dataset.s);
+    ED.brush = {
+      kind: "part",
+      shape: s.id,
+      size: s.size.slice(),
+      rot: [ 0, ED.brush.rot ? ED.brush.rot[1] : 0, 0 ]
+    };
+    ED.sel = null;
+    setTool("build");
+    edClosePal();
+  } else if (t.dataset.m) {
+    ED.mat = t.dataset.m;
+    SD.settings.edMat = ED.mat;
+    persist();
+    if (ED.sel && ED.sel.kind === "p" && ED.D.p[ED.sel.i][1] !== ED.mat) {
+      edPush();
+      ED.D.p[ED.sel.i][1] = ED.mat;
+      edRefreshPart(ED.sel.i);
+      edClosePal();
+    } else {
+      if (tool !== "paint") setTool("build");
+      edClosePal();
+    }
+  } else if (t.dataset.i) {
+    ED.brush = {
+      kind: "item",
+      id: t.dataset.i,
+      rot: [ 0, 0, 0 ]
+    };
+    ED.sel = null;
+    setTool("build");
+    edClosePal();
+  } else if (t.dataset.k) {
+    ED.brush = {
+      kind: t.dataset.k,
+      rot: [ 0, t.dataset.k === "sp" ? ED.D.sp[3] || 0 : 0, 0 ]
+    };
+    ED.sel = null;
+    setTool("build");
+    edClosePal();
+  }
+  edHud();
+  updateToolText();
+});
+
+$("palClose").innerHTML = icon("close");
+
+$("palClose").addEventListener("click", edClosePal);
+
+$("edPal").addEventListener("pointerdown", e => {
+  if (e.target.id === "edPal") edClosePal();
+});
+
+function edOpenMenu() {
+  if (!ED.on) return;
+  paused = true;
+  fireHeld = false;
+  mdrag = null;
+  ED.carry = null;
+  renderEdMenu();
+  $("edMenu").classList.remove("hidden");
+  if (document.pointerLockElement) {
+    suppressPause = true;
+    document.exitPointerLock();
+  }
+}
+
+function edCloseMenu() {
+  paused = false;
+  $("edMenu").classList.add("hidden");
+  wantLock();
+}
+
+function renderEdMenu(view) {
+  ED.view = view || "main";
+  const D = ED.D, sel = (id, opts, v) => `<select id="${id}">${opts.map(([k, t]) => `<option value="${k}" ${String(v) === String(k) ? "selected" : ""}>${t}</option>`).join("")}</select>`;
+  let h = "";
+  if (ED.view === "main") {
+    h = `<h2>MAP MAKER</h2><p class="foot" style="margin-top:4px">${esc(ED.draft.name)} · ${D.p.length} pieces · ${D.it.length} props${ED.draft.wid ? " · in the Workshop" : ""}</p>\n    <button class="go" data-m="resume">KEEP BUILDING</button>\n    <div class="opts">\n      <button class="opt" data-m="test">TEST PLAY <b>›</b></button>\n      <button class="opt" data-m="settings">MAP SETTINGS <b>›</b></button>\n      <button class="opt" data-m="publish" style="color:var(--acc)">${ED.draft.wid ? "UPDATE IN WORKSHOP" : "PUBLISH TO WORKSHOP"} <b>›</b></button>\n      <button class="opt" data-m="save">SAVE NOW</button>\n      <label class="opt">LOOK SPEED <input type="range" id="edSens" min="0.4" max="2.2" step="0.1" value="${sens}"></label>\n      <button class="opt" data-m="exit">SAVE AND EXIT</button>\n    </div>\n    <div class="foot">${isTouch ? "Left side moves, JUMP flies up, DOWN flies down. The bar at the top resizes and turns things." : "<b>WASD</b> fly · <b>Space</b>/<b>C</b> up/down · <b>1–5</b> tools · <b>Q</b> pieces · <b>R</b>/<b>F</b> turn · <b>T</b>/<b>G</b> tilt/roll · <b>Arrows</b> width/length · <b>PgUp</b>/<b>PgDn</b> height · <b>B</b> copy · <b>Del</b> delete · <b>N</b> grid · <b>Z</b> undo · <b>Right-click</b> copies a piece · <b>Tab</b> frees the mouse for the bar"}</div>`;
+  } else if (ED.view === "settings") {
+    h = `<h2>MAP SETTINGS</h2><div class="opts">\n      <label class="fld">NAME<input id="edName" maxlength="32" value="${esc(ED.draft.name)}" autocomplete="off"></label>\n      <div class="admgrid">\n        <label class="fld">SKY${sel("edSky", [ [ "day", "Day" ], [ "sunset", "Sunset" ], [ "overcast", "Cloudy" ], [ "night", "Night" ] ], D.env.sky)}</label>\n        <label class="fld">GROUND${sel("edFloor", MK_FLOORS.map(f => [ f, f === "none" ? "None (void)" : (MK_MAT[f] || {}).name ]), D.env.floor)}</label>\n        <label class="fld">GROUND SIZE${sel("edSize", [ 40, 60, 80, 120, 160, 200, 300, 400 ].map(v => [ v, v + " m" ]), D.env.size)}</label>\n        <label class="fld">ZOMBIES${sel("edHorde", [ [ 0, "Only placed ones" ], [ 1, "Horde keeps coming" ] ], D.env.horde ? 1 : 0)}</label>\n      </div></div>\n      <button class="go" data-m="applyset">APPLY</button><button class="go ghost" data-m="back">BACK</button>`;
+  } else if (ED.view === "publish") {
+    h = `<h2>${ED.draft.wid ? "UPDATE" : "PUBLISH"}</h2>\n      <p class="foot" style="margin-top:4px">${user ? `Everyone can find it in the Workshop. The picture is taken from where you are looking right now.` : "Log in first so the map is saved under your name."}</p>\n      <div class="opts"><label class="fld">NAME<input id="pubName" maxlength="32" value="${esc(ED.draft.name)}" autocomplete="off"></label>\n      <label class="fld">DESCRIPTION<input id="pubDesc" maxlength="140" value="${esc(ED.draft.desc || "")}" autocomplete="off" placeholder="What's fun about it?"></label></div>\n      <p class="err" id="pubErr"></p>\n      ${user ? `<button class="go" data-m="dopub">${ED.draft.wid ? "UPDATE MAP" : "PUBLISH MAP"}</button>` : '<button class="go" data-m="login">LOG IN</button>'}\n      <button class="go ghost" data-m="back">BACK</button>`;
+  }
+  $("edMenuBody").innerHTML = h;
+  const sl = $("edSens");
+  if (sl) sl.oninput = e => {
+    sens = +e.target.value;
+    SD.settings.sens = sens;
+    persist();
+    $("sens").value = sens;
+  };
+}
+
+$("edMenu").addEventListener("click", async e => {
+  const b = e.target.closest("[data-m]");
+  if (!b) return;
+  switch (b.dataset.m) {
+   case "resume":
+    edCloseMenu();
+    break;
+
+   case "test":
+    paused = false;
+    edTest();
+    break;
+
+   case "settings":
+    renderEdMenu("settings");
+    break;
+
+   case "publish":
+    renderEdMenu("publish");
+    break;
+
+   case "back":
+    renderEdMenu("main");
+    break;
+
+   case "save":
+    edSave();
+    edThumb();
+    break;
+
+   case "exit":
+    paused = false;
+    edExit(true);
+    break;
+
+   case "login":
+    paused = false;
+    edExit(false);
+    $("mainMenu").classList.add("hidden");
+    $("loginMenu").classList.remove("hidden");
+    break;
+
+   case "applyset":
+    {
+      edPush();
+      ED.draft.name = ($("edName").value || "").trim().slice(0, 32) || "Untitled map";
+      Object.assign(ED.D.env, {
+        sky: $("edSky").value,
+        floor: $("edFloor").value,
+        size: +$("edSize").value,
+        horde: +$("edHorde").value
+      });
+      MAPS["m:edit"] = edDef();
+      edRebuild();
+      edSave(true);
+      renderEdMenu("main");
+      break;
+    }
+
+   case "dopub":
+    {
+      const name = ($("pubName").value || "").trim().slice(0, 32), desc = ($("pubDesc").value || "").trim().slice(0, 140);
+      if (!name) {
+        $("pubErr").textContent = "Give it a name.";
+        break;
+      }
+      ED.draft.name = name;
+      ED.draft.desc = desc;
+      $("pubErr").textContent = "Publishing…";
+      b.disabled = true;
+      try {
+        await wsPublish(ED.draft);
+        renderEdMenu("main");
+        toast(ED.draft.wid ? "Your map is in the Workshop" : "Published", 2600);
+      } catch (er) {
+        console.warn(er);
+        $("pubErr").textContent = wsErr(er);
+        b.disabled = false;
+      }
+      break;
+    }
+  }
+});
+
+function mkDrafts() {
+  if (!Array.isArray(SD.mk)) SD.mk = [];
+  return SD.mk;
+}
+
+function openMaker() {
+  $("mainMenu").classList.add("hidden");
+  $("mkMenu").classList.remove("hidden");
+  renderMaker();
+}
+
+function renderMaker(confirm) {
+  const L = mkDrafts().slice().sort((a, b) => b.t - a.t);
+  $("mkList").innerHTML = L.length ? L.map(d => `<div class="admrow"><img src="${esc(d.thumb || "")}" alt="" onerror="this.style.visibility='hidden'"><div class="info"><div class="nm">${esc(d.name.toUpperCase())}</div><div class="dt">${d.d && d.d.p ? d.d.p.length : 0} pieces · ${fmtDate(d.t)}${d.wid ? " · published" : ""}</div></div><button class="sb save" data-k="edit" data-id="${d.id}">EDIT</button><button class="sb del" data-k="del" data-id="${d.id}">${confirm === d.id ? "SURE?" : "✕"}</button></div>`).join("") : '<div class="empty">No maps yet. Start one below.</div>';
+  $("mkNote").textContent = user ? "Your maps are saved to your account." : "Saved on this device. Log in to keep them everywhere and to publish.";
+}
+
+$("mkList").addEventListener("click", e => {
+  const b = e.target.closest("[data-k]");
+  if (!b) return;
+  const L = mkDrafts(), d = L.find(x => x.id === b.dataset.id);
+  if (!d) return;
+  if (b.dataset.k === "edit") {
+    ED.cam = null;
+    edEnter(d);
+  } else if (b.dataset.k === "del") {
+    if (renderMaker.confirm !== d.id) {
+      renderMaker.confirm = d.id;
+      renderMaker(d.id);
+      return;
+    }
+    renderMaker.confirm = null;
+    L.splice(L.indexOf(d), 1);
+    persist(true);
+    renderMaker();
+  }
+});
+
+$("mkNew").addEventListener("click", e => {
+  const b = e.target.closest("[data-tpl]");
+  if (!b) return;
+  const L = mkDrafts();
+  if (L.length >= 12) {
+    toast("You can keep 12 maps. Delete one first.", 2400);
+    return;
+  }
+  const d = {
+    id: "d" + Date.now().toString(36),
+    name: "My map " + (L.length + 1),
+    t: Date.now(),
+    d: mkBlank(b.dataset.tpl)
+  };
+  L.push(d);
+  persist(true);
+  ED.cam = null;
+  edEnter(d);
+});
+
+$("mkBack").onclick = () => {
+  $("mkMenu").classList.add("hidden");
+  $("mainMenu").classList.remove("hidden");
+};
+
+$("makerBtn").onclick = () => {
+  audioInit();
+  openMaker();
+};
+
+btn("downBtn", () => {
+  ED.down = true;
+}, () => {
+  ED.down = false;
+});
+
+btn("rotBtn", () => {
+  if (ED.on) edAdjust("rot", 1, 1);
+});
+
+const WS = {
+  tab: "POPULAR",
+  q: "",
+  rows: [],
+  busy: false,
+  detail: null,
+  liked: new Set,
+  likedFor: null,
+  seq: 0,
+  played: new Set,
+  confirm: null
+};
+
+const WS_COLS = "id,name,descr,author,author_name,thumb,likes,plays,featured,created_at,updated_at";
+
+function wsErr(e) {
+  const m = (e && e.message || String(e || "")).toLowerCase();
+  if (m.includes("row-level security") || m.includes("permission") || m.includes("not allowed") || m.includes("403")) return "The server said no. You might have hit the 30 map limit, or you're not logged in.";
+  if (m.includes("relation") || m.includes("does not exist") || m.includes("schema cache")) return "The Workshop isn't set up on the server yet.";
+  if (m.includes("check constraint") || m.includes("too large") || m.includes("payload")) return "That map is too big to publish.";
+  if (m.includes("fetch") || m.includes("network")) return "Could not reach the server.";
+  return e && e.message || "Something went wrong.";
+}
+
+async function wsPublish(draft) {
+  if (!user) throw new Error("Log in first.");
+  const D = mkClean(draft.d);
+  if (!D.p.length && !D.it.length) throw new Error("Build something first.");
+  const s = await getSB();
+  const row = {
+    name: draft.name.slice(0, 32),
+    descr: (draft.desc || "").slice(0, 140),
+    data: D,
+    thumb: draft.thumb || null
+  };
+  if (ED.on) {
+    edThumb();
+    row.thumb = draft.thumb || null;
+  }
+  let r;
+  if (draft.wid) {
+    r = await s.from("pz_workshop").update(Object.assign({
+      updated_at: (new Date).toISOString()
+    }, row)).eq("id", draft.wid).select("id").maybeSingle();
+    if (!r.error && !r.data) draft.wid = null;
+  }
+  if (!draft.wid) {
+    r = await s.from("pz_workshop").insert(row).select("id").single();
+    if (r.error) throw r.error;
+    draft.wid = r.data.id;
+  } else if (r.error) throw r.error;
+  persist(true);
+  const id = "w:" + draft.wid;
+  MAPS[id] = makerDef(id, D, {
+    name: row.name,
+    author: user.name
+  });
+  mapShots[id] = row.thumb;
+  return draft.wid;
+}
+
+function openWorkshop(from) {
+  WS.from = from || "menu";
+  WS.detail = null;
+  WS.confirm = null;
+  $("mainMenu").classList.add("hidden");
+  $("wsMenu").classList.remove("hidden");
+  renderWsHead();
+  wsLoad();
+}
+
+function closeWorkshop() {
+  $("wsMenu").classList.add("hidden");
+  $("mainMenu").classList.remove("hidden");
+  renderMaps();
+}
+
+function renderWsHead() {
+  const tabs = [ "POPULAR", "NEW" ].concat(user ? [ "MINE", "LIKED" ] : []);
+  $("wsTabs").innerHTML = tabs.map(t => `<button class="tab ${t === WS.tab ? "on" : ""}" data-t="${t}">${t}</button>`).join("");
+}
+
+async function wsLoad() {
+  if (WS.detail) return;
+  const seq = ++WS.seq;
+  WS.busy = true;
+  renderWs();
+  try {
+    const s = await getSB();
+    let q;
+    if (WS.tab === "LIKED") {
+      if (!user) {
+        WS.tab = "POPULAR";
+        return wsLoad();
+      }
+      const L = await s.from("pz_likes").select("map_id").eq("user_id", user.id).limit(60);
+      if (L.error) throw L.error;
+      const ids = (L.data || []).map(r => r.map_id);
+      WS.liked = new Set(ids);
+      WS.likedFor = user.id;
+      if (!ids.length) {
+        WS.rows = [];
+        WS.busy = false;
+        renderWs();
+        return;
+      }
+      q = s.from("pz_workshop").select(WS_COLS).in("id", ids).order("likes", {
+        ascending: false
+      });
+    } else {
+      q = s.from("pz_workshop").select(WS_COLS);
+      if (WS.tab === "MINE" && user) q = q.eq("author", user.id).order("updated_at", {
+        ascending: false
+      }); else if (WS.tab === "NEW") q = q.order("created_at", {
+        ascending: false
+      }); else q = q.order("featured", {
+        ascending: false
+      }).order("likes", {
+        ascending: false
+      }).order("plays", {
+        ascending: false
+      });
+    }
+    if (WS.q) q = q.ilike("name", "%" + WS.q.replace(/[%_\\]/g, "") + "%");
+    const r = await q.limit(40);
+    if (r.error) throw r.error;
+    if (seq !== WS.seq) return;
+    WS.rows = r.data || [];
+    if (user && WS.likedFor !== user.id) {
+      const L = await s.from("pz_likes").select("map_id").eq("user_id", user.id).limit(500);
+      if (!L.error) {
+        WS.liked = new Set((L.data || []).map(x => x.map_id));
+        WS.likedFor = user.id;
+      }
+    }
+    WS.err = "";
+  } catch (e) {
+    console.warn(e);
+    if (seq === WS.seq) {
+      WS.rows = [];
+      WS.err = wsErr(e);
+    }
+  }
+  if (seq === WS.seq) {
+    WS.busy = false;
+    renderWs();
+  }
+}
+
+const wsCard = r => `<button class="wscard" data-id="${esc(r.id)}"><div class="pv">${r.thumb ? `<img src="${esc(r.thumb)}" alt="">` : ""}${r.featured ? "<em>FEATURED</em>" : ""}</div><div class="nm">${esc(r.name)}</div><div class="by">by ${esc(r.author_name || "someone")}</div><div class="ct"><span>${WS.liked.has(r.id) ? "♥" : "♡"} ${r.likes || 0}</span><span>▶ ${r.plays || 0}</span></div></button>`;
+
+function renderWs() {
+  const body = $("wsBody");
+  $("wsSearch").classList.toggle("hidden", !!WS.detail);
+  if (WS.detail) {
+    body.innerHTML = wsDetailHTML(WS.detail);
+    return;
+  }
+  if (WS.busy && !WS.rows.length) {
+    body.innerHTML = '<div class="empty">Loading…</div>';
+    return;
+  }
+  if (WS.err) {
+    body.innerHTML = `<div class="empty">${esc(WS.err)}</div>`;
+    return;
+  }
+  if (!WS.rows.length) {
+    body.innerHTML = `<div class="empty">${WS.q ? "Nothing matches that." : WS.tab === "MINE" ? "You haven't published anything yet. Open the Map Maker and hit Publish." : WS.tab === "LIKED" ? "Maps you like show up here." : "No maps yet. Be the first: open the Map Maker!"}</div>`;
+    return;
+  }
+  body.innerHTML = `<div class="wsgrid">${WS.rows.map(wsCard).join("")}</div>`;
+}
+
+function wsDetailHTML(r) {
+  const mine = user && r.author === user.id, liked = WS.liked.has(r.id);
+  return `<div class="wsdet">\n    <button class="sb" data-w="back">‹ BACK</button>\n    <div class="pv">${r.thumb ? `<img src="${esc(r.thumb)}" alt="">` : ""}</div>\n    <h3>${esc(r.name)}</h3>\n    <div class="by">by <b>${esc(r.author_name || "someone")}</b> · ${fmtDate(new Date(r.updated_at || r.created_at).getTime())}</div>\n    ${r.descr ? `<p class="ds">${esc(r.descr)}</p>` : ""}\n    <div class="ct"><span>♥ ${r.likes || 0} likes</span><span>▶ ${r.plays || 0} plays</span>${r.featured ? '<span class="feat">FEATURED</span>' : ""}</div>\n    <div class="row2"><button class="go" data-w="play" ${WS.busy ? "disabled" : ""}>PLAY</button><button class="go alt" data-w="host" ${WS.busy ? "disabled" : ""}>PLAY ONLINE</button></div>\n    <div class="opts">\n      ${user ? `<button class="opt" data-w="like">${liked ? "LIKED" : "LIKE THIS MAP"} <b>${liked ? "♥" : "♡"}</b></button>` : '<p class="foot">Log in to like maps.</p>'}\n      <button class="opt" data-w="remix">${mine ? "EDIT IN MAP MAKER" : "COPY INTO MAP MAKER"} <b>›</b></button>\n      ${mine || isAdmin() ? `<button class="opt danger" data-w="del">${WS.confirm === r.id ? "TAP AGAIN TO DELETE" : "DELETE FROM WORKSHOP"}</button>` : ""}\n      ${isAdmin() ? `<button class="opt" data-w="feat" style="color:var(--acc)">${r.featured ? "UNFEATURE" : "FEATURE THIS MAP"} <b>★</b></button>` : ""}\n    </div>\n    <p class="err" id="wsErr"></p>\n  </div>`;
+}
+
+async function wsGetData(r) {
+  const id = "w:" + r.id;
+  if (MAPS[id] && MAPS[id].wsData) return MAPS[id].wsData;
+  const s = await getSB();
+  const {data: data, error: error} = await s.from("pz_workshop").select("id,name,descr,author_name,data,thumb").eq("id", r.id).maybeSingle();
+  if (error || !data) throw error || new Error("That map is gone.");
+  if (!mkValid(data.data)) throw new Error("That map is damaged.");
+  wsRegister(data);
+  return data.data;
+}
+
+function wsRegister(row) {
+  const id = "w:" + row.id;
+  MAPS[id] = makerDef(id, row.data, {
+    name: row.name,
+    author: row.author_name,
+    desc: row.descr ? row.descr.slice(0, 60) : null
+  });
+  MAPS[id].wsData = row.data;
+  MAPS[id].wsRow = {
+    id: row.id,
+    name: row.name
+  };
+  if (row.thumb) mapShots[id] = row.thumb;
+  return id;
+}
+
+function wsCountPlay(id) {
+  const uuid = String(id).slice(2);
+  if (WS.played.has(uuid)) return;
+  WS.played.add(uuid);
+  getSB().then(s => s.rpc("pz_play", {
+    map: uuid
+  })).catch(() => {});
+}
+
+async function wsAction(a, b) {
+  const r = WS.detail;
+  const err = t => {
+    const el = $("wsErr");
+    if (el) el.textContent = t;
+  };
+  switch (a) {
+   case "back":
+    WS.detail = null;
+    WS.confirm = null;
+    renderWs();
+    if (!WS.rows.length) wsLoad();
+    return;
+
+   case "play":
+   case "host":
+    {
+      WS.busy = true;
+      renderWs();
+      err("Loading map…");
+      try {
+        await wsGetData(r);
+      } catch (e) {
+        WS.busy = false;
+        renderWs();
+        err(wsErr(e));
+        return;
+      }
+      WS.busy = false;
+      const id = "w:" + r.id;
+      $("wsMenu").classList.add("hidden");
+      selectMap(id);
+      if (a === "play") {
+        startGame();
+        wsCountPlay(id);
+      } else openOnline();
+      return;
+    }
+
+   case "like":
+    {
+      if (!user) return;
+      const s = await getSB(), liked = WS.liked.has(r.id);
+      const q = liked ? s.from("pz_likes").delete().eq("map_id", r.id).eq("user_id", user.id) : s.from("pz_likes").insert({
+        map_id: r.id,
+        user_id: user.id
+      });
+      const {error: error} = await q;
+      if (error && !/duplicate/i.test(error.message || "")) {
+        err(wsErr(error));
+        return;
+      }
+      if (liked) {
+        WS.liked.delete(r.id);
+        r.likes = Math.max(0, (r.likes || 0) - 1);
+      } else {
+        WS.liked.add(r.id);
+        r.likes = (r.likes || 0) + 1;
+        sfx.pop();
+      }
+      renderWs();
+      return;
+    }
+
+   case "remix":
+    {
+      err("Loading map…");
+      let D;
+      try {
+        D = await wsGetData(r);
+      } catch (e) {
+        err(wsErr(e));
+        return;
+      }
+      const L = mkDrafts(), mine = user && r.author === user.id;
+      let d = mine ? L.find(x => x.wid === r.id) : null;
+      if (!d) {
+        if (L.length >= 12) {
+          err("You can keep 12 maps in the Map Maker. Delete one first.");
+          return;
+        }
+        d = {
+          id: "d" + Date.now().toString(36),
+          name: (mine ? r.name : r.name + " remix").slice(0, 32),
+          desc: mine ? r.descr || "" : "",
+          t: Date.now(),
+          d: JSON.parse(JSON.stringify(D)),
+          thumb: r.thumb || null
+        };
+        if (mine) d.wid = r.id;
+        L.push(d);
+        persist(true);
+      }
+      $("wsMenu").classList.add("hidden");
+      ED.cam = null;
+      edEnter(d);
+      return;
+    }
+
+   case "del":
+    {
+      if (WS.confirm !== r.id) {
+        WS.confirm = r.id;
+        renderWs();
+        return;
+      }
+      const s = await getSB();
+      const {error: error} = await s.from("pz_workshop").delete().eq("id", r.id);
+      if (error) {
+        err(wsErr(error));
+        return;
+      }
+      for (const d of mkDrafts()) if (d.wid === r.id) d.wid = null;
+      persist(true);
+      delete MAPS["w:" + r.id];
+      if (curMapId === "w:" + r.id) selectMap("flatgrass");
+      WS.rows = WS.rows.filter(x => x.id !== r.id);
+      WS.detail = null;
+      WS.confirm = null;
+      renderWs();
+      toast("Deleted");
+      return;
+    }
+
+   case "feat":
+    {
+      const s = await getSB();
+      const {error: error} = await s.rpc("pz_feature", {
+        map: r.id,
+        flag: !r.featured
+      });
+      if (error) {
+        err(wsErr(error));
+        return;
+      }
+      r.featured = !r.featured;
+      renderWs();
+      return;
+    }
+  }
+}
+
+$("wsTabs").addEventListener("click", e => {
+  const t = e.target.closest(".tab");
+  if (!t) return;
+  WS.tab = t.dataset.t;
+  WS.detail = null;
+  renderWsHead();
+  wsLoad();
+});
+
+$("wsBody").addEventListener("click", e => {
+  const c = e.target.closest(".wscard");
+  if (c) {
+    WS.detail = WS.rows.find(r => r.id === c.dataset.id) || null;
+    WS.confirm = null;
+    renderWs();
+    $("wsBody").scrollTop = 0;
+    return;
+  }
+  const b = e.target.closest("[data-w]");
+  if (!b || b.disabled) return;
+  wsAction(b.dataset.w, b).catch(er => {
+    console.warn(er);
+    const el = $("wsErr");
+    if (el) el.textContent = wsErr(er);
+  });
+});
+
+let wsQT = null;
+
+$("wsQ").addEventListener("input", e => {
+  clearTimeout(wsQT);
+  wsQT = setTimeout(() => {
+    WS.q = e.target.value.trim().slice(0, 32);
+    wsLoad();
+  }, 350);
+});
+
+$("wsClose").innerHTML = icon("close");
+
+$("wsClose").addEventListener("click", closeWorkshop);
+
+$("wsBtn").onclick = () => {
+  audioInit();
+  openWorkshop("menu");
+};
+
+$("mkWs").onclick = () => {
+  $("mkMenu").classList.add("hidden");
+  openWorkshop("maker");
+};
+
+const RTC_CFG = {
+  iceServers: [ {
+    urls: [ "stun:stun.l.google.com:19302", "stun:stun1.l.google.com:19302" ]
+  }, {
+    urls: "stun:stun.cloudflare.com:3478"
+  } ]
+};
+
+const VC_MAX = 7;
+
+VC.mode = [ "ptt", "open", "off" ].includes(SD.settings.voice) ? SD.settings.voice : "ptt";
+
+VC.vol = SD.settings.vvol ?? 1;
+
+VC.prox = SD.settings.vprox !== false;
+
+const vcOk = () => typeof RTCPeerConnection !== "undefined" && !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+
+function vcOut() {
+  audioInit();
+  if (!ac) return null;
+  if (!VC.out) {
+    VC.out = ac.createGain();
+    VC.out.gain.value = VC.vol;
+    VC.out.connect(ac.destination);
+  }
+  return VC.out;
+}
+
+function vcMic() {
+  if (VC.track && VC.track.readyState === "live") return Promise.resolve(VC.track);
+  if (VC.getting) return VC.getting;
+  if (!vcOk()) {
+    toast("Voice chat needs a newer browser", 2600);
+    return Promise.reject(new Error("unsupported"));
+  }
+  VC.getting = navigator.mediaDevices.getUserMedia({
+    audio: {
+      echoCancellation: true,
+      noiseSuppression: true,
+      autoGainControl: true
+    }
+  }).then(st => {
+    VC.getting = null;
+    if (VC.mode === "off") {
+      st.getTracks().forEach(t => t.stop());
+      throw new Error("off");
+    }
+    VC.stream = st;
+    VC.track = st.getAudioTracks()[0];
+    vcApplyTalk();
+    for (const r of VC.pcs.values()) vcAttach(r);
+    try {
+      const o = vcOut();
+      if (o) {
+        VC.lsrc = ac.createMediaStreamSource(st);
+        VC.lan = ac.createAnalyser();
+        VC.lan.fftSize = 512;
+        VC.lsrc.connect(VC.lan);
+      }
+    } catch (e) {}
+    return VC.track;
+  }).catch(e => {
+    VC.getting = null;
+    if (e && e.message !== "off") {
+      toast("Microphone blocked. Allow it in your browser settings to talk.", 3600);
+      VC.denied = true;
+    }
+    throw e;
+  });
+  return VC.getting;
+}
+
+function vcStopMic() {
+  if (VC.stream) VC.stream.getTracks().forEach(t => t.stop());
+  if (VC.lsrc) {
+    try {
+      VC.lsrc.disconnect();
+    } catch (e) {}
+  }
+  VC.stream = VC.track = VC.lsrc = VC.lan = null;
+  VC.getting = null;
+}
+
+function vcApplyTalk() {
+  const on = VC.mode === "open" ? !VC.selfMute : VC.held;
+  if (VC.track) VC.track.enabled = !!on;
+  VC.talking = !!on && !!VC.track;
+  const b = $("micBtn");
+  if (b) {
+    b.classList.toggle("on", VC.talking);
+    b.classList.toggle("muted", VC.mode === "open" && !!VC.selfMute);
+  }
+}
+
+function vcTalk(on) {
+  if (!NET.on || VC.mode === "off") return;
+  if (VC.mode === "open") {
+    if (on) {
+      VC.selfMute = !VC.selfMute;
+      vcApplyTalk();
+      toast(VC.selfMute ? "Mic muted" : "Mic on");
+    }
+    return;
+  }
+  VC.held = on;
+  if (on && !VC.track) vcMic().then(vcApplyTalk).catch(() => {});
+  vcApplyTalk();
+}
+
+function vcAttach(r) {
+  const tr = r.pc.getTransceivers()[0];
+  if (tr && tr.sender && VC.track && tr.sender.track !== VC.track) tr.sender.replaceTrack(VC.track).catch(() => {});
+}
+
+function vcPeer(id, initiator) {
+  let r = VC.pcs.get(id);
+  if (r) return r;
+  const pc = new RTCPeerConnection(RTC_CFG);
+  r = {
+    id: id,
+    pc: pc,
+    q: VC.pend.get(id) || [],
+    remoteSet: false,
+    lvl: 0,
+    t0: now
+  };
+  VC.pend.delete(id);
+  VC.pcs.set(id, r);
+  pc.onicecandidate = e => {
+    if (e.candidate && NET.on) send("rtc", {
+      f: NET.id,
+      to: id,
+      t: "ice",
+      d: e.candidate.toJSON()
+    });
+  };
+  pc.ontrack = e => vcPlay(r, e.streams && e.streams[0] ? e.streams[0] : new MediaStream([ e.track ]));
+  pc.onconnectionstatechange = () => {
+    if (pc.connectionState === "failed") {
+      vcClose(id, true);
+      r.failed = now;
+      VC.retry.set(id, now);
+    }
+  };
+  if (initiator) {
+    const tr = pc.addTransceiver("audio", {
+      direction: "sendrecv"
+    });
+    if (VC.track) tr.sender.replaceTrack(VC.track).catch(() => {});
+    pc.createOffer().then(o => pc.setLocalDescription(o)).then(() => {
+      if (VC.pcs.get(id) === r) send("rtc", {
+        f: NET.id,
+        to: id,
+        t: "offer",
+        d: pc.localDescription.toJSON()
+      });
+    }).catch(e => console.warn("voice offer", e));
+  }
+  return r;
+}
+
+function vcFlush(r) {
+  const q = r.q.splice(0);
+  for (const c of q) r.pc.addIceCandidate(c).catch(() => {});
+}
+
+async function vcSignal(p) {
+  if (!p || p.to !== NET.id || !NET.on || !p.f) return;
+  if (VC.mode === "off" || !vcOk()) {
+    if (p.t === "offer") send("rtc", {
+      f: NET.id,
+      to: p.f,
+      t: "bye"
+    });
+    return;
+  }
+  try {
+    if (p.t === "offer") {
+      let r = VC.pcs.get(p.f);
+      if (r && (r.remoteSet || r.pc.signalingState !== "stable")) {
+        vcClose(p.f, true);
+        r = null;
+      }
+      r = vcPeer(p.f, false);
+      await r.pc.setRemoteDescription(p.d);
+      r.remoteSet = true;
+      const tr = r.pc.getTransceivers()[0];
+      if (tr) {
+        tr.direction = "sendrecv";
+        if (VC.track) await tr.sender.replaceTrack(VC.track);
+      }
+      const a = await r.pc.createAnswer();
+      await r.pc.setLocalDescription(a);
+      send("rtc", {
+        f: NET.id,
+        to: p.f,
+        t: "answer",
+        d: r.pc.localDescription.toJSON()
+      });
+      vcFlush(r);
+    } else if (p.t === "answer") {
+      const r = VC.pcs.get(p.f);
+      if (!r || r.pc.signalingState !== "have-local-offer") return;
+      await r.pc.setRemoteDescription(p.d);
+      r.remoteSet = true;
+      vcFlush(r);
+    } else if (p.t === "ice") {
+      const r = VC.pcs.get(p.f);
+      if (!r) {
+        if (!VC.pend.has(p.f)) VC.pend.set(p.f, []);
+        VC.pend.get(p.f).push(p.d);
+        return;
+      }
+      if (r.remoteSet) await r.pc.addIceCandidate(p.d).catch(() => {}); else r.q.push(p.d);
+    } else if (p.t === "bye") vcClose(p.f, true);
+  } catch (e) {
+    console.warn("voice", e);
+  }
+}
+
+function vcPlay(r, stream) {
+  const out = vcOut();
+  if (!out) return;
+  if (r.src) {
+    try {
+      r.src.disconnect();
+      r.gain.disconnect();
+    } catch (e) {}
+  }
+  r.audio = new Audio;
+  r.audio.muted = true;
+  r.audio.srcObject = stream;
+  const pl = r.audio.play();
+  if (pl && pl.catch) pl.catch(() => {});
+  r.src = ac.createMediaStreamSource(stream);
+  r.an = ac.createAnalyser();
+  r.an.fftSize = 512;
+  r.buf = new Float32Array(r.an.fftSize);
+  r.gain = ac.createGain();
+  r.pan = ac.createPanner();
+  r.pan.panningModel = "equalpower";
+  r.pan.distanceModel = "linear";
+  r.pan.refDistance = 3;
+  r.pan.maxDistance = 45;
+  r.pan.rolloffFactor = 1;
+  r.src.connect(r.an);
+  r.src.connect(r.gain);
+  vcRoute(r);
+}
+
+function vcRoute(r) {
+  if (!r.gain || !VC.out) return;
+  try {
+    r.gain.disconnect();
+    r.pan.disconnect();
+  } catch (e) {}
+  r.gain.gain.value = VC.muted.has(r.id) ? 0 : 1;
+  if (VC.prox) {
+    r.gain.connect(r.pan);
+    r.pan.connect(VC.out);
+  } else r.gain.connect(VC.out);
+}
+
+function vcClose(id, quiet) {
+  const r = VC.pcs.get(id);
+  if (!r) return;
+  VC.pcs.delete(id);
+  if (!quiet && NET.on) send("rtc", {
+    f: NET.id,
+    to: id,
+    t: "bye"
+  });
+  try {
+    r.pc.close();
+  } catch (e) {}
+  try {
+    if (r.src) r.src.disconnect();
+    if (r.gain) r.gain.disconnect();
+    if (r.pan) r.pan.disconnect();
+  } catch (e) {}
+  if (r.audio) {
+    r.audio.srcObject = null;
+  }
+  const Rm = NET.peers.get(id);
+  if (Rm && Rm.spk) Rm.spk.visible = false;
+}
+
+function vcCloseAll() {
+  for (const id of [ ...VC.pcs.keys() ]) vcClose(id, !NET.on);
+  VC.pend.clear();
+  VC.retry.clear();
+  VC.held = false;
+  VC.selfMute = false;
+  vcApplyTalk();
+}
+
+function vcSync() {
+  const metas = NET.metas || [];
+  if (!NET.on || VC.mode === "off" || !vcOk()) {
+    if (VC.pcs.size) vcCloseAll();
+    return;
+  }
+  const want = new Set(metas.filter(m => m.id !== NET.id && m.vc).map(m => m.id));
+  for (const id of [ ...VC.pcs.keys() ]) if (!want.has(id)) vcClose(id, true);
+  let n = VC.pcs.size;
+  for (const id of want) {
+    if (VC.pcs.has(id) || n >= VC_MAX) continue;
+    if (NET.id < id) {
+      const t = VC.retry.get(id);
+      if (t && now - t < 4) continue;
+      vcPeer(id, true);
+      n++;
+    }
+  }
+}
+
+function vcSetMode(m) {
+  const prev = VC.mode;
+  VC.mode = m;
+  SD.settings.voice = m;
+  persist();
+  if (m === "off") {
+    vcCloseAll();
+    for (const id of [ ...VC.pcs.keys() ]) vcClose(id);
+    vcStopMic();
+  } else if (m === "open" && NET.on) vcMic().catch(() => {});
+  if (m !== "ptt") VC.held = false;
+  VC.selfMute = false;
+  vcApplyTalk();
+  if (NET.on && NET.ch && prev !== m) {
+    try {
+      NET.ch.track(myMeta(NET.host));
+    } catch (e) {}
+  }
+  vcSync();
+  vcUI();
+}
+
+const VC_LABEL = {
+  ptt: "PUSH TO TALK",
+  open: "OPEN MIC",
+  off: "OFF"
+};
+
+function vcUI() {
+  const lab = `VOICE CHAT <b>${VC_LABEL[VC.mode]}</b>`;
+  for (const id of [ "optVoice", "voiceToggle" ]) if ($(id)) $(id).innerHTML = lab;
+  if ($("optProx")) $("optProx").innerHTML = `VOICE BY DISTANCE <b>${VC.prox ? "ON" : "OFF"}</b>`;
+  if ($("voiceVol")) $("voiceVol").value = VC.vol;
+  for (const id of [ "optVoice", "optProx", "optVoiceVol" ]) $(id).classList.toggle("hidden", !NET.on);
+  document.body.classList.toggle("vc", NET.on && VC.mode !== "off");
+  const mb = $("micBtn");
+  if (mb) mb.innerHTML = icon(VC.mode === "open" && VC.selfMute ? "micoff" : "mic") + (VC.mode === "open" ? "MIC" : "TALK");
+  if ($("voiceHint")) $("voiceHint").textContent = VC.mode === "off" ? "Voice chat is off. You won't hear others either." : VC.mode === "open" ? `Your mic is always on in rooms. ${isTouch ? "Tap MIC" : "Press T"} to mute.` : `Hold ${isTouch ? "TALK" : "T"} to talk. Nearby players hear you louder.`;
+}
+
+const spkTex = (() => {
+  const c = document.createElement("canvas");
+  c.width = c.height = 64;
+  const g = c.getContext("2d");
+  g.fillStyle = "rgba(13,14,17,.75)";
+  g.beginPath();
+  g.arc(32, 32, 30, 0, 7);
+  g.fill();
+  g.fillStyle = "#f5a524";
+  g.beginPath();
+  g.moveTo(14, 26);
+  g.lineTo(24, 26);
+  g.lineTo(34, 16);
+  g.lineTo(34, 48);
+  g.lineTo(24, 38);
+  g.lineTo(14, 38);
+  g.closePath();
+  g.fill();
+  g.strokeStyle = "#f5a524";
+  g.lineWidth = 4;
+  g.lineCap = "round";
+  g.beginPath();
+  g.arc(36, 32, 9, -.9, .9);
+  g.stroke();
+  g.beginPath();
+  g.arc(36, 32, 17, -.9, .9);
+  g.stroke();
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  return t;
+})();
+
+function vcSpeaker(Rm) {
+  if (!Rm.spk) {
+    Rm.spk = new THREE.Sprite(new THREE.SpriteMaterial({
+      map: spkTex,
+      depthTest: false,
+      transparent: true
+    }));
+    Rm.spk.scale.set(.42, .42, 1);
+    Rm.spk.position.y = 3.55;
+    Rm.spk.renderOrder = 21;
+    Rm.root.add(Rm.spk);
+  }
+  return Rm.spk;
+}
+
+const vcFwd = new THREE.Vector3, vcUp = new THREE.Vector3;
+
+let vcT = 0, vcSyncT = 0;
+
+function vcLevel(an, buf) {
+  an.getFloatTimeDomainData(buf);
+  let s = 0;
+  for (let i = 0; i < buf.length; i++) s += buf[i] * buf[i];
+  return Math.sqrt(s / buf.length);
+}
+
+function vcUpdate(dt) {
+  if (!NET.on || VC.mode === "off") return;
+  vcSyncT -= dt;
+  if (vcSyncT <= 0) {
+    vcSyncT = 3;
+    vcSync();
+  }
+  if (!ac || !VC.out) return;
+  VC.out.gain.value = VC.vol;
+  const L = ac.listener, p = camera.position;
+  camera.getWorldDirection(vcFwd);
+  vcUp.set(0, 1, 0).applyQuaternion(camera.quaternion);
+  if (L.positionX) {
+    L.positionX.value = p.x;
+    L.positionY.value = p.y;
+    L.positionZ.value = p.z;
+    L.forwardX.value = vcFwd.x;
+    L.forwardY.value = vcFwd.y;
+    L.forwardZ.value = vcFwd.z;
+    L.upX.value = vcUp.x;
+    L.upY.value = vcUp.y;
+    L.upZ.value = vcUp.z;
+  } else if (L.setPosition) {
+    L.setPosition(p.x, p.y, p.z);
+    L.setOrientation(vcFwd.x, vcFwd.y, vcFwd.z, vcUp.x, vcUp.y, vcUp.z);
+  }
+  vcT -= dt;
+  const meter = vcT <= 0;
+  if (meter) vcT = .08;
+  for (const r of VC.pcs.values()) {
+    const Rm = NET.peers.get(r.id);
+    if (r.pan && Rm) {
+      if (r.pan.positionX) {
+        r.pan.positionX.value = Rm.p.x;
+        r.pan.positionY.value = Rm.p.y + 1.7;
+        r.pan.positionZ.value = Rm.p.z;
+      } else r.pan.setPosition(Rm.p.x, Rm.p.y + 1.7, Rm.p.z);
+    }
+    if (meter && r.an) {
+      const l = vcLevel(r.an, r.buf);
+      r.lvl = Math.max(l, r.lvl * .7);
+      if (Rm) {
+        const sp = vcSpeaker(Rm);
+        sp.visible = r.lvl > .015 && !VC.muted.has(r.id) && Rm.root.visible;
+      }
+    }
+  }
+  if (meter) {
+    const loud = VC.talking && VC.lan ? vcLevel(VC.lan, VC.lbuf || (VC.lbuf = new Float32Array(512))) : 0;
+    $("vcInd").classList.toggle("hidden", !VC.talking);
+    $("vcInd").classList.toggle("loud", loud > .02);
+  }
+}
+
+function vcStats() {
+  return [ ...VC.pcs.values() ].map(r => ({
+    id: r.id,
+    st: r.pc.connectionState,
+    lvl: +r.lvl.toFixed(4),
+    audio: !!r.src
+  }));
+}
+
+btn("micBtn", () => {
+  audioInit();
+  vcTalk(true);
+}, () => {
+  if (VC.mode === "ptt") vcTalk(false);
+});
+
+$("optVoice").onclick = () => vcSetMode(VC.mode === "ptt" ? "open" : VC.mode === "open" ? "off" : "ptt");
+
+$("voiceToggle").onclick = () => vcSetMode(VC.mode === "ptt" ? "open" : VC.mode === "open" ? "off" : "ptt");
+
+$("optProx").onclick = () => {
+  VC.prox = !VC.prox;
+  SD.settings.vprox = VC.prox;
+  persist();
+  for (const r of VC.pcs.values()) vcRoute(r);
+  vcUI();
+};
+
+$("voiceVol").oninput = e => {
+  VC.vol = +e.target.value;
+  SD.settings.vvol = VC.vol;
+  persist();
+};
+
+$("pauseRoom").addEventListener("click", e => {
+  const b = e.target.closest("[data-mute]");
+  if (!b) return;
+  const id = b.dataset.mute;
+  if (VC.muted.has(id)) VC.muted.delete(id); else VC.muted.add(id);
+  const r = VC.pcs.get(id);
+  if (r) vcRoute(r);
+  renderPauseRoom();
+});
+
+vcUI();
+
 const clock = new THREE.Clock;
 
 const eye = new THREE.Vector3, focus = new THREE.Vector3;
@@ -9144,7 +12449,7 @@ function loop() {
       SD.stats.time += dt;
       if ((now | 0) % 15 === 0 && (now - dt | 0) % 15 !== 0) persist();
       updatePlayer(dt);
-      if (isAuth()) {
+      if (ED.on) edUpdate(dt); else if (isAuth()) {
         if (mode === "survival") updateSurvival(dt); else updateHorde(dt);
       }
     } else if (state === "dead") {
@@ -9167,9 +12472,12 @@ function loop() {
       v.x *= .8;
       v.z *= .8;
     }
-    if (isAuth()) updateZombies(dt);
+    if (isAuth() && !ED.on) updateZombies(dt);
     updateGrab();
-    if (NET.on) netTick(dt);
+    if (NET.on) {
+      netTick(dt);
+      vcUpdate(dt);
+    }
     world.step(1 / 60, dt * WSET.ts, 3);
     updateRockets(dt);
     updateVRockets(dt);
@@ -9182,7 +12490,12 @@ function loop() {
     for (const z of zombies) animZombie(z, dt);
   }
   updateLauncher(paused ? 0 : dt);
-  if (state === "play" && firstPerson && pBones.head) {
+  if (state === "play" && ED.on) {
+    eye.set(player.position.x, player.position.y + 1.65, player.position.z);
+    camera.position.lerp(eye, 1 - Math.exp(-dt * 30));
+    camera.rotation.set(lookPitch, yaw, 0, "YXZ");
+    focus.copy(player.position);
+  } else if (state === "play" && firstPerson && pBones.head) {
     modelHolder.updateMatrixWorld(true);
     pBones.head.getWorldPosition(eye);
     eye.x += Math.sin(facing) * eyeOff.fwd;
@@ -9236,7 +12549,7 @@ function loop() {
     $("stats").innerHTML = mode === "survival" ? `WAVE <b>${W[0]}</b> · LEFT <b>${W[1]}</b> · KILLS <b>${kills}</b>` : `ZOMBIES <b>${zombies.size}</b> · KILLS <b>${kills}</b>${(isAuth() ? horde : NET.horde) ? ' · <b style="color:var(--red)">HORDE</b>' : ""}`;
     if (NET.on) $("roomChip").textContent = `ROOM ${NET.code} · ${NET.count} ${NET.count === 1 ? "PLAYER" : "PLAYERS"}${NET.host ? " · HOST" : ""}`;
     let hot = !!grab.body;
-    if (!hot && (tool === "grab" || tool === "remove" || tool === "balloon" || tool === "hands")) {
+    if (ED.on) hot = $("cross").classList.contains("hot"); else if (!hot && (tool === "grab" || tool === "remove" || tool === "balloon" || tool === "hands")) {
       const a = aim(tool === "hands" ? 2.9 : 26);
       hot = !!(a && a.body.ent);
     }
@@ -9259,9 +12572,10 @@ function makeMapShots() {
     sh = h;
     sw = h * 16 / 9;
   }
-  const was = playerRoot.visible;
+  const was = playerRoot.visible, keep = curMapId;
   playerRoot.visible = false;
   for (const id of Object.keys(MAPS)) {
+    if (MAPS[id].custom || MAPS[id].maker || MAPS[id].editor) continue;
     const m = MAPS[id];
     buildMap(id);
     try {
@@ -9286,7 +12600,7 @@ function makeMapShots() {
     mapShots[id] = out.toDataURL("image/jpeg", .82);
   }
   playerRoot.visible = was;
-  buildMap(curMapId);
+  buildMap(MAPS[keep] ? keep : "flatgrass");
 }
 
 addEventListener("resize", () => {
@@ -9316,6 +12630,8 @@ loadCharacter().then(() => {
   const b = $("startBtn");
   b.disabled = false;
   b.textContent = "PLAY SOLO";
+  $("makerBtn").disabled = false;
+  $("wsBtn").disabled = false;
   $("onlineBtn").disabled = false;
   initAuth();
 }).catch(err => {
