@@ -2150,6 +2150,7 @@ function buildMap(id) {
   curMapId = id;
   curMap = MAPS[id];
   const m = curMap;
+  madeReset();
   sgBuild(m && m.mkData && m.mkData.gui, false);
   scene.background = new THREE.Color(m.sky);
   scene.fog = new THREE.Fog(m.sky, m.fog[0], m.fog[1]);
@@ -6724,6 +6725,7 @@ function promote() {
   } catch (e) {}
   NET.fullT = 0;
   banner("YOU ARE THE HOST", "the old host left", 2200);
+  madeClear();
   startScripts();
   if (NET.isPublic) lobbyJoin().then(lobbyAnnounce).catch(() => {});
 }
@@ -7013,11 +7015,12 @@ function buildSnap(full) {
   };
   const lp = LIVE.list.length ? liveSnap(full) : null;
   if (lp && lp.length) msg.lp = lp;
+  madeSnap(msg, full);
   if (GUI.gdirty || full && Object.keys(GUI.glob).length) {
     msg.gu = GUI.glob;
     GUI.gdirty = false;
   }
-  if (full) msg.all = [ ...ents ].map(e => e.nid); else if (!list.length && !msg.fx.length && !msg.d.length && !msg.lp && !msg.gu) return null;
+  if (full) msg.all = [ ...ents ].map(e => e.nid); else if (!list.length && !msg.fx.length && !msg.d.length && !msg.lp && !msg.gu && !msg.mk && !msg.mx && !msg.gm) return null;
   return msg;
 }
 
@@ -7148,6 +7151,11 @@ function onSnap(m) {
   if (m.ts !== undefined) WSET.ts = m.ts;
   mode = m.md === "survival" ? "survival" : "sandbox";
   NET.horde = !!m.hd;
+  if (m.gm) try {
+    madeApply({
+      gm: m.gm
+    });
+  } catch (err) {}
   if (m.gu) sgRemote(m.gu);
   const pw = NET.wave;
   NET.wave = m.w || [ 0, 0, 0 ];
@@ -7176,6 +7184,9 @@ function onSnap(m) {
     const keep = new Set(m.all);
     for (const e of [ ...ents ]) if (!keep.has(e.nid)) removeEnt(e);
   }
+  try {
+    madeApply(m);
+  } catch (err) {}
   if (m.lp) for (const a of m.lp) {
     try {
       liveApply(a);
@@ -14487,7 +14498,7 @@ const SCR = {
   lastPlayers: new Set
 };
 
-const SCR_BOOT = `"use strict";\nconst post = self.postMessage.bind(self);\n(() => {\n  const bad = ['fetch','XMLHttpRequest','importScripts','WebSocket','WebSocketStream','EventSource','indexedDB','caches','BroadcastChannel','Worker','SharedWorker','WebTransport','navigator','location','FileReader','FileReaderSync','OffscreenCanvas','createImageBitmap','Notification','Request','Response','Headers','FormData','Blob','File','URL','close','postMessage','queueMicrotask','reportError','structuredClone'];\n  for (const k of bad) {\n    let o = self;\n    while (o && o !== Object.prototype) { try { delete o[k]; } catch (e) {} o = Object.getPrototypeOf(o); }\n    try { Object.defineProperty(self, k, { value: undefined, writable: false, configurable: false }); } catch (e) {}\n  }\n})();\nconst S = { parts: [], names: new Map(), players: [], me: '', time: 0, g: 1, H: {}, T: new Map(), q: [], logs: [], errs: [], listen: [], gui: [], gname: new Map(), gp: new Map(), GC: new Map() };\nlet curScript = '';\nconst lineOf = e => { const m = String(e && e.stack || '').match(/<anonymous>:(\\d+):(\\d+)/); return m ? (+m[1] - 2) : 0; };\nconst report = (name, e) => { S.errs.push([name, lineOf(e), String(e && e.message || e).slice(0, 200)]); };\nconst wrap = fn => { const name = curScript; return (...a) => { try { const r = fn(...a); if (r && typeof r.then === 'function') r.then(null, e => report(name, e)); } catch (e) { report(name, e); } }; };\nconst fire = (list, ...a) => { if (list) for (const f of list.slice()) f(...a); };\nconst num = v => { v = +v; return Number.isFinite(v) ? v : 0; };\nconst vec = (v, y, z) => { if (Array.isArray(v)) return [num(v[0]), num(v[1]), num(v[2])]; if (v && typeof v === 'object') return [num(v.x), num(v.y), num(v.z)]; return [num(v), num(y), num(z)]; };\nconst cmd = (...a) => { if (S.q.length < 2000) S.q.push(a); };\nconst colorHex = c => { c = String(c || '').trim().replace('#', ''); if (/^[0-9a-f]{3}$/i.test(c)) c = c.split('').map(x => x + x).join(''); return /^[0-9a-f]{6}$/i.test(c) ? c.toLowerCase() : null; };\nconst vec2 = (v, y) => { if (Array.isArray(v)) return [num(v[0]), num(v[1])]; if (v && typeof v === 'object') return [num(v.x), num(v.y)]; return [num(v), num(y)]; };\nfunction guiHandle(i, tgt) {\n  const G = () => S.gui[i];\n  const mine = () => { const k = tgt + '|' + i; let o = S.gp.get(k); if (!o) S.gp.set(k, o = {}); return o; };\n  const get = k => tgt === '*' ? G().p[k] : (k in mine() ? mine()[k] : G().p[k]);\n  const set = (k, v) => { if (tgt === '*') G().p[k] = v; else mine()[k] = v; cmd('gui', tgt, i, k, v); };\n  const h = {\n    get name() { return G().n; }, get type() { return G().t; },\n    get text() { const t = get('tx'); return t == null ? '' : String(t); }, set text(v) { set('tx', String(v == null ? '' : v).slice(0, 200)); },\n    get visible() { return !!get('v'); }, set visible(v) { set('v', v ? 1 : 0); },\n    get textColor() { return '#' + get('tc'); }, set textColor(v) { const c = colorHex(v); if (c) set('tc', c); },\n    get background() { return '#' + get('bg'); }, set background(v) { const c = colorHex(v); if (c) set('bg', c); },\n    get transparency() { return get('bt'); }, set transparency(v) { set('bt', Math.min(1, Math.max(0, num(v)))); },\n    get position() { return [get('x'), get('y')]; }, set position(v) { const a = vec2(v); set('x', a[0]); set('y', a[1]); },\n    get size() { return [get('w'), get('h')]; }, set size(v) { const a = vec2(v); set('w', Math.max(0, a[0])); set('h', Math.max(0, a[1])); },\n    get textSize() { return get('ts'); }, set textSize(v) { set('ts', Math.min(96, Math.max(6, num(v)))); },\n    show() { h.visible = true; }, hide() { h.visible = false; },\n    on(ev, fn) { if (ev !== 'click' || typeof fn !== 'function') return; let L = S.GC.get(i); if (!L) S.GC.set(i, L = []); const f = wrap(fn); L.push(tgt === '*' ? f : pl => { if (pl && pl.id === tgt) f(pl); }); },\n  };\n  return Object.freeze(h);\n}\nconst guiFind = name => { const i = S.gname.get(String(name)); return i == null ? null : i; };\nfunction partHandle(i) {\n  const P = () => S.parts[i];\n  const h = {\n    get name() { return P().n; },\n    get position() { return P().pos.slice(); }, set position(v) { P().pos = vec(v); cmd('set', i, 'pos', P().pos); },\n    get rotation() { return P().rot.slice(); }, set rotation(v) { P().rot = vec(v); cmd('set', i, 'rot', P().rot); },\n    get size() { return P().size.slice(); }, set size(v) { P().size = vec(v).map(x => Math.min(200, Math.max(.1, x))); cmd('set', i, 'size', P().size); },\n    get color() { return P().col ? '#' + P().col : null; }, set color(v) { const c = colorHex(v); if (c) { P().col = c; cmd('set', i, 'color', c); } },\n    get transparency() { return P().tr; }, set transparency(v) { P().tr = Math.min(1, Math.max(0, num(v))); cmd('set', i, 'tr', P().tr); },\n    get canCollide() { return P().cc; }, set canCollide(v) { P().cc = !!v; cmd('set', i, 'cc', P().cc ? 1 : 0); },\n    get anchored() { return P().an; }, set anchored(v) { P().an = !!v; cmd('set', i, 'an', P().an ? 1 : 0); },\n    set velocity(v) { cmd('set', i, 'vel', vec(v)); },\n    get visible() { return P().tr < 1; }, set visible(v) { h.transparency = v ? 0 : 1; },\n    move(x, y, z) { const d = vec(x, y, z), p = P().pos; h.position = [p[0] + d[0], p[1] + d[1], p[2] + d[2]]; },\n    turn(x, y, z) { const d = vec(x, y, z), r = P().rot; h.rotation = [r[0] + d[0], r[1] + d[1], r[2] + d[2]]; },\n    destroy() { h.transparency = 1; h.canCollide = false; },\n    on(ev, fn) { if (typeof fn !== 'function') return; const k = ev === 'touchEnded' ? 'end' : 'touch'; let t = S.T.get(i); if (!t) S.T.set(i, t = { touch: [], end: [] }); t[k].push(wrap(fn)); if (!S.listen.includes(i)) { S.listen.push(i); cmd('listen', i); } },\n  };\n  return Object.freeze(h);\n}\nfunction playerHandle(p) {\n  if (!p) return null;\n  const id = p.id;\n  return Object.freeze({\n    id, name: p.name, get position() { const q = S.players.find(x => x.id === id); return q ? q.p.slice() : p.p.slice(); }, get health() { const q = S.players.find(x => x.id === id); return q ? q.h : 0; },\n    damage(n) { cmd('dmg', id, Math.max(0, num(n))); }, heal(n) { cmd('heal', id, Math.max(0, num(n))); },\n    teleport(x, y, z) { cmd('tp', id, vec(x, y, z)); }, launch(x, y, z) { cmd('vel', id, vec(x, y, z)); }, kill() { cmd('dmg', id, 999); },\n    gui(name) { const i = guiFind(name); return i == null ? null : guiHandle(i, id); },\n  });\n}\nconst byName = n => S.names.get(String(n)) || [];\nconst game = Object.freeze({\n  on(ev, fn) { if (typeof fn === 'function') (S.H[ev] || (S.H[ev] = [])).push(wrap(fn)); },\n  part(name) { const l = byName(name); return l.length ? partHandle(l[0]) : null; },\n  parts(name) { return (name == null ? S.parts.map((p, i) => p ? i : -1).filter(i => i >= 0) : byName(name)).map(partHandle); },\n  players() { return S.players.map(playerHandle); },\n  player(id) { return playerHandle(S.players.find(p => p.id === id || p.name === id)); },\n  message(text, seconds) { cmd('msg', String(text).slice(0, 120), Math.min(20, Math.max(.5, num(seconds) || 3))); },\n  chat(text) { cmd('chat', String(text).slice(0, 120)); },\n  spawn(item, pos) { cmd('spawn', String(item), vec(pos)); },\n  zombie(type, pos) { cmd('zombie', String(type || 'walker'), vec(pos)); },\n  explode(pos, power) { cmd('boom', vec(pos), Math.min(3, Math.max(.2, num(power) || 1))); },\n  get time() { return S.time; }, get gravity() { return S.g; }, set gravity(v) { S.g = Math.min(3, Math.max(-1, num(v))); cmd('grav', S.g); },\n  random(a, b) { return a + Math.random() * (b - a); },\n  gui(name) { const i = guiFind(name); return i == null ? null : guiHandle(i, '*'); },\n});\nfunction lockDown() {\n  const st = self.setTimeout.bind(self), si = self.setInterval.bind(self);\n  const guard = f => (fn, t, ...a) => typeof fn === 'function' ? f(fn, t, ...a) : 0;\n  Object.defineProperty(self, 'setTimeout', { value: guard(st), writable: false, configurable: false });\n  Object.defineProperty(self, 'setInterval', { value: guard(si), writable: false, configurable: false });\n  for (const F of [function () {}, async function () {}, function* () {}, async function* () {}]) { try { Object.defineProperty(Object.getPrototypeOf(F), 'constructor', { value: undefined, writable: false, configurable: false }); } catch (e) {} }\n  for (const k of ['eval', 'Function']) { try { delete self[k]; } catch (e) {} try { Object.defineProperty(self, k, { value: undefined, writable: false, configurable: false }); } catch (e) {} }\n}\nconst print = (...a) => { if (S.logs.length < 200) S.logs.push(a.map(x => typeof x === 'object' ? JSON.stringify(x) : String(x)).join(' ').slice(0, 300)); };\nconst wait = s => new Promise(r => setTimeout(r, Math.max(0, num(s)) * 1000));\nconst every = (s, fn) => { const f = wrap(fn); setInterval(f, Math.max(.05, num(s)) * 1000); };\nconst flush = () => { const m = { t: 'out' }; if (S.q.length) m.c = S.q.splice(0); if (S.logs.length) m.l = S.logs.splice(0); if (S.errs.length) m.e = S.errs.splice(0); post(m); };\nself.onunhandledrejection = e => { report('script', e.reason); };\nself.onerror = e => { report('script', e.error || e.message); return true; };\nself.onmessage = ev => {\n  const d = ev.data;\n  if (d.t === 'init') {\n    S.me = d.me; S.g = d.g;\n    for (const p of d.parts) { S.parts[p.i] = p; if (p.n) { if (!S.names.has(p.n)) S.names.set(p.n, []); S.names.get(p.n).push(p.i); } }\n    S.players = d.players || [];\n    for (const g of d.gui || []) { S.gui[g.i] = { n: g.n, t: g.t, p: g.p }; if (!S.gname.has(g.n)) S.gname.set(g.n, g.i); }\n    const fns = [];\n    for (const sc of d.scripts) {\n      if (/\\bimport\\b/.test(sc.src)) { report(sc.n, new Error('import is not allowed in map scripts')); continue; }\n      try { fns.push([sc.n, new Function('game', 'print', 'wait', 'every', sc.src)]); } catch (e) { report(sc.n, e); }\n    }\n    lockDown();\n    for (const [n, f] of fns) { curScript = n; try { f(game, print, wait, every); } catch (e) { report(n, e); } }\n    curScript = '';\n    fire(S.H.start);\n  } else if (d.t === 'tick') {\n    S.time = d.time; S.players = d.players;\n    if (d.dyn) for (const a of d.dyn) { const p = S.parts[a[0]]; if (p) { p.pos = [a[1], a[2], a[3]]; p.rot = [a[4], a[5], a[6]]; } }\n    if (d.ev) for (const e of d.ev) {\n      if (e[0] === 'touch' || e[0] === 'end') { const t = S.T.get(e[1]); const pl = playerHandle(S.players.find(p => p.id === e[2]) || { id: e[2], name: e[3], p: [0, 0, 0] }); if (t) fire(e[0] === 'touch' ? t.touch : t.end, pl); }\n      else if (e[0] === 'join') fire(S.H.playerJoined, playerHandle({ id: e[1], name: e[2], p: [0, 0, 0] }));\n      else if (e[0] === 'leave') fire(S.H.playerLeft, { id: e[1], name: e[2] });\n      else if (e[0] === 'died') fire(S.H.playerDied, playerHandle(S.players.find(p => p.id === e[1]) || { id: e[1], name: e[2], p: [0, 0, 0] }));\n      else if (e[0] === 'chat') fire(S.H.chat, playerHandle(S.players.find(p => p.id === e[1]) || { id: e[1], name: e[2], p: [0, 0, 0] }), e[3]);\n      else if (e[0] === 'click') { const L = S.GC.get(e[1]); if (L) fire(L, playerHandle(S.players.find(p => p.id === e[2]) || { id: e[2], name: e[3], p: [0, 0, 0] })); }\n    }\n    fire(S.H.tick, d.dt);\n  }\n  flush();\n};`;
+const SCR_BOOT = `"use strict";\nconst post = self.postMessage.bind(self);\n(() => {\n  const bad = ['fetch','XMLHttpRequest','importScripts','WebSocket','WebSocketStream','EventSource','indexedDB','caches','BroadcastChannel','Worker','SharedWorker','WebTransport','navigator','location','FileReader','FileReaderSync','OffscreenCanvas','createImageBitmap','Notification','Request','Response','Headers','FormData','Blob','File','URL','close','postMessage','queueMicrotask','reportError','structuredClone'];\n  for (const k of bad) {\n    let o = self;\n    while (o && o !== Object.prototype) { try { delete o[k]; } catch (e) {} o = Object.getPrototypeOf(o); }\n    try { Object.defineProperty(self, k, { value: undefined, writable: false, configurable: false }); } catch (e) {}\n  }\n})();\nconst S = { parts: [], names: new Map(), players: [], me: '', time: 0, g: 1, H: {}, T: new Map(), q: [], logs: [], errs: [], listen: [], gui: [], gname: new Map(), gp: new Map(), GC: new Map(), made: 0, madeCount: 0 };\nlet curScript = '';\nconst lineOf = e => { const m = String(e && e.stack || '').match(/<anonymous>:(\\d+):(\\d+)/); return m ? (+m[1] - 2) : 0; };\nconst report = (name, e) => { S.errs.push([name, lineOf(e), String(e && e.message || e).slice(0, 200)]); };\nconst wrap = fn => { const name = curScript; return (...a) => { try { const r = fn(...a); if (r && typeof r.then === 'function') r.then(null, e => report(name, e)); } catch (e) { report(name, e); } }; };\nconst fire = (list, ...a) => { if (list) for (const f of list.slice()) f(...a); };\nconst num = v => { v = +v; return Number.isFinite(v) ? v : 0; };\nconst vec = (v, y, z) => { if (Array.isArray(v)) return [num(v[0]), num(v[1]), num(v[2])]; if (v && typeof v === 'object') return [num(v.x), num(v.y), num(v.z)]; return [num(v), num(y), num(z)]; };\nconst cmd = (...a) => { if (S.q.length < 2000) S.q.push(a); };\nconst colorHex = c => { c = String(c || '').trim().replace('#', ''); if (/^[0-9a-f]{3}$/i.test(c)) c = c.split('').map(x => x + x).join(''); return /^[0-9a-f]{6}$/i.test(c) ? c.toLowerCase() : null; };\nconst vec2 = (v, y) => { if (Array.isArray(v)) return [num(v[0]), num(v[1])]; if (v && typeof v === 'object') return [num(v.x), num(v.y)]; return [num(v), num(y)]; };\nfunction guiHandle(i, tgt) {\n  const G = () => S.gui[i];\n  const mine = () => { const k = tgt + '|' + i; let o = S.gp.get(k); if (!o) S.gp.set(k, o = {}); return o; };\n  const get = k => tgt === '*' ? G().p[k] : (k in mine() ? mine()[k] : G().p[k]);\n  const set = (k, v) => { if (tgt === '*') G().p[k] = v; else mine()[k] = v; cmd('gui', tgt, i, k, v); };\n  const h = {\n    get name() { return G().n; }, get type() { return G().t; },\n    get text() { const t = get('tx'); return t == null ? '' : String(t); }, set text(v) { set('tx', String(v == null ? '' : v).slice(0, 200)); },\n    get visible() { return !!get('v'); }, set visible(v) { set('v', v ? 1 : 0); },\n    get textColor() { return '#' + get('tc'); }, set textColor(v) { const c = colorHex(v); if (c) set('tc', c); },\n    get background() { return '#' + get('bg'); }, set background(v) { const c = colorHex(v); if (c) set('bg', c); },\n    get transparency() { return get('bt'); }, set transparency(v) { set('bt', Math.min(1, Math.max(0, num(v)))); },\n    get position() { return [get('x'), get('y')]; }, set position(v) { const a = vec2(v); set('x', a[0]); set('y', a[1]); },\n    get size() { return [get('w'), get('h')]; }, set size(v) { const a = vec2(v); set('w', Math.max(0, a[0])); set('h', Math.max(0, a[1])); },\n    get textSize() { return get('ts'); }, set textSize(v) { set('ts', Math.min(96, Math.max(6, num(v)))); },\n    show() { h.visible = true; }, hide() { h.visible = false; }, destroy() { h.visible = false; },\n    on(ev, fn) { if (ev !== 'click' || typeof fn !== 'function') return; let L = S.GC.get(i); if (!L) S.GC.set(i, L = []); const f = wrap(fn); L.push(tgt === '*' ? f : pl => { if (pl && pl.id === tgt) f(pl); }); },\n  };\n  return Object.freeze(h);\n}\nconst guiFind = name => { const i = S.gname.get(String(name)); return i == null ? null : i; };\nconst SHAPES = { block: 'box', box: 'box', part: 'box', ball: 'ball', sphere: 'ball', cylinder: 'cyl', cyl: 'cyl', ramp: 'ramp', wedge: 'ramp', stairs: 'stairs' };\nconst MATS = ['grass','dirt','sand','snow','rock','concrete','brick','wood','metal','asphalt','dev','white','black','red','orange','yellow','green','blue','purple','glass','ice','lava','bounce','invis'];\nconst cleanName = v => String(v == null ? '' : v).replace(/[^\\w \\-]/g, '').trim().slice(0, 32);\nconst size3 = v => { if (typeof v === 'number') return [v, v, v].map(x => Math.min(200, Math.max(0.1, num(x)))); return vec(v).map(x => Math.min(200, Math.max(0.1, x || 1))); };\nfunction addName(n, i) { if (!n) return; if (!S.names.has(n)) S.names.set(n, []); S.names.get(n).push(i); }\nfunction dropName(n, i) { const l = S.names.get(n); if (!l) return; const k = l.indexOf(i); if (k >= 0) l.splice(k, 1); if (!l.length) S.names.delete(n); }\nfunction makePart(o) {\n  o = o && typeof o === 'object' ? o : {};\n  if (S.madeCount >= 300) { print('Part limit reached (300 made by scripts)'); return null; }\n  const i = 10000 + S.made++;\n  const shape = SHAPES[String(o.shape || 'block').toLowerCase()] || 'box';\n  const mat = MATS.includes(String(o.material)) ? String(o.material) : 'concrete';\n  const pos = o.position != null ? vec(o.position) : [0, 5, 0];\n  const rot = o.rotation != null ? vec(o.rotation) : [0, 0, 0];\n  let size = o.size != null ? size3(o.size) : [2, 2, 2];\n  if (shape === 'ball') size = [size[0], size[0], size[0]];\n  if (shape === 'cyl') size = [size[0], size[1], size[0]];\n  const props = {};\n  const n = cleanName(o.name);\n  if (n) props.n = n;\n  if (o.anchored === false) props.an = 0;\n  if (o.canCollide === false) props.cc = 0;\n  const tr = o.transparency != null ? Math.min(1, Math.max(0, num(o.transparency))) : 0;\n  if (tr > 0) props.tr = tr;\n  const col = o.color != null ? colorHex(o.color) : null;\n  if (col) props.col = col;\n  if (o.mass != null && num(o.mass) > 0) props.ms = num(o.mass);\n  S.parts[i] = { i, n, t: shape, m: mat, made: 1, pos, rot, size, col, tr, cc: o.canCollide !== false, an: o.anchored !== false, ms: props.ms };\n  addName(n, i);\n  S.madeCount++;\n  cmd('new', i, [shape, mat, pos[0], pos[1], pos[2], rot[0], rot[1], rot[2], size[0], size[1], size[2], props]);\n  return partHandle(i);\n}\nconst GUI_DEF = { t: 'label', x: 50, y: 12, w: 30, h: 8, an: 1, tx: 'Label', ts: 24, tc: 'ffffff', bg: '15161a', bt: 0.3, r: 8, v: 1, f: 'bold', al: 'c' };\nconst ANCH = { topleft: 0, top: 1, topright: 2, left: 3, center: 4, right: 5, bottomleft: 6, bottom: 7, bottomright: 8 };\nfunction makeGui(o) {\n  o = o && typeof o === 'object' ? o : {};\n  if (S.gui.length >= 60) { print('GUI limit reached (60)'); return null; }\n  const i = S.gui.length;\n  const ty = String(o.type || 'label').toLowerCase();\n  const t = ty === 'button' || ty === 'textbutton' ? 'button' : ty === 'frame' ? 'frame' : 'label';\n  const d = { t, n: cleanName(o.name) || ('Gui' + i) };\n  const pa = o.parent && typeof o.parent === 'object' ? o.parent.name : o.parent;\n  if (pa) d.pa = cleanName(pa);\n  if (o.position != null) { const a = vec2(o.position); d.x = a[0]; d.y = a[1]; }\n  if (o.size != null) { const a = vec2(o.size); d.w = Math.max(0, a[0]); d.h = Math.max(0, a[1]); }\n  if (o.anchor != null) d.an = typeof o.anchor === 'number' ? Math.min(8, Math.max(0, Math.round(o.anchor))) : (ANCH[String(o.anchor).toLowerCase().replace(/[^a-z]/g, '')] ?? 1);\n  d.tx = o.text != null ? String(o.text).slice(0, 200) : (t === 'frame' ? '' : d.n);\n  if (o.textSize != null) d.ts = Math.min(96, Math.max(6, num(o.textSize)));\n  const tc = o.textColor != null ? colorHex(o.textColor) : null; if (tc) d.tc = tc;\n  const bg = o.background != null ? colorHex(o.background) : null; if (bg) d.bg = bg;\n  if (o.transparency != null) d.bt = Math.min(1, Math.max(0, num(o.transparency)));\n  if (o.corner != null) d.r = Math.min(60, Math.max(0, num(o.corner)));\n  if (o.visible === false) d.v = 0;\n  if (['bold', 'round', 'code'].includes(o.font)) d.f = o.font;\n  const al = { left: 'l', center: 'c', right: 'r' }[o.align]; if (al) d.al = al;\n  S.gui[i] = { n: d.n, t, p: Object.assign({}, GUI_DEF, d) };\n  if (!S.gname.has(d.n)) S.gname.set(d.n, i);\n  cmd('gnew', i, d);\n  return guiHandle(i, '*');\n}\nconst DEAD = { n: '', pos: [0, 0, 0], rot: [0, 0, 0], size: [1, 1, 1], col: null, tr: 1, cc: false, an: true, dead: 1 };\nfunction partHandle(i) {\n  const P = () => S.parts[i] || DEAD;\n  const h = {\n    get name() { return P().n; },\n    get position() { return P().pos.slice(); }, set position(v) { P().pos = vec(v); cmd('set', i, 'pos', P().pos); },\n    get rotation() { return P().rot.slice(); }, set rotation(v) { P().rot = vec(v); cmd('set', i, 'rot', P().rot); },\n    get size() { return P().size.slice(); }, set size(v) { P().size = vec(v).map(x => Math.min(200, Math.max(.1, x))); cmd('set', i, 'size', P().size); },\n    get color() { return P().col ? '#' + P().col : null; }, set color(v) { const c = colorHex(v); if (c) { P().col = c; cmd('set', i, 'color', c); } },\n    get transparency() { return P().tr; }, set transparency(v) { P().tr = Math.min(1, Math.max(0, num(v))); cmd('set', i, 'tr', P().tr); },\n    get canCollide() { return P().cc; }, set canCollide(v) { P().cc = !!v; cmd('set', i, 'cc', P().cc ? 1 : 0); },\n    get anchored() { return P().an; }, set anchored(v) { P().an = !!v; cmd('set', i, 'an', P().an ? 1 : 0); },\n    set velocity(v) { cmd('set', i, 'vel', vec(v)); },\n    get visible() { return P().tr < 1; }, set visible(v) { h.transparency = v ? 0 : 1; },\n    move(x, y, z) { const d = vec(x, y, z), p = P().pos; h.position = [p[0] + d[0], p[1] + d[1], p[2] + d[2]]; },\n    turn(x, y, z) { const d = vec(x, y, z), r = P().rot; h.rotation = [r[0] + d[0], r[1] + d[1], r[2] + d[2]]; },\n    get shape() { return P().t || null; }, get destroyed() { return !!P().dead; },\n    destroy() { const p = S.parts[i]; if (!p) return; if (p.made) { cmd('del', i); dropName(p.n, i); S.T.delete(i); delete S.parts[i]; S.madeCount--; } else { h.transparency = 1; h.canCollide = false; } },\n    clone(o) { const p = S.parts[i]; if (!p) return null; return makePart(Object.assign({ shape: p.t || 'block', material: p.m, position: p.pos, rotation: p.rot, size: p.size, color: p.col ? '#' + p.col : null, transparency: p.tr, canCollide: p.cc, anchored: p.an, name: p.n, mass: p.ms }, o || {})); },\n    on(ev, fn) { if (typeof fn !== 'function') return; const k = ev === 'touchEnded' ? 'end' : 'touch'; let t = S.T.get(i); if (!t) S.T.set(i, t = { touch: [], end: [] }); t[k].push(wrap(fn)); if (!S.listen.includes(i)) { S.listen.push(i); cmd('listen', i); } },\n  };\n  return Object.freeze(h);\n}\nfunction playerHandle(p) {\n  if (!p) return null;\n  const id = p.id;\n  return Object.freeze({\n    id, name: p.name, get position() { const q = S.players.find(x => x.id === id); return q ? q.p.slice() : p.p.slice(); }, get health() { const q = S.players.find(x => x.id === id); return q ? q.h : 0; },\n    damage(n) { cmd('dmg', id, Math.max(0, num(n))); }, heal(n) { cmd('heal', id, Math.max(0, num(n))); },\n    teleport(x, y, z) { cmd('tp', id, vec(x, y, z)); }, launch(x, y, z) { cmd('vel', id, vec(x, y, z)); }, kill() { cmd('dmg', id, 999); },\n    gui(name) { const i = guiFind(name); return i == null ? null : guiHandle(i, id); },\n  });\n}\nconst byName = n => S.names.get(String(n)) || [];\nconst game = Object.freeze({\n  on(ev, fn) { if (typeof fn === 'function') (S.H[ev] || (S.H[ev] = [])).push(wrap(fn)); },\n  part(name) { const l = byName(name); return l.length ? partHandle(l[0]) : null; },\n  parts(name) { return (name == null ? S.parts.map((p, i) => p ? i : -1).filter(i => i >= 0) : byName(name)).map(partHandle); },\n  players() { return S.players.map(playerHandle); },\n  player(id) { return playerHandle(S.players.find(p => p.id === id || p.name === id)); },\n  message(text, seconds) { cmd('msg', String(text).slice(0, 120), Math.min(20, Math.max(.5, num(seconds) || 3))); },\n  chat(text) { cmd('chat', String(text).slice(0, 120)); },\n  spawn(item, pos) { cmd('spawn', String(item), vec(pos)); },\n  zombie(type, pos) { cmd('zombie', String(type || 'walker'), vec(pos)); },\n  explode(pos, power) { cmd('boom', vec(pos), Math.min(3, Math.max(.2, num(power) || 1))); },\n  get time() { return S.time; }, get gravity() { return S.g; }, set gravity(v) { S.g = Math.min(3, Math.max(-1, num(v))); cmd('grav', S.g); },\n  random(a, b) { return a + Math.random() * (b - a); },\n  gui(name) { const i = guiFind(name); return i == null ? null : guiHandle(i, '*'); },\n  create(o) { return makePart(o); },\n  createGui(o) { return makeGui(o); },\n});\nfunction lockDown() {\n  const st = self.setTimeout.bind(self), si = self.setInterval.bind(self);\n  const guard = f => (fn, t, ...a) => typeof fn === 'function' ? f(fn, t, ...a) : 0;\n  Object.defineProperty(self, 'setTimeout', { value: guard(st), writable: false, configurable: false });\n  Object.defineProperty(self, 'setInterval', { value: guard(si), writable: false, configurable: false });\n  for (const F of [function () {}, async function () {}, function* () {}, async function* () {}]) { try { Object.defineProperty(Object.getPrototypeOf(F), 'constructor', { value: undefined, writable: false, configurable: false }); } catch (e) {} }\n  for (const k of ['eval', 'Function']) { try { delete self[k]; } catch (e) {} try { Object.defineProperty(self, k, { value: undefined, writable: false, configurable: false }); } catch (e) {} }\n}\nconst print = (...a) => { if (S.logs.length < 200) S.logs.push(a.map(x => typeof x === 'object' ? JSON.stringify(x) : String(x)).join(' ').slice(0, 300)); };\nconst wait = s => new Promise(r => setTimeout(r, Math.max(0, num(s)) * 1000));\nconst every = (s, fn) => { const f = wrap(fn); setInterval(f, Math.max(.05, num(s)) * 1000); };\nconst flush = () => { const m = { t: 'out' }; if (S.q.length) m.c = S.q.splice(0); if (S.logs.length) m.l = S.logs.splice(0); if (S.errs.length) m.e = S.errs.splice(0); post(m); };\nself.onunhandledrejection = e => { report('script', e.reason); };\nself.onerror = e => { report('script', e.error || e.message); return true; };\nself.onmessage = ev => {\n  const d = ev.data;\n  if (d.t === 'init') {\n    S.me = d.me; S.g = d.g;\n    for (const p of d.parts) { S.parts[p.i] = p; if (p.n) { if (!S.names.has(p.n)) S.names.set(p.n, []); S.names.get(p.n).push(p.i); } }\n    S.players = d.players || [];\n    for (const g of d.gui || []) { S.gui[g.i] = { n: g.n, t: g.t, p: g.p }; if (!S.gname.has(g.n)) S.gname.set(g.n, g.i); }\n    const fns = [];\n    for (const sc of d.scripts) {\n      if (/\\bimport\\b/.test(sc.src)) { report(sc.n, new Error('import is not allowed in map scripts')); continue; }\n      try { fns.push([sc.n, new Function('game', 'print', 'wait', 'every', sc.src)]); } catch (e) { report(sc.n, e); }\n    }\n    lockDown();\n    for (const [n, f] of fns) { curScript = n; try { f(game, print, wait, every); } catch (e) { report(n, e); } }\n    curScript = '';\n    fire(S.H.start);\n  } else if (d.t === 'tick') {\n    S.time = d.time; S.players = d.players;\n    if (d.dyn) for (const a of d.dyn) { const p = S.parts[a[0]]; if (p) { p.pos = [a[1], a[2], a[3]]; p.rot = [a[4], a[5], a[6]]; } }\n    if (d.ev) for (const e of d.ev) {\n      if (e[0] === 'touch' || e[0] === 'end') { const t = S.T.get(e[1]); const pl = playerHandle(S.players.find(p => p.id === e[2]) || { id: e[2], name: e[3], p: [0, 0, 0] }); if (t) fire(e[0] === 'touch' ? t.touch : t.end, pl); }\n      else if (e[0] === 'join') fire(S.H.playerJoined, playerHandle({ id: e[1], name: e[2], p: [0, 0, 0] }));\n      else if (e[0] === 'leave') fire(S.H.playerLeft, { id: e[1], name: e[2] });\n      else if (e[0] === 'died') fire(S.H.playerDied, playerHandle(S.players.find(p => p.id === e[1]) || { id: e[1], name: e[2], p: [0, 0, 0] }));\n      else if (e[0] === 'chat') fire(S.H.chat, playerHandle(S.players.find(p => p.id === e[1]) || { id: e[1], name: e[2], p: [0, 0, 0] }), e[3]);\n      else if (e[0] === 'click') { const L = S.GC.get(e[1]); if (L) fire(L, playerHandle(S.players.find(p => p.id === e[2]) || { id: e[2], name: e[3], p: [0, 0, 0] })); }\n    }\n    fire(S.H.tick, d.dt);\n  }\n  flush();\n};`;
 
 function scriptsOf(m) {
   const D = m && m.mkData;
@@ -14552,6 +14563,8 @@ function startScripts() {
   const parts = LIVE.list.map(L => ({
     i: L.i,
     n: L.n,
+    t: L.t,
+    m: ((curMap && curMap.mkData && curMap.mkData.p || [])[L.i] || [])[1],
     pos: [ q2(L.body.position.x), q2(L.body.position.y), q2(L.body.position.z) ],
     rot: mkRotOf(L),
     size: L.s.slice(),
@@ -14691,6 +14704,31 @@ function scCmd(c) {
     if (Number.isFinite(c[1])) setGravity(clamp(c[1], -1, 3));
     break;
 
+   case "new":
+    {
+      const i = c[1];
+      if (!Number.isInteger(i) || i < 1e4 || i > 1e6 || LIVE.byIdx.has(i) || MADE.defs.size >= 300 || (SCR.rate.make || 0) >= 150) break;
+      const p = mkPartDef(c[2]);
+      if (!p) break;
+      SCR.rate.make = (SCR.rate.make || 0) + 1;
+      liveMake(i, p);
+      break;
+    }
+
+   case "del":
+    liveKill(c[1]);
+    break;
+
+   case "gnew":
+    {
+      if (c[1] !== GUI.defs.length || GUI.defs.length >= SG_MAX) break;
+      const d = sgClean(c[2]);
+      if (!d) break;
+      sgAdd(d);
+      GUI.mdirty = true;
+      break;
+    }
+
    case "gui":
     {
       const i = c[2], k = c[3];
@@ -14777,6 +14815,7 @@ function scriptTick(dt) {
     SCR.rate.spawn = 0;
     SCR.rate.boom = 0;
     SCR.rate.msg = 0;
+    SCR.rate.make = 0;
   }
   if (SCR.busy) {
     if (performance.now() - SCR.sentAt > 3e3) {
@@ -14843,6 +14882,124 @@ function applyRules() {
   if (R.nz) horde = false;
   if (R.ns && tool !== "hands") setTool("hands"); else renderHotbar();
   if (R.ns && spawnOpen()) closeSpawn();
+}
+
+const MADE = {
+  defs: new Map,
+  dirty: [],
+  gone: []
+};
+
+function mkPartDef(d) {
+  if (!Array.isArray(d) || d.length < 11) return null;
+  if (![ "box", "ramp", "stairs", "cyl", "ball" ].includes(d[0])) return null;
+  const n = d.slice(2, 11).map(Number);
+  if (!n.every(Number.isFinite)) return null;
+  const pos = n.slice(0, 3).map(v => clamp(v, -2e3, 2e3)), rot = n.slice(3, 6).map(v => Math.round(v * 10) / 10);
+  const size = edConstrain(d[0], n.slice(6, 9));
+  const p = [ d[0], MK_MAT[d[1]] ? d[1] : "concrete", ...pos, ...rot, ...size ];
+  const o = mkCleanProps(d[11]);
+  if (o) p.push(o);
+  return p;
+}
+
+function liveMake(i, p) {
+  if (LIVE.byIdx.has(i)) return;
+  const L = liveBuild(p, i);
+  L.made = true;
+  L.changed = true;
+  L.moved = true;
+  MADE.defs.set(i, p);
+  if (!NET.on || NET.host) MADE.dirty.push(i);
+}
+
+function liveKill(i) {
+  const L = LIVE.byIdx.get(i);
+  if (!L || !L.made) return;
+  mapGroup.remove(L.mesh);
+  L.mesh.geometry.dispose();
+  L.mat.dispose();
+  world.removeBody(L.body);
+  const k = mapBodies.indexOf(L.body);
+  if (k >= 0) mapBodies.splice(k, 1);
+  LIVE.list.splice(LIVE.list.indexOf(L), 1);
+  LIVE.byIdx.delete(i);
+  MADE.defs.delete(i);
+  if (!NET.on || NET.host) MADE.gone.push(i);
+}
+
+function madeReset() {
+  MADE.defs.clear();
+  MADE.dirty.length = 0;
+  MADE.gone.length = 0;
+}
+
+function madeClear() {
+  for (const i of [ ...MADE.defs.keys() ]) liveKill(i);
+  sgTrim(GUI.base);
+  GUI.mdirty = true;
+}
+
+function madeSnap(msg, full) {
+  const list = full ? [ ...MADE.defs.keys() ] : MADE.dirty.filter(i => MADE.defs.has(i));
+  MADE.dirty.length = 0;
+  if (list.length) msg.mk = list.map(i => [ i, MADE.defs.get(i) ]);
+  if (full) msg.mka = 1;
+  if (MADE.gone.length) msg.mx = MADE.gone.splice(0, 400);
+  if (GUI.mdirty || full && GUI.defs.length > GUI.base) {
+    msg.gm = GUI.defs.slice(GUI.base);
+    GUI.mdirty = false;
+  }
+}
+
+function madeApply(m) {
+  if (m.mx) for (const i of m.mx) liveKill(i);
+  if (m.mka) {
+    const keep = new Set((m.mk || []).map(a => a[0]));
+    for (const i of [ ...MADE.defs.keys() ]) if (!keep.has(i)) liveKill(i);
+  }
+  if (m.mk) for (const a of m.mk.slice(0, 400)) {
+    if (!Array.isArray(a) || !Number.isInteger(a[0]) || a[0] < 1e4) continue;
+    const p = mkPartDef(a[1]);
+    if (p) liveMake(a[0], p);
+  }
+  if (Array.isArray(m.gm)) {
+    const list = m.gm.slice(0, SG_MAX - GUI.base).map(sgClean).filter(Boolean);
+    const now = GUI.defs.slice(GUI.base);
+    if (JSON.stringify(list) !== JSON.stringify(now)) {
+      sgTrim(GUI.base);
+      for (const d of list) sgAdd(d);
+    }
+  }
+}
+
+function sgFrameEl(name, self) {
+  for (let j = 0; j < GUI.defs.length; j++) if (j !== self && GUI.defs[j].t === "frame" && GUI.defs[j].n === name) return GUI.els[j];
+  return null;
+}
+
+function sgAdd(d) {
+  const i = GUI.defs.length;
+  GUI.defs.push(d);
+  const el = document.createElement("div");
+  el.dataset.g = i;
+  GUI.els[i] = el;
+  const host = d.pa && sgFrameEl(d.pa, i) || $("sgui");
+  host.appendChild(el);
+  sgPaint(i);
+  sgHint();
+  return i;
+}
+
+function sgTrim(n) {
+  for (let i = GUI.defs.length - 1; i >= n; i--) {
+    const el = GUI.els[i];
+    if (el) el.remove();
+    delete GUI.glob[i];
+    delete GUI.pers[i];
+  }
+  GUI.defs.length = Math.min(GUI.defs.length, n);
+  GUI.els.length = Math.min(GUI.els.length, n);
 }
 
 const SG_MAX = 60;
@@ -14991,6 +15148,8 @@ function sgBuild(list, editor) {
     host.appendChild(GUI.els[i]);
   });
   GUI.defs.forEach((d, i) => sgPaint(i));
+  GUI.base = GUI.defs.length;
+  GUI.mdirty = false;
   sgScale();
   sgHint();
 }
@@ -15642,7 +15801,7 @@ function renderScHelp() {
   $("scSide").classList.toggle("hidden", !ST.help);
   if (!ST.help) return;
   const ex = (t, c) => `<div class="sc-ex"><b>${t}</b><pre>${esc(c)}</pre><button class="st-mini" data-ins="${esc(c)}">INSERT</button></div>`;
-  $("scSide").innerHTML = `<div class="sc-oh">API</div>\n  <div class="sc-api">\n  <p><code>game.on(event, fn)</code> events: <code>start</code>, <code>tick</code> (dt), <code>playerJoined</code>, <code>playerLeft</code>, <code>playerDied</code>, <code>chat</code> (player, text)</p>\n  <p><code>game.part(name)</code> one named part · <code>game.parts(name)</code> all with that name</p>\n  <p>Part: <code>position</code> <code>rotation</code> <code>size</code> <code>color</code> <code>transparency</code> <code>canCollide</code> <code>anchored</code> <code>velocity</code> <code>visible</code> · <code>move(x,y,z)</code> <code>turn(x,y,z)</code> <code>destroy()</code> · <code>on('touched', fn)</code> <code>on('touchEnded', fn)</code></p>\n  <p>Player: <code>name</code> <code>position</code> <code>health</code> · <code>damage(n)</code> <code>heal(n)</code> <code>teleport(x,y,z)</code> <code>launch(x,y,z)</code> <code>kill()</code></p>\n  <p><code>game.players()</code> <code>game.message(text, sec)</code> <code>game.chat(text)</code> <code>game.spawn('crate', [x,y,z])</code> <code>game.zombie('runner', [x,y,z])</code> <code>game.explode([x,y,z], power)</code> <code>game.gravity</code> <code>game.time</code> <code>game.random(a,b)</code></p>\n  <p><code>print(...)</code> <code>await wait(sec)</code> <code>every(sec, fn)</code></p>\n  <p>ScreenGUI: <code>game.gui(name)</code> for everyone · <code>player.gui(name)</code> for one player · <code>text</code> <code>visible</code> <code>textColor</code> <code>background</code> <code>transparency</code> <code>position</code> [x%, y%] <code>size</code> [w%, h%] <code>textSize</code> · <code>show()</code> <code>hide()</code> · <code>on('click', player =&gt; …)</code></p>\n  </div>\n  ${ex("Kill brick", "game.part('Lava').on('touched', p => p.kill())")}\n  ${ex("Moving platform", "const plat = game.part('Platform')\nconst start = plat.position\ngame.on('tick', () => {\n  plat.position = [start[0], start[1] + Math.sin(game.time) * 3, start[2]]\n})")}\n  ${ex("Spinner", "const spin = game.part('Spinner')\ngame.on('tick', dt => spin.turn(0, 90 * dt, 0))")}\n  ${ex("Button opens a door", "const door = game.part('Door')\ngame.part('Button').on('touched', async p => {\n  door.canCollide = false\n  door.transparency = 0.8\n  await wait(3)\n  door.canCollide = true\n  door.transparency = 0\n})")}\n  ${ex("Checkpoint", "game.part('Checkpoint').on('touched', p => {\n  game.message(p.name + ' reached the checkpoint!', 2)\n})")}\n  ${ex("Jump pad", "game.part('Pad').on('touched', p => p.launch(0, 25, 0))")}\n  ${ex("Zombie waves", "every(10, () => game.zombie('walker', [game.random(-20, 20), 1, -30]))")}\n  ${ex("Falling floor", "for (const tile of game.parts('Tile')) {\n  tile.on('touched', async () => {\n    tile.color = '#d93a3a'\n    await wait(0.6)\n    tile.anchored = false\n  })\n}")}\n  ${ex("GUI: coin counter", "const coins = {}\nfor (const c of game.parts('Coin')) {\n  c.on('touched', p => {\n    coins[p.id] = (coins[p.id] || 0) + 1\n    c.destroy()\n    const label = p.gui('Coins')\n    if (label) label.text = 'Coins: ' + coins[p.id]\n  })\n}")}\n  ${ex("GUI: heal button", "const btn = game.gui('HealButton')\nif (btn) btn.on('click', async p => {\n  p.heal(50)\n  p.gui('HealButton').hide()\n  await wait(10)\n  p.gui('HealButton').show()\n})")}\n  ${ex("GUI: countdown", "const timer = game.gui('Timer')\nlet left = 60\nevery(1, () => {\n  if (left <= 0) return\n  left--\n  timer.text = 'Time: ' + left\n  if (left <= 10) timer.textColor = '#ff4d4d'\n})")}`;
+  $("scSide").innerHTML = `<div class="sc-oh">API</div>\n  <div class="sc-api">\n  <p><code>game.on(event, fn)</code> events: <code>start</code>, <code>tick</code> (dt), <code>playerJoined</code>, <code>playerLeft</code>, <code>playerDied</code>, <code>chat</code> (player, text)</p>\n  <p><code>game.part(name)</code> one named part · <code>game.parts(name)</code> all with that name</p>\n  <p>Part: <code>position</code> <code>rotation</code> <code>size</code> <code>color</code> <code>transparency</code> <code>canCollide</code> <code>anchored</code> <code>velocity</code> <code>visible</code> · <code>move(x,y,z)</code> <code>turn(x,y,z)</code> <code>destroy()</code> · <code>on('touched', fn)</code> <code>on('touchEnded', fn)</code></p>\n  <p>Player: <code>name</code> <code>position</code> <code>health</code> · <code>damage(n)</code> <code>heal(n)</code> <code>teleport(x,y,z)</code> <code>launch(x,y,z)</code> <code>kill()</code></p>\n  <p><code>game.players()</code> <code>game.message(text, sec)</code> <code>game.chat(text)</code> <code>game.spawn('crate', [x,y,z])</code> <code>game.zombie('runner', [x,y,z])</code> <code>game.explode([x,y,z], power)</code> <code>game.gravity</code> <code>game.time</code> <code>game.random(a,b)</code></p>\n  <p><code>print(...)</code> <code>await wait(sec)</code> <code>every(sec, fn)</code></p>\n  <p>ScreenGUI: <code>game.gui(name)</code> for everyone · <code>player.gui(name)</code> for one player · <code>text</code> <code>visible</code> <code>textColor</code> <code>background</code> <code>transparency</code> <code>position</code> [x%, y%] <code>size</code> [w%, h%] <code>textSize</code> · <code>show()</code> <code>hide()</code> · <code>on('click', player =&gt; …)</code></p>\n  <p>Make things: <code>game.create({ shape, size, position, rotation, color, material, anchored, canCollide, transparency, name })</code> returns a part · <code>part.clone()</code> · <code>part.destroy()</code> · <code>game.createGui({ type, name, text, position, size, anchor, textColor, background, parent })</code></p>\n  </div>\n  ${ex("Kill brick", "game.part('Lava').on('touched', p => p.kill())")}\n  ${ex("Moving platform", "const plat = game.part('Platform')\nconst start = plat.position\ngame.on('tick', () => {\n  plat.position = [start[0], start[1] + Math.sin(game.time) * 3, start[2]]\n})")}\n  ${ex("Spinner", "const spin = game.part('Spinner')\ngame.on('tick', dt => spin.turn(0, 90 * dt, 0))")}\n  ${ex("Button opens a door", "const door = game.part('Door')\ngame.part('Button').on('touched', async p => {\n  door.canCollide = false\n  door.transparency = 0.8\n  await wait(3)\n  door.canCollide = true\n  door.transparency = 0\n})")}\n  ${ex("Checkpoint", "game.part('Checkpoint').on('touched', p => {\n  game.message(p.name + ' reached the checkpoint!', 2)\n})")}\n  ${ex("Jump pad", "game.part('Pad').on('touched', p => p.launch(0, 25, 0))")}\n  ${ex("Zombie waves", "every(10, () => game.zombie('walker', [game.random(-20, 20), 1, -30]))")}\n  ${ex("Falling floor", "for (const tile of game.parts('Tile')) {\n  tile.on('touched', async () => {\n    tile.color = '#d93a3a'\n    await wait(0.6)\n    tile.anchored = false\n  })\n}")}\n  ${ex("GUI: coin counter", "const coins = {}\nfor (const c of game.parts('Coin')) {\n  c.on('touched', p => {\n    coins[p.id] = (coins[p.id] || 0) + 1\n    c.destroy()\n    const label = p.gui('Coins')\n    if (label) label.text = 'Coins: ' + coins[p.id]\n  })\n}")}\n  ${ex("GUI: heal button", "const btn = game.gui('HealButton')\nif (btn) btn.on('click', async p => {\n  p.heal(50)\n  p.gui('HealButton').hide()\n  await wait(10)\n  p.gui('HealButton').show()\n})")}\n  ${ex("Make a kickable ball", "const ball = game.create({ shape: 'ball', size: 2, position: [0, 6, 0], color: '#ffffff', anchored: false })\nball.on('touched', p => {\n  const a = ball.position, b = p.position\n  const dx = a[0] - b[0], dz = a[2] - b[2], len = Math.hypot(dx, dz) || 1\n  ball.velocity = [dx / len * 16, 5, dz / len * 16]\n})")}\n  ${ex("Build a staircase", "for (let i = 0; i < 10; i++) {\n  game.create({ size: [4, 1, 4], position: [i * 5, i * 1.5, 0], color: '#3aa655' })\n}")}\n  ${ex("GUI: countdown", "const timer = game.gui('Timer')\nlet left = 60\nevery(1, () => {\n  if (left <= 0) return\n  left--\n  timer.text = 'Time: ' + left\n  if (left <= 10) timer.textColor = '#ff4d4d'\n})")}`;
 }
 
 $("scSrc").addEventListener("input", scSync);
