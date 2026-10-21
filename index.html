@@ -521,6 +521,21 @@
   #sgHint{position:absolute;left:50%;bottom:calc(66px + env(safe-area-inset-bottom));transform:translateX(-50%);font-size:13px;font-weight:700;letter-spacing:.12em;color:#cfcac0;text-shadow:0 1px 3px rgba(0,0,0,.85);white-space:nowrap}
   body.r-ns:not(.editing) #spawnBtn,body.r-ns:not(.editing) #undoBtn,body.r-ns:not(.editing) #hotbar{display:none}
   .st-v2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}
+  #zcHud{margin-top:5px;font-size:14px;font-weight:800;letter-spacing:.08em;color:#ffd23f;white-space:nowrap}
+  #zcHud b,.sb.zc b,.zc-big b{display:inline-flex;align-items:center;justify-content:center;width:1.25em;height:1.25em;border-radius:50%;background:#ffd23f;color:#3a2a00;font-weight:900;font-size:.85em;margin-right:4px;box-shadow:inset 0 -2px 0 rgba(0,0,0,.18)}
+  #zcPop{position:absolute;left:calc(12px + env(safe-area-inset-left));top:calc(118px + env(safe-area-inset-top));font-size:15px;font-weight:800;letter-spacing:.06em;color:#ffd23f;text-shadow:0 1px 3px rgba(0,0,0,.85);opacity:0;transform:translateY(6px);transition:opacity .25s,transform .25s;pointer-events:none;white-space:nowrap}
+  #zcPop.show{opacity:1;transform:none}
+  .hb-top .sb.zc{background:#fff;color:#191b1f;border-color:#fff;font-weight:900;display:flex;align-items:center;gap:2px}
+  .hb-top .sb.zc b{background:#ffd23f}
+  .zcp{max-width:440px}
+  .zc-big{font-family:'Barlow Condensed',sans-serif;font-size:56px;font-weight:800;text-align:center;line-height:1;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:6px}
+  .avchip.lock{border-style:dashed;color:#6b7280}
+  .avchip.lock em{font-style:normal;font-weight:900;color:#b7791f;margin-left:6px;font-size:12.5px}
+  .avbuy{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#fff7e0;border:1px solid #f3d27a;border-radius:10px;padding:10px 12px;margin:10px 0 2px;font-weight:700;font-size:15px}
+  .avbuy span{flex:1;min-width:160px}
+  .avbuy b{color:#b7791f}
+  .avbuy .go{margin:0;width:auto;padding:8px 16px;font-size:16px}
+  .avbal{display:flex;justify-content:flex-end;font-weight:800;font-size:14px;color:#6b7280;margin-top:6px}
 </style>
 <script type="importmap">
 {"imports":{
@@ -534,7 +549,7 @@
 <body>
 <div id="sgui"></div>
 <div id="hud">
-  <div id="hp"><div class="row"><span class="num" id="hpNum">100</span><span class="lbl">HEALTH</span></div><div class="bar"><div class="fill" id="hpFill"></div></div><div id="stats"></div><div id="roomChip"></div><div id="vcInd" class="hidden">MIC ON</div></div>
+  <div id="hp"><div class="row"><span class="num" id="hpNum">100</span><span class="lbl">HEALTH</span></div><div class="bar"><div class="fill" id="hpFill"></div></div><div id="stats"></div><div id="roomChip"></div><div id="vcInd" class="hidden">MIC ON</div><div id="zcHud"></div></div>
   <div id="edInfo"></div>
   <div id="edBar"></div>
   <div id="stDock"><div class="st-ex"><div class="st-h">EXPLORER</div><div class="st-tree" id="stTree"></div></div><div class="st-pr"><div class="st-h">PROPERTIES</div><div class="st-props" id="stProps"></div></div></div>
@@ -551,6 +566,7 @@
   <div id="hotbar"></div>
   <div id="chatLog"></div>
   <div id="sgHint" class="hidden">PRESS M TO USE THE MOUSE</div>
+  <div id="zcPop"></div>
 </div>
 <div id="chatBox" class="hidden"><input id="chatIn" maxlength="120" placeholder="Say something" enterkeyhint="send" autocomplete="off"></div>
 <div id="plist" class="panel hidden"></div>
@@ -775,6 +791,7 @@
     <div class="sc-out" id="scOut"></div>
   </div>
 </div>
+<div class="ov lt hidden" id="zcMenu"><div class="panel zcp"><h2>Z COINS</h2><div id="zcBody"></div></div></div>
 <div class="toast" id="toast"></div>
 
 <div class="ov hidden" id="overMenu">
@@ -926,6 +943,49 @@ SD.stats = Object.assign({
   time: 0,
   spawned: 0
 }, SD.stats);
+
+const ZC_PRICE = {
+  "hat:party": 100,
+  "hat:spiky": 120,
+  "hat:tophat": 150,
+  "hat:cowboy": 150,
+  "hat:headphones": 200,
+  "hat:cat": 250,
+  "hat:horns": 300,
+  "hat:viking": 400,
+  "hat:wizard": 500,
+  "hat:halo": 750,
+  "hat:flame": 900,
+  "hat:crown": 1000,
+  "fw:shades": 100,
+  "fw:mask": 150,
+  "fw:visor": 400,
+  "back:cape": 300,
+  "back:guitar": 500,
+  "back:sword": 600,
+  "back:wings": 800,
+  "back:jetpack": 1200,
+  "neck:bowtie": 120,
+  "neck:chain": 400
+};
+
+const ZC_SLOTS = [ "hat", "fw", "back", "neck" ];
+
+function zcInit() {
+  if (!Number.isFinite(SD.zc) || SD.zc < 0) SD.zc = 0;
+  if (!Number.isFinite(SD.zlife) || SD.zlife < 0) SD.zlife = SD.zc;
+  if (!Array.isArray(SD.zown)) {
+    SD.zown = [];
+    const o = SD.settings && SD.settings.outfit || {};
+    for (const k of ZC_SLOTS) if (o[k] && ZC_PRICE[k + ":" + o[k]]) SD.zown.push(k + ":" + o[k]);
+  }
+}
+
+zcInit();
+
+const zcOwns = (k, v) => !ZC_PRICE[k + ":" + v] || SD.zown.includes(k + ":" + v);
+
+const zcFmt = n => Math.floor(n).toLocaleString("en-US");
 
 const ED = {
   on: false,
@@ -2153,7 +2213,10 @@ function buildMap(id) {
   curMap = MAPS[id];
   const m = curMap;
   madeReset();
+  CLICKS.clear();
   spdMul = 1;
+  DECO.lights = 0;
+  atmosBuild(m && (m.mkData || (m.editor && ED.D)));
   sgBuild(m && m.mkData && m.mkData.gui, false);
   scene.background = new THREE.Color(m.sky);
   scene.fog = new THREE.Fog(m.sky, m.fog[0], m.fog[1]);
@@ -2946,6 +3009,7 @@ function addKill() {
   kills++;
   SD.stats.kills++;
   persist();
+  zcKill();
 }
 
 function recordWave() {
@@ -3808,6 +3872,10 @@ function primary() {
   }
   switch (tool) {
    case "hands":
+    if (tryPartClick()) {
+      cd = .3;
+      break;
+    }
     punch();
     cd = .38;
     break;
@@ -4494,6 +4562,7 @@ function updateSurvival(dt) {
     }
   } else if (zombies.size === 0 && surv.wave > 0) {
     banner(`WAVE ${surv.wave} CLEARED`, "+40 health", 2200);
+    zcWave(surv.wave);
     hp = Math.min(100, hp + 40);
     surv.breakT = 6;
     recordWave();
@@ -4560,6 +4629,7 @@ function toMenu() {
   renderStats();
   renderMaps();
   hubWs();
+  zcDaily();
 }
 
 const r3 = v => [ +v.x.toFixed(3), +v.y.toFixed(3), +v.z.toFixed(3) ];
@@ -5156,6 +5226,17 @@ $("hotbar").addEventListener("pointerdown", e => {
 
 let toolTextKey = "", toolFadeT = null;
 
+let ckAimT = 0;
+
+function clickAim(dt) {
+  ckAimT -= dt;
+  if (ckAimT > 0) return;
+  ckAimT = .12;
+  if (!CLICKS.size || state !== "play" || ED.on || tool !== "hands") return;
+  const h = aim(10), L = h && LIVE.list.find(l => l.body === h.body);
+  $("cross").classList.toggle("hot", !!(L && (L.click || CLICKS.has(L.i))));
+}
+
 function updateToolText() {
   const t = curTools().find(x => x.id === tool) || curTools()[0];
   const hint = t.hint(), key = t.name + hint;
@@ -5412,7 +5493,7 @@ $("avGrid").addEventListener("click", e => {
 
 function renderStats() {
   const st = SD.stats, bw = st.bestWave[curMapId] || 0;
-  $("menuStats").innerHTML = `<span><b>${st.kills}</b>ZOMBIES DOWN</span><span><b>${bw || "–"}</b>BEST WAVE HERE</span><span><b>${st.deaths}</b>DEATHS</span><span><b>${Math.floor(st.time / 60)}</b>MIN PLAYED</span>`;
+  $("menuStats").innerHTML = `<span><b>${st.kills}</b>ZOMBIES DOWN</span><span><b>${bw || "–"}</b>BEST WAVE HERE</span><span><b>${st.deaths}</b>DEATHS</span><span><b>${Math.floor(st.time / 60)}</b>MIN PLAYED</span><span><b>${zcFmt(SD.zc)}</b>Z COINS</span><span><b>${zcFmt(SD.zlife || 0)}</b>Z EARNED</span>`;
 }
 
 renderMaps();
@@ -6132,12 +6213,17 @@ const uMail = u => `${u}@players.playgroundz.app`;
 function renderAcct() {
   renderHubMe();
   $("hubAdmin").classList.toggle("hidden", !isAdmin());
-  $("acct").innerHTML = user ? `${isAdmin() ? '<button class="sb adm" data-a="adm">ADMIN</button>' : ""}<span class="who">${esc(user.name.toUpperCase())}</span><button class="sb" data-a="out">LOG OUT</button>` : `<span class="who dim">GUEST</span><button class="sb save" data-a="in">LOG IN</button>`;
+  $("acct").innerHTML = `<button class="sb zc" data-a="zc"><b>Z</b> ${zcFmt(SD.zc)}</button>` + (user ? `${isAdmin() ? '<button class="sb adm" data-a="adm">ADMIN</button>' : ""}<span class="who">${esc(user.name.toUpperCase())}</span><button class="sb" data-a="out">LOG OUT</button>` : `<span class="who dim">GUEST</span><button class="sb save" data-a="in">LOG IN</button>`);
+  zcRender();
 }
 
 $("acct").addEventListener("click", async e => {
   const b = e.target.closest("button");
   if (!b) return;
+  if (b.dataset.a === "zc") {
+    openZcMenu();
+    return;
+  }
   if (b.dataset.a === "adm") {
     openAdmin("menu");
     return;
@@ -6330,6 +6416,12 @@ async function cloudPull() {
 }
 
 function applySave(r) {
+  applySaveRaw(r);
+  zcInit();
+  zcRender();
+}
+
+function applySaveRaw(r) {
   for (const k of Object.keys(SD)) delete SD[k];
   Object.assign(SD, {
     settings: {},
@@ -6446,6 +6538,9 @@ async function openRoom(code, asHost) {
     if (p.k === "gclick") {
       const Rm = NET.peers.get(p.i);
       scEvent("click", +p.g | 0, p.i, Rm ? Rm.name : "");
+    } else if (p.k === "pclick") {
+      const Rm = NET.peers.get(p.i);
+      scEvent("pclick", +p.g | 0, p.i, Rm ? Rm.name : "");
     } else if (actOk(p.k, p)) runAct(p.i, p.k, p);
   });
   ch.on("broadcast", {
@@ -7025,11 +7120,15 @@ function buildSnap(full) {
   const lp = LIVE.list.length ? liveSnap(full) : null;
   if (lp && lp.length) msg.lp = lp;
   madeSnap(msg, full);
+  if (CLICKS.size && (full || CLICKS.dirty)) {
+    msg.ck = [ ...CLICKS ];
+    CLICKS.dirty = false;
+  }
   if (GUI.gdirty || full && Object.keys(GUI.glob).length) {
     msg.gu = GUI.glob;
     GUI.gdirty = false;
   }
-  if (full) msg.all = [ ...ents ].map(e => e.nid); else if (!list.length && !msg.fx.length && !msg.d.length && !msg.lp && !msg.gu && !msg.mk && !msg.mx && !msg.gm) return null;
+  if (full) msg.all = [ ...ents ].map(e => e.nid); else if (!list.length && !msg.fx.length && !msg.d.length && !msg.lp && !msg.gu && !msg.mk && !msg.mx && !msg.gm && !msg.ck) return null;
   return msg;
 }
 
@@ -7173,6 +7272,7 @@ function onSnap(m) {
     if (NET.wave[0] > pw[0] && NET.wave[0] > 0) banner(`WAVE ${NET.wave[0]}`, `${NET.wave[1]} incoming`, 2200);
     if (NET.wave[2] && !pw[2] && NET.wave[0] > 0) {
       banner(`WAVE ${NET.wave[0]} CLEARED`, "+40 health", 2200);
+      zcWave(NET.wave[0]);
       if (state === "play") hp = Math.min(100, hp + 40);
       recordWave();
     }
@@ -7196,6 +7296,10 @@ function onSnap(m) {
   try {
     madeApply(m);
   } catch (err) {}
+  if (Array.isArray(m.ck)) {
+    CLICKS.clear();
+    for (const i of m.ck.slice(0, 2e3)) if (Number.isInteger(i)) CLICKS.add(i);
+  }
   if (m.lp) for (const a of m.lp) {
     try {
       liveApply(a);
@@ -7543,6 +7647,19 @@ const LIGHT = {
     sun: [ 10466559, .9 ],
     sunDir: [ -.3, 1, .5 ],
     exp: 1.25
+  },
+  dawn: {
+    sky: 15641016,
+    hemi: [ 16113331, 6182531, 1.05 ],
+    sun: [ 16766118, 2.1 ],
+    sunDir: [ -.85, .35, .4 ]
+  },
+  space: {
+    sky: 197383,
+    hemi: [ 5329279, 1052688, .8 ],
+    sun: [ 15132415, 1.6 ],
+    sunDir: [ .4, .9, -.3 ],
+    exp: 1.2
   }
 };
 
@@ -10082,6 +10199,22 @@ const MK_MATS = [ {
   css: "#8a4fd6",
   make: () => mkCol(9064406)
 }, {
+  id: "neon",
+  name: "Neon",
+  css: "linear-gradient(135deg,#7dfff0,#ff5ce1)",
+  tip: "Glows in its color",
+  make: () => {
+    const m = new THREE.MeshStandardMaterial({
+      color: 6741503,
+      emissive: 6741503,
+      emissiveIntensity: 1.5,
+      roughness: .35
+    });
+    m.userData.tile = 4;
+    m.userData.neon = true;
+    return m;
+  }
+}, {
   id: "glass",
   name: "Glass",
   css: "linear-gradient(135deg,#cfeaff,#7fb6dd)",
@@ -10319,6 +10452,11 @@ function mkCleanProps(o) {
   if (+o.tr > 0) r.tr = Math.min(1, Math.round(+o.tr * 100) / 100);
   if (typeof o.col === "string" && /^[0-9a-f]{6}$/i.test(o.col)) r.col = o.col.toLowerCase();
   if (+o.ms > 0) r.ms = clamp(+o.ms, .1, 500);
+  if (typeof o.sg === "string") {
+    const t = o.sg.replace(/[\u0000-\u001f]/g, " ").trim().slice(0, 60);
+    if (t) r.sg = t;
+  }
+  if (+o.lt > 0) r.lt = clamp(Math.round(+o.lt), 1, 60);
   return Object.keys(r).length ? r : null;
 }
 
@@ -10339,6 +10477,9 @@ function mkClean(D) {
       } : {},
       ...D.env.nc ? {
         nc: 1
+      } : {},
+      ...[ "rain", "snow", "fireflies" ].includes(D.env.wx) ? {
+        wx: D.env.wx
       } : {}
     },
     ...Array.isArray(D.gui) && D.gui.length ? {
@@ -10743,6 +10884,7 @@ function edPartMesh(p, i) {
     i: i
   };
   ED.group.add(m);
+  partDeco(m, decoOf(p));
   return m;
 }
 
@@ -10793,6 +10935,7 @@ function edRefreshPart(i) {
   m.position.set(p[2], p[3], p[4]);
   m.quaternion.copy(mkQuat(p[5], p[6], p[7]));
   m.castShadow = !md.glass && !md.invis;
+  partDeco(m, decoOf(p));
 }
 
 function edRebuild() {
@@ -11368,6 +11511,7 @@ function edDelete(s) {
   edPush();
   if (s.kind === "p") {
     ED.D.p.splice(s.i, 1);
+    partDeco(ED.meshes[s.i], null);
     ED.group.remove(ED.meshes[s.i]);
     ED.meshes.splice(s.i, 1);
   } else if (s.kind === "it") {
@@ -11911,7 +12055,7 @@ function renderEdMenu(view) {
   if (ED.view === "main") {
     h = `<h2>MAP MAKER</h2><p class="foot" style="margin-top:4px">${esc(ED.draft.name)} · ${D.p.length} pieces · ${D.it.length} props${ED.draft.wid ? " · in the Workshop" : ""}</p>\n    <button class="go" data-m="resume">KEEP BUILDING</button>\n    <div class="opts">\n      <button class="opt" data-m="test">TEST PLAY <b>›</b></button>\n      <button class="opt" data-m="settings">MAP SETTINGS <b>›</b></button>\n      <button class="opt" data-m="scripts">SCRIPTS <b>${(ED.D.sc || []).length} ›</b></button>\n      <button class="opt" data-m="publish" style="color:var(--acc)">${ED.draft.wid ? "UPDATE IN WORKSHOP" : "PUBLISH TO WORKSHOP"} <b>›</b></button>\n      <button class="opt" data-m="save">SAVE NOW</button>\n      <label class="opt">LOOK SPEED <input type="range" id="edSens" min="0.4" max="2.2" step="0.1" value="${sens}"></label>\n      <button class="opt" data-m="exit">SAVE AND EXIT</button>\n    </div>\n    <div class="foot">${isTouch ? "Left side moves, JUMP flies up, DOWN flies down. The bar at the top resizes and turns things." : "<b>WASD</b> fly · <b>Space</b>/<b>C</b> up/down · <b>1–5</b> tools · <b>Q</b> pieces · <b>R</b>/<b>F</b> turn · <b>T</b>/<b>G</b> tilt/roll · <b>Arrows</b> width/length · <b>PgUp</b>/<b>PgDn</b> height · <b>B</b> copy · <b>Del</b> delete · <b>N</b> grid · <b>Z</b> undo · <b>Right-click</b> copies a piece · <b>Tab</b> frees the mouse for the bar · <b>E</b> Explorer and Properties"}</div>`;
   } else if (ED.view === "settings") {
-    h = `<h2>MAP SETTINGS</h2><div class="opts">\n      <label class="fld">NAME<input id="edName" maxlength="32" value="${esc(ED.draft.name)}" autocomplete="off"></label>\n      <div class="admgrid">\n        <label class="fld">SKY${sel("edSky", [ [ "day", "Day" ], [ "sunset", "Sunset" ], [ "overcast", "Cloudy" ], [ "night", "Night" ] ], D.env.sky)}</label>\n        <label class="fld">GROUND${sel("edFloor", MK_FLOORS.map(f => [ f, f === "none" ? "None (void)" : (MK_MAT[f] || {}).name ]), D.env.floor)}</label>\n        <label class="fld">GROUND SIZE${sel("edSize", [ 40, 60, 80, 120, 160, 200, 300, 400 ].map(v => [ v, v + " m" ]), D.env.size)}</label>\n        <label class="fld">ZOMBIES${sel("edHorde", [ [ 2, "No zombies" ], [ 0, "Only placed ones" ], [ 1, "Horde keeps coming" ] ], D.env.nz ? 2 : D.env.horde ? 1 : 0)}</label>\n        <label class="fld">PLAYER TOOLS${sel("edNs", [ [ 0, "Full sandbox" ], [ 1, "No sandbox tools" ] ], D.env.ns ? 1 : 0)}</label>\n        <label class="fld">COPYING${sel("edNc", [ [ 0, "Anyone can copy" ], [ 1, "Copying off" ] ], D.env.nc ? 1 : 0)}</label>\n      </div></div>\n      <p class="foot"><b>No zombies</b> hides zombies from the spawn menu and turns off hordes and survival. Your scripts can still spawn them. <b>No sandbox tools</b> leaves players with only their hands: no spawning, grabbing, launcher or remover. <b>Copying off</b> hides "Copy into Map Maker" in the Workshop for everyone but you.</p>\n      <button class="go" data-m="applyset">APPLY</button><button class="go ghost" data-m="back">BACK</button>`;
+    h = `<h2>MAP SETTINGS</h2><div class="opts">\n      <label class="fld">NAME<input id="edName" maxlength="32" value="${esc(ED.draft.name)}" autocomplete="off"></label>\n      <div class="admgrid">\n        <label class="fld">SKY${sel("edSky", [ [ "day", "Day" ], [ "dawn", "Dawn" ], [ "sunset", "Sunset" ], [ "overcast", "Cloudy" ], [ "night", "Night" ], [ "space", "Space" ] ], D.env.sky)}</label>\n        <label class="fld">WEATHER${sel("edWx", [ [ "none", "Clear" ], [ "rain", "Rain" ], [ "snow", "Snow" ], [ "fireflies", "Fireflies" ] ], D.env.wx || "none")}</label>\n        <label class="fld">GROUND${sel("edFloor", MK_FLOORS.map(f => [ f, f === "none" ? "None (void)" : (MK_MAT[f] || {}).name ]), D.env.floor)}</label>\n        <label class="fld">GROUND SIZE${sel("edSize", [ 40, 60, 80, 120, 160, 200, 300, 400 ].map(v => [ v, v + " m" ]), D.env.size)}</label>\n        <label class="fld">ZOMBIES${sel("edHorde", [ [ 2, "No zombies" ], [ 0, "Only placed ones" ], [ 1, "Horde keeps coming" ] ], D.env.nz ? 2 : D.env.horde ? 1 : 0)}</label>\n        <label class="fld">PLAYER TOOLS${sel("edNs", [ [ 0, "Full sandbox" ], [ 1, "No sandbox tools" ] ], D.env.ns ? 1 : 0)}</label>\n        <label class="fld">COPYING${sel("edNc", [ [ 0, "Anyone can copy" ], [ 1, "Copying off" ] ], D.env.nc ? 1 : 0)}</label>\n      </div></div>\n      <p class="foot"><b>No zombies</b> hides zombies from the spawn menu and turns off hordes and survival. Your scripts can still spawn them. <b>No sandbox tools</b> leaves players with only their hands: no spawning, grabbing, launcher or remover. <b>Copying off</b> hides "Copy into Map Maker" in the Workshop for everyone but you.</p>\n      <button class="go" data-m="applyset">APPLY</button><button class="go ghost" data-m="back">BACK</button>`;
   } else if (ED.view === "publish") {
     h = `<h2>${ED.draft.wid ? "UPDATE" : "PUBLISH"}</h2>\n      <p class="foot" style="margin-top:4px">${user ? `Everyone can find it in the Workshop. The picture is taken from where you are looking right now.` : "Log in first so the map is saved under your name."}</p>\n      <div class="opts"><label class="fld">NAME<input id="pubName" maxlength="32" value="${esc(ED.draft.name)}" autocomplete="off"></label>\n      <label class="fld">DESCRIPTION<input id="pubDesc" maxlength="140" value="${esc(ED.draft.desc || "")}" autocomplete="off" placeholder="What's fun about it?"></label></div>\n      <p class="err" id="pubErr"></p>\n      ${user ? `<button class="go" data-m="dopub">${ED.draft.wid ? "UPDATE MAP" : "PUBLISH MAP"}</button>` : '<button class="go" data-m="login">LOG IN</button>'}\n      <button class="go ghost" data-m="back">BACK</button>`;
   }
@@ -11987,8 +12131,10 @@ $("edMenu").addEventListener("click", async e => {
         horde: zv === 1 ? 1 : 0,
         nz: zv === 2 ? 1 : 0,
         ns: +$("edNs").value ? 1 : 0,
-        nc: +$("edNc").value ? 1 : 0
+        nc: +$("edNc").value ? 1 : 0,
+        wx: $("edWx").value
       });
+      if (ED.D.env.wx === "none") delete ED.D.env.wx;
       for (const k of [ "nz", "ns", "nc" ]) if (!ED.D.env[k]) delete ED.D.env[k];
       MAPS["m:edit"] = edDef();
       edRebuild();
@@ -13043,13 +13189,13 @@ const AV_SHIRTS = [ [ "none", "None" ], [ "tank", "Tank top" ], [ "tee", "T-shir
 
 const AV_PANTS = [ [ "none", "None" ], [ "shorts", "Shorts" ], [ "pants", "Pants" ] ];
 
-const AV_HATS = [ [ "none", "None" ], [ "cap", "Cap" ], [ "beanie", "Beanie" ], [ "tophat", "Top Hat" ], [ "cowboy", "Cowboy" ], [ "crown", "Crown" ], [ "party", "Party Hat" ], [ "headphones", "Headphones" ], [ "spiky", "Spiky Hair" ], [ "horns", "Horns" ], [ "halo", "Halo" ] ];
+const AV_HATS = [ [ "none", "None" ], [ "cap", "Cap" ], [ "beanie", "Beanie" ], [ "tophat", "Top Hat" ], [ "cowboy", "Cowboy" ], [ "crown", "Crown" ], [ "party", "Party Hat" ], [ "headphones", "Headphones" ], [ "spiky", "Spiky Hair" ], [ "horns", "Horns" ], [ "halo", "Halo" ], [ "cat", "Cat Ears" ], [ "viking", "Viking Helmet" ], [ "wizard", "Wizard Hat" ], [ "flame", "Flame Hair" ] ];
 
-const AV_FACEWEAR = [ [ "none", "None" ], [ "shades", "Shades" ], [ "glasses", "Glasses" ], [ "mask", "Mask" ] ];
+const AV_FACEWEAR = [ [ "none", "None" ], [ "shades", "Shades" ], [ "glasses", "Glasses" ], [ "mask", "Mask" ], [ "visor", "Cyber Visor" ] ];
 
-const AV_BACK = [ [ "none", "None" ], [ "backpack", "Backpack" ], [ "cape", "Cape" ], [ "wings", "Wings" ], [ "jetpack", "Jetpack" ] ];
+const AV_BACK = [ [ "none", "None" ], [ "backpack", "Backpack" ], [ "cape", "Cape" ], [ "wings", "Wings" ], [ "jetpack", "Jetpack" ], [ "sword", "Sword" ], [ "guitar", "Guitar" ] ];
 
-const AV_NECK = [ [ "none", "None" ], [ "scarf", "Scarf" ], [ "chain", "Gold Chain" ] ];
+const AV_NECK = [ [ "none", "None" ], [ "scarf", "Scarf" ], [ "chain", "Gold Chain" ], [ "bowtie", "Bow Tie" ] ];
 
 const AV_FACES = [ [ "none", "Blank" ], [ "classic", "Classic" ], [ "happy", "Happy" ], [ "grin", "Grin" ], [ "cool", "Cool" ], [ "angry", "Angry" ], [ "wow", "Surprised" ], [ "sleepy", "Sleepy" ], [ "smug", "Smug" ] ];
 
@@ -13628,6 +13774,57 @@ function avAcc(kind, id, box, col) {
         emissiveIntensity: 1.2
       }), c.x, top + H * .35, c.z, Math.PI / 2);
       break;
+
+     case "cat":
+      for (const s of [ -1, 1 ]) {
+        add(new THREE.ConeGeometry(R * .32, H * .42, 4), mat, c.x + s * R * .6, top + H * .1, c.z - R * .05, 0, Math.PI / 4, -s * .25);
+        add(new THREE.ConeGeometry(R * .18, H * .26, 4), avStd(16758465), c.x + s * R * .6, top + H * .07, c.z + R * .06, 0, Math.PI / 4, -s * .25);
+      }
+      break;
+
+     case "viking":
+      {
+        const steel = avStd(10264240, {
+          metalness: .75,
+          roughness: .35
+        });
+        const d = add(new THREE.SphereGeometry(R * 1.12, 22, 12, 0, Math.PI * 2, 0, Math.PI / 2), steel, c.x, y0, c.z);
+        d.scale.y = 1.05;
+        add(new THREE.CylinderGeometry(R * 1.14, R * 1.14, H * .12, 22), mat, c.x, y0 + H * .02, c.z);
+        add(new THREE.BoxGeometry(R * .14, H * .5, R * .1), steel, c.x, y0 - H * .1, box.max.z + R * .08);
+        for (const s of [ -1, 1 ]) add(new THREE.ConeGeometry(R * .2, H * .6, 10), avStd(15790320), c.x + s * R * 1.1, y0 + H * .25, c.z, 0, 0, -s * 1);
+        break;
+      }
+
+     case "wizard":
+      {
+        const b = add(new THREE.CylinderGeometry(R * 1.9, R * 1.9, R * .06, 30), mat, c.x, top - H * .08, c.z);
+        b.scale.z = .95;
+        add(new THREE.ConeGeometry(R * .95, H * 1.5, 22), mat, c.x, top + H * .66, c.z - R * .1, -.12);
+        add(new THREE.OctahedronGeometry(R * .2), avStd(16766012, {
+          emissive: 16766012,
+          emissiveIntensity: .8
+        }), c.x, top + H * .45, box.max.z - R * .05);
+        break;
+      }
+
+     case "flame":
+      {
+        const f1 = avStd(16740876, {
+          emissive: 16729088,
+          emissiveIntensity: 1.1,
+          roughness: .4
+        }), f2 = avStd(16766012, {
+          emissive: 16760320,
+          emissiveIntensity: 1.2
+        });
+        for (let i = 0; i < 7; i++) {
+          const a = i / 7 * Math.PI * 2, rr = R * .55;
+          add(new THREE.ConeGeometry(R * .38, H * (.55 + (i % 3) * .15), 8), f1, c.x + Math.cos(a) * rr, top + H * .18, c.z + Math.sin(a) * rr, Math.sin(a) * .35, 0, -Math.cos(a) * .35);
+        }
+        add(new THREE.ConeGeometry(R * .5, H * .95, 10), f2, c.x, top + H * .4, c.z);
+        break;
+      }
     }
   } else if (kind === "fw") {
     const ey = c.y + H * .02, fz = box.max.z + R * .04;
@@ -13637,7 +13834,15 @@ function avAcc(kind, id, box, col) {
     } else if (id === "glasses") {
       for (const s of [ -1, 1 ]) add(new THREE.TorusGeometry(R * .32, R * .05, 6, 20), dark, c.x + s * R * .42, ey, fz);
       add(new THREE.BoxGeometry(R * .3, R * .05, R * .05), dark, c.x, ey + R * .05, fz);
-    } else if (id === "mask") add(new THREE.BoxGeometry(R * 1.7, H * .32, R * .12), mat, c.x, c.y - H * .22, fz - R * .02);
+    } else if (id === "mask") add(new THREE.BoxGeometry(R * 1.7, H * .32, R * .12), mat, c.x, c.y - H * .22, fz - R * .02); else if (id === "visor") {
+      add(new THREE.BoxGeometry(R * 1.95, H * .2, R * .12), avStd(2944255, {
+        emissive: 2944255,
+        emissiveIntensity: 1.3,
+        transparent: true,
+        opacity: .85
+      }), c.x, ey, fz);
+      for (const s of [ -1, 1 ]) add(new THREE.BoxGeometry(R * .1, H * .14, R * 1.5), dark, c.x + s * R * 1, ey, c.z);
+    }
   } else if (kind === "back") {
     const bz = box.min.z;
     if (id === "backpack") {
@@ -13657,13 +13862,54 @@ function avAcc(kind, id, box, col) {
         roughness: .35
       }), c.x + s * R * .32, c.y, bz - R * .3);
       add(new THREE.ConeGeometry(R * .22, R * .35, 12), dark, c.x + s * R * .32, c.y - sz.y * .5, bz - R * .3, Math.PI);
+    } else if (id === "sword") {
+      const steel = avStd(14079702, {
+        metalness: .85,
+        roughness: .25
+      }), sw = new THREE.Group;
+      const p = (geo, m, y) => {
+        const o = new THREE.Mesh(geo, m);
+        o.position.y = y;
+        o.castShadow = true;
+        sw.add(o);
+      };
+      p(new THREE.BoxGeometry(R * .22, sz.y * 1.7, R * .05), steel, 0);
+      p(new THREE.BoxGeometry(R * .75, R * .12, R * .12), gold, sz.y * .85);
+      p(new THREE.CylinderGeometry(R * .08, R * .08, sz.y * .35, 8), dark, sz.y * 1.05);
+      p(new THREE.SphereGeometry(R * .11, 8, 6), gold, sz.y * 1.25);
+      sw.position.set(c.x, c.y + sz.y * .1, bz - R * .22);
+      sw.rotation.z = .65;
+      g.add(sw);
+    } else if (id === "guitar") {
+      const gt = new THREE.Group, wood = avStd(hc, {
+        roughness: .45
+      });
+      const p = (geo, m, x, y, z, rx = 0) => {
+        const o = new THREE.Mesh(geo, m);
+        o.position.set(x, y, z);
+        o.rotation.x = rx;
+        o.castShadow = true;
+        gt.add(o);
+      };
+      p(new THREE.CylinderGeometry(R * .55, R * .55, R * .22, 20), wood, 0, -sz.y * .25, 0, Math.PI / 2);
+      p(new THREE.CylinderGeometry(R * .42, R * .42, R * .22, 20), wood, 0, sz.y * .12, 0, Math.PI / 2);
+      p(new THREE.CylinderGeometry(R * .14, R * .14, R * .24, 14), dark, 0, -sz.y * .1, -R * .01, Math.PI / 2);
+      p(new THREE.BoxGeometry(R * .16, sz.y * 1.1, R * .1), avStd(4073235), 0, sz.y * .75, 0);
+      p(new THREE.BoxGeometry(R * .26, sz.y * .2, R * .12), dark, 0, sz.y * 1.38, 0);
+      gt.position.set(c.x, c.y, bz - R * .3);
+      gt.rotation.z = -.55;
+      g.add(gt);
     }
   } else if (kind === "neck") {
     if (id === "scarf") {
       const s = add(new THREE.TorusGeometry(R * 1.05, R * .3, 10, 24), mat, c.x, box.min.y + sz.y * .3, c.z, Math.PI / 2);
       s.scale.set(1, 1, .9);
       add(new THREE.BoxGeometry(R * .5, sz.y * 1.6, R * .2), mat, c.x + R * .4, box.min.y - sz.y * .5, box.max.z + R * .1, 0, 0, .1);
-    } else if (id === "chain") add(new THREE.TorusGeometry(R * 1.2, R * .07, 6, 30), gold, c.x, box.min.y - sz.y * .1, c.z + R * .15, Math.PI / 2 - .5);
+    } else if (id === "chain") add(new THREE.TorusGeometry(R * 1.2, R * .07, 6, 30), gold, c.x, box.min.y - sz.y * .1, c.z + R * .15, Math.PI / 2 - .5); else if (id === "bowtie") {
+      const fz = box.max.z + R * .1, y = box.min.y + sz.y * .1;
+      for (const s of [ -1, 1 ]) add(new THREE.ConeGeometry(R * .26, R * .5, 4), mat, c.x + s * R * .24, y, fz, 0, 0, s * Math.PI / 2);
+      add(new THREE.BoxGeometry(R * .16, R * .2, R * .14), mat, c.x, y, fz + R * .02);
+    }
   }
   return g;
 }
@@ -13786,6 +14032,7 @@ function openAvEditor() {
 }
 
 function closeAvEditor() {
+  aveBuyCancel();
   $("avMenu").classList.add("hidden");
   cancelAnimationFrame(AVE.raf);
   AVE.raf = 0;
@@ -13901,7 +14148,30 @@ function aveLoop(t) {
 const aveSw = (hex, on, key) => `<button class="sw ${on ? "on" : ""}" data-k="${key}" data-v="${hex}" style="background:#${hex}" aria-label="#${hex}"></button>`;
 
 function aveChips(list, cur, key) {
-  return `<div class="avchips">${list.map(([v, n]) => `<button class="avchip ${v === cur ? "on" : ""}" data-k="${key}" data-v="${v}">${n}</button>`).join("")}</div>`;
+  return `<div class="avchips">${list.map(([v, n]) => {
+    const own = zcOwns(key, v), price = ZC_PRICE[key + ":" + v];
+    return `<button class="avchip ${v === cur ? "on" : ""}${own ? "" : " lock"}" data-k="${key}" data-v="${v}">${n}${own ? "" : `<em>${zcFmt(price)} Z</em>`}</button>`;
+  }).join("")}</div>`;
+}
+
+function aveBuyHTML() {
+  const B = AVE.buy;
+  if (!B) return `<div class="avbal">You have&nbsp;<span style="color:#b7791f">${zcFmt(SD.zc)} Z</span></div>`;
+  const price = ZC_PRICE[B.k + ":" + B.v], name = ({
+    hat: AV_HATS,
+    fw: AV_FACEWEAR,
+    back: AV_BACK,
+    neck: AV_NECK
+  }[B.k].find(x => x[0] === B.v) || [ 0, B.v ])[1];
+  const can = SD.zc >= price;
+  return `<div class="avbuy"><span>${esc(name)} costs <b>${zcFmt(price)} Z</b>. ${can ? `You have ${zcFmt(SD.zc)} Z.` : `You need ${zcFmt(price - SD.zc)} more Z. Play maps to earn them.`}</span>${can ? '<button class="go" data-buy="yes">BUY</button>' : ""}<button class="go ghost" data-buy="no">${can ? "CANCEL" : "OK"}</button></div>`;
+}
+
+function aveBuyCancel() {
+  if (!AVE.buy) return;
+  AVE.o[AVE.buy.k] = AVE.buy.prev;
+  AVE.buy = null;
+  aveModel();
 }
 
 function aveTiles(list, cur, key, img) {
@@ -13946,10 +14216,11 @@ function renderAve() {
   } else if (AVE.tab === "EXTRAS") {
     h = `<div class="sec">FACE</div>${aveChips(AV_FACEWEAR, o.fw, "fw")}\n    <div class="sec">BACK</div>${aveChips(AV_BACK, o.back, "back")}\n    <div class="sec">NECK</div>${aveChips(AV_NECK, o.neck, "neck")}\n    <div class="sec">ACCESSORY COLOR</div><div class="sws">${AV_COLS.map(c => aveSw(c, o.hc === c, "hc")).join("")}</div>`;
   }
-  $("aveBody").innerHTML = h;
+  $("aveBody").innerHTML = (cust && AVE.tab !== "CHARACTERS" ? aveBuyHTML() : "") + h;
 }
 
 function aveApply() {
+  for (const k of ZC_SLOTS) if (!zcOwns(k, AVE.o[k])) AVE.o[k] = "none";
   SD.settings.outfit = avClean(AVE.o);
   persist();
   aveModel();
@@ -13962,6 +14233,7 @@ function aveApply() {
 $("aveTabs").addEventListener("click", e => {
   const t = e.target.closest(".tab");
   if (!t) return;
+  aveBuyCancel();
   AVE.tab = t.dataset.t;
   AVE.zoom = t.dataset.t === "BODY" || t.dataset.t === "HATS";
   renderAve();
@@ -13992,8 +14264,40 @@ $("aveBody").addEventListener("click", e => {
     openTsMaker();
     return;
   }
+  const by = e.target.closest("[data-buy]");
+  if (by) {
+    const B = AVE.buy;
+    if (by.dataset.buy === "yes" && B) {
+      const price = ZC_PRICE[B.k + ":" + B.v];
+      if (zcSpend(price)) {
+        SD.zown.push(B.k + ":" + B.v);
+        AVE.buy = null;
+        AVE.o[B.k] = B.v;
+        persist(true);
+        aveApply();
+        sfx.pop && sfx.pop();
+        toast("Bought! It's yours forever.", 2200);
+      }
+    } else aveBuyCancel();
+    renderAve();
+    return;
+  }
   const b = e.target.closest("[data-k]");
   if (!b) return;
+  if (ZC_SLOTS.includes(b.dataset.k) && !zcOwns(b.dataset.k, b.dataset.v)) {
+    if (AVE.buy) aveBuyCancel();
+    AVE.buy = {
+      k: b.dataset.k,
+      v: b.dataset.v,
+      prev: AVE.o[b.dataset.k]
+    };
+    AVE.o[b.dataset.k] = b.dataset.v;
+    aveModel();
+    renderAve();
+    $("aveBody").scrollTop = 0;
+    return;
+  }
+  if (AVE.buy) aveBuyCancel();
   AVE.o[b.dataset.k] = b.dataset.v;
   if (b.dataset.k === "design" && AVE.o.shirt === "none") AVE.o.shirt = "tee";
   aveApply();
@@ -14274,8 +14578,90 @@ const LIVE = {
 
 const isLivePart = p => {
   const o = p[11];
-  return !!(o && (o.n || o.an === 0 || o.tr > 0 || o.col || o.cc === 0));
+  return !!(o && (o.n || o.an === 0 || o.tr > 0 || o.col || o.cc === 0 || o.sg || o.lt));
 };
+
+const DECO = {
+  lights: 0,
+  max: 10
+};
+
+function signTexture(text) {
+  const c = document.createElement("canvas"), g = c.getContext("2d");
+  g.font = "800 64px 'Barlow Condensed', system-ui, sans-serif";
+  const w = Math.min(1600, Math.ceil(g.measureText(text).width) + 56);
+  c.width = w;
+  c.height = 96;
+  g.font = "800 64px 'Barlow Condensed', system-ui, sans-serif";
+  g.fillStyle = "rgba(10,11,14,.72)";
+  const r = 22;
+  g.beginPath();
+  g.moveTo(r, 0);
+  g.arcTo(w, 0, w, 96, r);
+  g.arcTo(w, 96, 0, 96, r);
+  g.arcTo(0, 96, 0, 0, r);
+  g.arcTo(0, 0, w, 0, r);
+  g.fill();
+  g.fillStyle = "#fff";
+  g.textAlign = "center";
+  g.textBaseline = "middle";
+  g.fillText(text, w / 2, 52);
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  t.anisotropy = 4;
+  return {
+    t: t,
+    aspect: w / 96
+  };
+}
+
+function partDeco(mesh, d) {
+  if (!mesh) return;
+  if (mesh.userData.deco) {
+    for (const o of mesh.userData.deco) {
+      mesh.remove(o);
+      if (o.isLight) DECO.lights--;
+      if (o.material) {
+        if (o.material.map) o.material.map.dispose();
+        o.material.dispose();
+      }
+    }
+  }
+  mesh.userData.deco = [];
+  if (!d) return;
+  const h = (mesh.geometry.boundingBox || (mesh.geometry.computeBoundingBox(), mesh.geometry.boundingBox)).max.y;
+  if (d.sg) {
+    const {t: t, aspect: aspect} = signTexture(d.sg);
+    const sp = new THREE.Sprite(new THREE.SpriteMaterial({
+      map: t,
+      transparent: true,
+      depthWrite: false
+    }));
+    const H = .9;
+    sp.scale.set(H * aspect, H, 1);
+    sp.position.set(0, h + .9, 0);
+    sp.renderOrder = 5;
+    mesh.add(sp);
+    mesh.userData.deco.push(sp);
+  }
+  if (d.lt > 0 && DECO.lights < DECO.max) {
+    const col = d.col ? "#" + d.col : "#fff3d6";
+    const L = new THREE.PointLight(col, 2.2, d.lt, 1.6);
+    L.position.set(0, h + .3, 0);
+    mesh.add(L);
+    mesh.userData.deco.push(L);
+    DECO.lights++;
+  }
+}
+
+function decoOf(p) {
+  const o = p[11] || {};
+  return o.sg || o.lt ? {
+    sg: o.sg || "",
+    lt: o.lt || 0,
+    col: o.col || null
+  } : null;
+}
 
 const mkPMCache = new Map;
 
@@ -14290,6 +14676,7 @@ function mkPartMaterial(p, fresh, editor) {
     m.map = null;
     m.emissiveMap = null;
     m.color.set("#" + o.col);
+    if (m.userData.neon) m.emissive.set("#" + o.col);
   }
   liveOpacity(m, o.tr || 0, editor);
   if (!fresh) mkPMCache.set(key, m);
@@ -14333,6 +14720,8 @@ function liveBuild(p, i) {
   world.addBody(body);
   mapBodies.push(body);
   const L = {
+    deco: decoOf(p),
+    click: false,
     i: i,
     n: o.n || "",
     t: p[0],
@@ -14355,6 +14744,7 @@ function liveBuild(p, i) {
   };
   LIVE.list.push(L);
   LIVE.byIdx.set(i, L);
+  partDeco(mesh, L.deco);
   return L;
 }
 
@@ -14424,6 +14814,11 @@ function liveSet(L, k, v) {
       L.mat.map = null;
       L.mat.emissiveMap = null;
       L.mat.color.set("#" + v);
+      if (L.mat.userData.neon) L.mat.emissive.set("#" + v);
+    }
+    if (L.deco && v) {
+      L.deco.col = v;
+      for (const o of L.mesh.userData.deco || []) if (o.isLight) o.color.set("#" + v);
     }
     L.mat.needsUpdate = true;
     break;
@@ -14438,6 +14833,32 @@ function liveSet(L, k, v) {
     L.cc = !!v;
     b.collisionResponse = L.cc;
     break;
+
+   case "sg":
+    {
+      const t = String(v || "").replace(/[\u0000-\u001f]/g, " ").trim().slice(0, 60);
+      L.deco = Object.assign({}, L.deco || {
+        lt: 0
+      }, {
+        sg: t,
+        col: L.col
+      });
+      partDeco(L.mesh, L.deco.sg || L.deco.lt ? L.deco : null);
+      break;
+    }
+
+   case "lt":
+    {
+      const n = clamp(Math.round(+v || 0), 0, 60);
+      L.deco = Object.assign({}, L.deco || {
+        sg: ""
+      }, {
+        lt: n,
+        col: L.col
+      });
+      partDeco(L.mesh, L.deco.sg || L.deco.lt ? L.deco : null);
+      break;
+    }
 
    case "an":
     {
@@ -14470,14 +14891,32 @@ function liveSet(L, k, v) {
   L.changed = true;
 }
 
-const liveEnc = L => {
+const liveEncBase = L => {
   const b = L.body, p = b.position, q = b.quaternion;
   return [ L.i, q2(p.x), q2(p.y), q2(p.z), q3(q.x), q3(q.y), q3(q.z), q3(q.w), L.col || "", Math.round(L.tr * 100), L.cc ? 1 : 0, L.s.map(q2) ];
 };
 
+const liveEnc = L => {
+  const a = liveEncBase(L);
+  if (L.deco && (L.deco.sg || L.deco.lt)) a.push(L.deco.sg || "", L.deco.lt || 0);
+  return a;
+};
+
+
 function liveApply(a) {
   const L = LIVE.byIdx.get(a[0]);
   if (!L) return;
+  if (a.length > 12) {
+    const sg = String(a[12] || "").slice(0, 60), lt = clamp(+a[13] || 0, 0, 60);
+    if (!L.deco || L.deco.sg !== sg || L.deco.lt !== lt) {
+      L.deco = {
+        sg: sg,
+        lt: lt,
+        col: L.col
+      };
+      partDeco(L.mesh, sg || lt ? L.deco : null);
+    }
+  }
   if (!L.tp) {
     L.tp = new CANNON.Vec3;
     L.tq = new CANNON.Quaternion;
@@ -14517,7 +14956,7 @@ const SCR = {
   lastPlayers: new Set
 };
 
-const SCR_BOOT = `"use strict";\nconst post = self.postMessage.bind(self);\n(() => {\n  const bad = ['fetch','XMLHttpRequest','importScripts','WebSocket','WebSocketStream','EventSource','indexedDB','caches','BroadcastChannel','Worker','SharedWorker','WebTransport','navigator','location','FileReader','FileReaderSync','OffscreenCanvas','createImageBitmap','Notification','Request','Response','Headers','FormData','Blob','File','URL','close','postMessage','queueMicrotask','reportError','structuredClone'];\n  for (const k of bad) {\n    let o = self;\n    while (o && o !== Object.prototype) { try { delete o[k]; } catch (e) {} o = Object.getPrototypeOf(o); }\n    try { Object.defineProperty(self, k, { value: undefined, writable: false, configurable: false }); } catch (e) {}\n  }\n})();\nconst S = { parts: [], names: new Map(), players: [], me: '', time: 0, g: 1, H: {}, T: new Map(), q: [], logs: [], errs: [], listen: [], gui: [], gname: new Map(), gp: new Map(), GC: new Map(), made: 0, madeCount: 0, spd: {} };\nlet curScript = '';\nconst lineOf = e => { const m = String(e && e.stack || '').match(/<anonymous>:(\\d+):(\\d+)/); return m ? (+m[1] - 2) : 0; };\nconst report = (name, e) => { S.errs.push([name, lineOf(e), String(e && e.message || e).slice(0, 200)]); };\nconst wrap = fn => { const name = curScript; return (...a) => { try { const r = fn(...a); if (r && typeof r.then === 'function') r.then(null, e => report(name, e)); } catch (e) { report(name, e); } }; };\nconst fire = (list, ...a) => { if (list) for (const f of list.slice()) f(...a); };\nconst num = v => { v = +v; return Number.isFinite(v) ? v : 0; };\nconst vec = (v, y, z) => { if (Array.isArray(v)) return [num(v[0]), num(v[1]), num(v[2])]; if (v && typeof v === 'object') return [num(v.x), num(v.y), num(v.z)]; return [num(v), num(y), num(z)]; };\nconst cmd = (...a) => { if (S.q.length < 2000) S.q.push(a); };\nconst colorHex = c => { c = String(c || '').trim().replace('#', ''); if (/^[0-9a-f]{3}$/i.test(c)) c = c.split('').map(x => x + x).join(''); return /^[0-9a-f]{6}$/i.test(c) ? c.toLowerCase() : null; };\nconst vec2 = (v, y) => { if (Array.isArray(v)) return [num(v[0]), num(v[1])]; if (v && typeof v === 'object') return [num(v.x), num(v.y)]; return [num(v), num(y)]; };\nfunction guiHandle(i, tgt) {\n  const G = () => S.gui[i];\n  const mine = () => { const k = tgt + '|' + i; let o = S.gp.get(k); if (!o) S.gp.set(k, o = {}); return o; };\n  const get = k => tgt === '*' ? G().p[k] : (k in mine() ? mine()[k] : G().p[k]);\n  const set = (k, v) => { if (tgt === '*') G().p[k] = v; else mine()[k] = v; cmd('gui', tgt, i, k, v); };\n  const h = {\n    get name() { return G().n; }, get type() { return G().t; },\n    get text() { const t = get('tx'); return t == null ? '' : String(t); }, set text(v) { set('tx', String(v == null ? '' : v).slice(0, 200)); },\n    get visible() { return !!get('v'); }, set visible(v) { set('v', v ? 1 : 0); },\n    get textColor() { return '#' + get('tc'); }, set textColor(v) { const c = colorHex(v); if (c) set('tc', c); },\n    get background() { return '#' + get('bg'); }, set background(v) { const c = colorHex(v); if (c) set('bg', c); },\n    get transparency() { return get('bt'); }, set transparency(v) { set('bt', Math.min(1, Math.max(0, num(v)))); },\n    get position() { return [get('x'), get('y')]; }, set position(v) { const a = vec2(v); set('x', a[0]); set('y', a[1]); },\n    get size() { return [get('w'), get('h')]; }, set size(v) { const a = vec2(v); set('w', Math.max(0, a[0])); set('h', Math.max(0, a[1])); },\n    get textSize() { return get('ts'); }, set textSize(v) { set('ts', Math.min(96, Math.max(6, num(v)))); },\n    show() { h.visible = true; }, hide() { h.visible = false; }, destroy() { h.visible = false; },\n    on(ev, fn) { if (ev !== 'click' || typeof fn !== 'function') return; let L = S.GC.get(i); if (!L) S.GC.set(i, L = []); const f = wrap(fn); L.push(tgt === '*' ? f : pl => { if (pl && pl.id === tgt) f(pl); }); },\n  };\n  return Object.freeze(h);\n}\nconst guiFind = name => { const i = S.gname.get(String(name)); return i == null ? null : i; };\nconst SHAPES = { block: 'box', box: 'box', part: 'box', ball: 'ball', sphere: 'ball', cylinder: 'cyl', cyl: 'cyl', ramp: 'ramp', wedge: 'ramp', stairs: 'stairs' };\nconst MATS = ['grass','dirt','sand','snow','rock','concrete','brick','wood','metal','asphalt','dev','white','black','red','orange','yellow','green','blue','purple','glass','ice','lava','bounce','invis'];\nconst cleanName = v => String(v == null ? '' : v).replace(/[^\\w \\-]/g, '').trim().slice(0, 32);\nconst size3 = v => { if (typeof v === 'number') return [v, v, v].map(x => Math.min(200, Math.max(0.1, num(x)))); return vec(v).map(x => Math.min(200, Math.max(0.1, x || 1))); };\nfunction addName(n, i) { if (!n) return; if (!S.names.has(n)) S.names.set(n, []); S.names.get(n).push(i); }\nfunction dropName(n, i) { const l = S.names.get(n); if (!l) return; const k = l.indexOf(i); if (k >= 0) l.splice(k, 1); if (!l.length) S.names.delete(n); }\nfunction makePart(o) {\n  o = o && typeof o === 'object' ? o : {};\n  if (S.madeCount >= 300) { print('Part limit reached (300 made by scripts)'); return null; }\n  const i = 10000 + S.made++;\n  const shape = SHAPES[String(o.shape || 'block').toLowerCase()] || 'box';\n  const mat = MATS.includes(String(o.material)) ? String(o.material) : 'concrete';\n  const pos = o.position != null ? vec(o.position) : [0, 5, 0];\n  const rot = o.rotation != null ? vec(o.rotation) : [0, 0, 0];\n  let size = o.size != null ? size3(o.size) : [2, 2, 2];\n  if (shape === 'ball') size = [size[0], size[0], size[0]];\n  if (shape === 'cyl') size = [size[0], size[1], size[0]];\n  const props = {};\n  const n = cleanName(o.name);\n  if (n) props.n = n;\n  if (o.anchored === false) props.an = 0;\n  if (o.canCollide === false) props.cc = 0;\n  const tr = o.transparency != null ? Math.min(1, Math.max(0, num(o.transparency))) : 0;\n  if (tr > 0) props.tr = tr;\n  const col = o.color != null ? colorHex(o.color) : null;\n  if (col) props.col = col;\n  if (o.mass != null && num(o.mass) > 0) props.ms = num(o.mass);\n  S.parts[i] = { i, n, t: shape, m: mat, made: 1, pos, rot, size, col, tr, cc: o.canCollide !== false, an: o.anchored !== false, ms: props.ms };\n  addName(n, i);\n  S.madeCount++;\n  cmd('new', i, [shape, mat, pos[0], pos[1], pos[2], rot[0], rot[1], rot[2], size[0], size[1], size[2], props]);\n  return partHandle(i);\n}\nconst GUI_DEF = { t: 'label', x: 50, y: 12, w: 30, h: 8, an: 1, tx: 'Label', ts: 24, tc: 'ffffff', bg: '15161a', bt: 0.3, r: 8, v: 1, f: 'bold', al: 'c' };\nconst ANCH = { topleft: 0, top: 1, topright: 2, left: 3, center: 4, right: 5, bottomleft: 6, bottom: 7, bottomright: 8 };\nfunction makeGui(o) {\n  o = o && typeof o === 'object' ? o : {};\n  if (S.gui.length >= 60) { print('GUI limit reached (60)'); return null; }\n  const i = S.gui.length;\n  const ty = String(o.type || 'label').toLowerCase();\n  const t = ty === 'button' || ty === 'textbutton' ? 'button' : ty === 'frame' ? 'frame' : 'label';\n  const d = { t, n: cleanName(o.name) || ('Gui' + i) };\n  const pa = o.parent && typeof o.parent === 'object' ? o.parent.name : o.parent;\n  if (pa) d.pa = cleanName(pa);\n  if (o.position != null) { const a = vec2(o.position); d.x = a[0]; d.y = a[1]; }\n  if (o.size != null) { const a = vec2(o.size); d.w = Math.max(0, a[0]); d.h = Math.max(0, a[1]); }\n  if (o.anchor != null) d.an = typeof o.anchor === 'number' ? Math.min(8, Math.max(0, Math.round(o.anchor))) : (ANCH[String(o.anchor).toLowerCase().replace(/[^a-z]/g, '')] ?? 1);\n  d.tx = o.text != null ? String(o.text).slice(0, 200) : (t === 'frame' ? '' : d.n);\n  if (o.textSize != null) d.ts = Math.min(96, Math.max(6, num(o.textSize)));\n  const tc = o.textColor != null ? colorHex(o.textColor) : null; if (tc) d.tc = tc;\n  const bg = o.background != null ? colorHex(o.background) : null; if (bg) d.bg = bg;\n  if (o.transparency != null) d.bt = Math.min(1, Math.max(0, num(o.transparency)));\n  if (o.corner != null) d.r = Math.min(60, Math.max(0, num(o.corner)));\n  if (o.visible === false) d.v = 0;\n  if (['bold', 'round', 'code'].includes(o.font)) d.f = o.font;\n  const al = { left: 'l', center: 'c', right: 'r' }[o.align]; if (al) d.al = al;\n  if (o.key != null && /^[a-z]$/i.test(String(o.key))) d.k = String(o.key).toUpperCase();\n  S.gui[i] = { n: d.n, t, p: Object.assign({}, GUI_DEF, d) };\n  if (!S.gname.has(d.n)) S.gname.set(d.n, i);\n  cmd('gnew', i, d);\n  return guiHandle(i, '*');\n}\nconst DEAD = { n: '', pos: [0, 0, 0], rot: [0, 0, 0], size: [1, 1, 1], col: null, tr: 1, cc: false, an: true, dead: 1 };\nfunction partHandle(i) {\n  const P = () => S.parts[i] || DEAD;\n  const h = {\n    get name() { return P().n; },\n    get position() { return P().pos.slice(); }, set position(v) { P().pos = vec(v); cmd('set', i, 'pos', P().pos); },\n    get rotation() { return P().rot.slice(); }, set rotation(v) { P().rot = vec(v); cmd('set', i, 'rot', P().rot); },\n    get size() { return P().size.slice(); }, set size(v) { P().size = vec(v).map(x => Math.min(200, Math.max(.1, x))); cmd('set', i, 'size', P().size); },\n    get color() { return P().col ? '#' + P().col : null; }, set color(v) { const c = colorHex(v); if (c) { P().col = c; cmd('set', i, 'color', c); } },\n    get transparency() { return P().tr; }, set transparency(v) { P().tr = Math.min(1, Math.max(0, num(v))); cmd('set', i, 'tr', P().tr); },\n    get canCollide() { return P().cc; }, set canCollide(v) { P().cc = !!v; cmd('set', i, 'cc', P().cc ? 1 : 0); },\n    get anchored() { return P().an; }, set anchored(v) { P().an = !!v; cmd('set', i, 'an', P().an ? 1 : 0); },\n    set velocity(v) { cmd('set', i, 'vel', vec(v)); },\n    get visible() { return P().tr < 1; }, set visible(v) { h.transparency = v ? 0 : 1; },\n    move(x, y, z) { const d = vec(x, y, z), p = P().pos; h.position = [p[0] + d[0], p[1] + d[1], p[2] + d[2]]; },\n    turn(x, y, z) { const d = vec(x, y, z), r = P().rot; h.rotation = [r[0] + d[0], r[1] + d[1], r[2] + d[2]]; },\n    get shape() { return P().t || null; }, get destroyed() { return !!P().dead; },\n    destroy() { const p = S.parts[i]; if (!p) return; if (p.made) { cmd('del', i); dropName(p.n, i); S.T.delete(i); delete S.parts[i]; S.madeCount--; } else { h.transparency = 1; h.canCollide = false; } },\n    clone(o) { const p = S.parts[i]; if (!p) return null; return makePart(Object.assign({ shape: p.t || 'block', material: p.m, position: p.pos, rotation: p.rot, size: p.size, color: p.col ? '#' + p.col : null, transparency: p.tr, canCollide: p.cc, anchored: p.an, name: p.n, mass: p.ms }, o || {})); },\n    on(ev, fn) { if (typeof fn !== 'function') return; const k = ev === 'touchEnded' ? 'end' : 'touch'; let t = S.T.get(i); if (!t) S.T.set(i, t = { touch: [], end: [] }); t[k].push(wrap(fn)); if (!S.listen.includes(i)) { S.listen.push(i); cmd('listen', i); } },\n  };\n  return Object.freeze(h);\n}\nfunction playerHandle(p) {\n  if (!p) return null;\n  const id = p.id;\n  return Object.freeze({\n    id, name: p.name, get position() { const q = S.players.find(x => x.id === id); return q ? q.p.slice() : p.p.slice(); }, get health() { const q = S.players.find(x => x.id === id); return q ? q.h : 0; },\n    damage(n) { cmd('dmg', id, Math.max(0, num(n))); }, heal(n) { cmd('heal', id, Math.max(0, num(n))); },\n    teleport(x, y, z) { cmd('tp', id, vec(x, y, z)); }, launch(x, y, z) { cmd('vel', id, vec(x, y, z)); }, kill() { cmd('dmg', id, 999); },\n    get look() { const q = S.players.find(x => x.id === id); return q && q.l ? q.l.slice() : [0, 0, -1]; },\n    get velocity() { const q = S.players.find(x => x.id === id); return q && q.v ? q.v.slice() : [0, 0, 0]; },\n    get speed() { return S.spd[id] || 1; }, set speed(v) { v = Math.min(3, Math.max(0.2, num(v) || 1)); S.spd[id] = v; cmd('spd', id, v); },\n    lookAt(x, y, z) { cmd('look', id, vec(x, y, z)); },\n    gui(name) { const i = guiFind(name); return i == null ? null : guiHandle(i, id); },\n  });\n}\nconst byName = n => S.names.get(String(n)) || [];\nconst game = Object.freeze({\n  on(ev, fn) { if (typeof fn === 'function') (S.H[ev] || (S.H[ev] = [])).push(wrap(fn)); },\n  part(name) { const l = byName(name); return l.length ? partHandle(l[0]) : null; },\n  parts(name) { return (name == null ? S.parts.map((p, i) => p ? i : -1).filter(i => i >= 0) : byName(name)).map(partHandle); },\n  players() { return S.players.map(playerHandle); },\n  player(id) { return playerHandle(S.players.find(p => p.id === id || p.name === id)); },\n  message(text, seconds) { cmd('msg', String(text).slice(0, 120), Math.min(20, Math.max(.5, num(seconds) || 3))); },\n  chat(text) { cmd('chat', String(text).slice(0, 120)); },\n  spawn(item, pos) { cmd('spawn', String(item), vec(pos)); },\n  zombie(type, pos) { cmd('zombie', String(type || 'walker'), vec(pos)); },\n  explode(pos, power) { cmd('boom', vec(pos), Math.min(3, Math.max(.2, num(power) || 1))); },\n  get time() { return S.time; }, get gravity() { return S.g; }, set gravity(v) { S.g = Math.min(3, Math.max(-1, num(v))); cmd('grav', S.g); },\n  random(a, b) { return a + Math.random() * (b - a); },\n  gui(name) { const i = guiFind(name); return i == null ? null : guiHandle(i, '*'); },\n  create(o) { return makePart(o); },\n  createGui(o) { return makeGui(o); },\n});\nfunction lockDown() {\n  const st = self.setTimeout.bind(self), si = self.setInterval.bind(self);\n  const guard = f => (fn, t, ...a) => typeof fn === 'function' ? f(fn, t, ...a) : 0;\n  Object.defineProperty(self, 'setTimeout', { value: guard(st), writable: false, configurable: false });\n  Object.defineProperty(self, 'setInterval', { value: guard(si), writable: false, configurable: false });\n  for (const F of [function () {}, async function () {}, function* () {}, async function* () {}]) { try { Object.defineProperty(Object.getPrototypeOf(F), 'constructor', { value: undefined, writable: false, configurable: false }); } catch (e) {} }\n  for (const k of ['eval', 'Function']) { try { delete self[k]; } catch (e) {} try { Object.defineProperty(self, k, { value: undefined, writable: false, configurable: false }); } catch (e) {} }\n}\nconst print = (...a) => { if (S.logs.length < 200) S.logs.push(a.map(x => typeof x === 'object' ? JSON.stringify(x) : String(x)).join(' ').slice(0, 300)); };\nconst wait = s => new Promise(r => setTimeout(r, Math.max(0, num(s)) * 1000));\nconst every = (s, fn) => { const f = wrap(fn); setInterval(f, Math.max(.05, num(s)) * 1000); };\nconst flush = () => { const m = { t: 'out' }; if (S.q.length) m.c = S.q.splice(0); if (S.logs.length) m.l = S.logs.splice(0); if (S.errs.length) m.e = S.errs.splice(0); post(m); };\nself.onunhandledrejection = e => { report('script', e.reason); };\nself.onerror = e => { report('script', e.error || e.message); return true; };\nself.onmessage = ev => {\n  const d = ev.data;\n  if (d.t === 'init') {\n    S.me = d.me; S.g = d.g;\n    for (const p of d.parts) { S.parts[p.i] = p; if (p.n) { if (!S.names.has(p.n)) S.names.set(p.n, []); S.names.get(p.n).push(p.i); } }\n    S.players = d.players || [];\n    for (const g of d.gui || []) { S.gui[g.i] = { n: g.n, t: g.t, p: g.p }; if (!S.gname.has(g.n)) S.gname.set(g.n, g.i); }\n    const fns = [];\n    for (const sc of d.scripts) {\n      if (/\\bimport\\b/.test(sc.src)) { report(sc.n, new Error('import is not allowed in map scripts')); continue; }\n      try { fns.push([sc.n, new Function('game', 'print', 'wait', 'every', sc.src)]); } catch (e) { report(sc.n, e); }\n    }\n    lockDown();\n    for (const [n, f] of fns) { curScript = n; try { f(game, print, wait, every); } catch (e) { report(n, e); } }\n    curScript = '';\n    fire(S.H.start);\n  } else if (d.t === 'tick') {\n    S.time = d.time; S.players = d.players;\n    if (d.dyn) for (const a of d.dyn) { const p = S.parts[a[0]]; if (p) { p.pos = [a[1], a[2], a[3]]; p.rot = [a[4], a[5], a[6]]; } }\n    if (d.ev) for (const e of d.ev) {\n      if (e[0] === 'touch' || e[0] === 'end') { const t = S.T.get(e[1]); const pl = playerHandle(S.players.find(p => p.id === e[2]) || { id: e[2], name: e[3], p: [0, 0, 0] }); if (t) fire(e[0] === 'touch' ? t.touch : t.end, pl); }\n      else if (e[0] === 'join') fire(S.H.playerJoined, playerHandle({ id: e[1], name: e[2], p: [0, 0, 0] }));\n      else if (e[0] === 'leave') fire(S.H.playerLeft, { id: e[1], name: e[2] });\n      else if (e[0] === 'died') fire(S.H.playerDied, playerHandle(S.players.find(p => p.id === e[1]) || { id: e[1], name: e[2], p: [0, 0, 0] }));\n      else if (e[0] === 'chat') fire(S.H.chat, playerHandle(S.players.find(p => p.id === e[1]) || { id: e[1], name: e[2], p: [0, 0, 0] }), e[3]);\n      else if (e[0] === 'click') { const L = S.GC.get(e[1]); if (L) fire(L, playerHandle(S.players.find(p => p.id === e[2]) || { id: e[2], name: e[3], p: [0, 0, 0] })); }\n    }\n    fire(S.H.tick, d.dt);\n  }\n  flush();\n};`;
+const SCR_BOOT = `"use strict";\nconst post = self.postMessage.bind(self);\n(() => {\n  const bad = ['fetch','XMLHttpRequest','importScripts','WebSocket','WebSocketStream','EventSource','indexedDB','caches','BroadcastChannel','Worker','SharedWorker','WebTransport','navigator','location','FileReader','FileReaderSync','OffscreenCanvas','createImageBitmap','Notification','Request','Response','Headers','FormData','Blob','File','URL','close','postMessage','queueMicrotask','reportError','structuredClone'];\n  for (const k of bad) {\n    let o = self;\n    while (o && o !== Object.prototype) { try { delete o[k]; } catch (e) {} o = Object.getPrototypeOf(o); }\n    try { Object.defineProperty(self, k, { value: undefined, writable: false, configurable: false }); } catch (e) {}\n  }\n})();\nconst S = { parts: [], names: new Map(), players: [], me: '', time: 0, g: 1, H: {}, T: new Map(), q: [], logs: [], errs: [], listen: [], gui: [], gname: new Map(), gp: new Map(), GC: new Map(), made: 0, madeCount: 0, spd: {} };\nlet curScript = '';\nconst lineOf = e => { const m = String(e && e.stack || '').match(/<anonymous>:(\\d+):(\\d+)/); return m ? (+m[1] - 2) : 0; };\nconst report = (name, e) => { S.errs.push([name, lineOf(e), String(e && e.message || e).slice(0, 200)]); };\nconst wrap = fn => { const name = curScript; return (...a) => { try { const r = fn(...a); if (r && typeof r.then === 'function') r.then(null, e => report(name, e)); } catch (e) { report(name, e); } }; };\nconst fire = (list, ...a) => { if (list) for (const f of list.slice()) f(...a); };\nconst num = v => { v = +v; return Number.isFinite(v) ? v : 0; };\nconst vec = (v, y, z) => { if (Array.isArray(v)) return [num(v[0]), num(v[1]), num(v[2])]; if (v && typeof v === 'object') return [num(v.x), num(v.y), num(v.z)]; return [num(v), num(y), num(z)]; };\nconst cmd = (...a) => { if (S.q.length < 2000) S.q.push(a); };\nconst colorHex = c => { c = String(c || '').trim().replace('#', ''); if (/^[0-9a-f]{3}$/i.test(c)) c = c.split('').map(x => x + x).join(''); return /^[0-9a-f]{6}$/i.test(c) ? c.toLowerCase() : null; };\nconst vec2 = (v, y) => { if (Array.isArray(v)) return [num(v[0]), num(v[1])]; if (v && typeof v === 'object') return [num(v.x), num(v.y)]; return [num(v), num(y)]; };\nfunction guiHandle(i, tgt) {\n  const G = () => S.gui[i];\n  const mine = () => { const k = tgt + '|' + i; let o = S.gp.get(k); if (!o) S.gp.set(k, o = {}); return o; };\n  const get = k => tgt === '*' ? G().p[k] : (k in mine() ? mine()[k] : G().p[k]);\n  const set = (k, v) => { if (tgt === '*') G().p[k] = v; else mine()[k] = v; cmd('gui', tgt, i, k, v); };\n  const h = {\n    get name() { return G().n; }, get type() { return G().t; },\n    get text() { const t = get('tx'); return t == null ? '' : String(t); }, set text(v) { set('tx', String(v == null ? '' : v).slice(0, 500)); },\n    get visible() { return !!get('v'); }, set visible(v) { set('v', v ? 1 : 0); },\n    get textColor() { return '#' + get('tc'); }, set textColor(v) { const c = colorHex(v); if (c) set('tc', c); },\n    get background() { return '#' + get('bg'); }, set background(v) { const c = colorHex(v); if (c) set('bg', c); },\n    get transparency() { return get('bt'); }, set transparency(v) { set('bt', Math.min(1, Math.max(0, num(v)))); },\n    get position() { return [get('x'), get('y')]; }, set position(v) { const a = vec2(v); set('x', a[0]); set('y', a[1]); },\n    get size() { return [get('w'), get('h')]; }, set size(v) { const a = vec2(v); set('w', Math.max(0, a[0])); set('h', Math.max(0, a[1])); },\n    get textSize() { return get('ts'); }, set textSize(v) { set('ts', Math.min(96, Math.max(6, num(v)))); },\n    show() { h.visible = true; }, hide() { h.visible = false; }, destroy() { h.visible = false; },\n    on(ev, fn) { if (ev !== 'click' || typeof fn !== 'function') return; let L = S.GC.get(i); if (!L) S.GC.set(i, L = []); const f = wrap(fn); L.push(tgt === '*' ? f : pl => { if (pl && pl.id === tgt) f(pl); }); },\n  };\n  return Object.freeze(h);\n}\nconst guiFind = name => { const i = S.gname.get(String(name)); return i == null ? null : i; };\nconst SHAPES = { block: 'box', box: 'box', part: 'box', ball: 'ball', sphere: 'ball', cylinder: 'cyl', cyl: 'cyl', ramp: 'ramp', wedge: 'ramp', stairs: 'stairs' };\nconst MATS = ['grass','dirt','sand','snow','rock','concrete','brick','wood','metal','asphalt','dev','white','black','red','orange','yellow','green','blue','purple','glass','ice','lava','bounce','invis'];\nconst cleanName = v => String(v == null ? '' : v).replace(/[^\\w \\-]/g, '').trim().slice(0, 32);\nconst size3 = v => { if (typeof v === 'number') return [v, v, v].map(x => Math.min(200, Math.max(0.1, num(x)))); return vec(v).map(x => Math.min(200, Math.max(0.1, x || 1))); };\nfunction addName(n, i) { if (!n) return; if (!S.names.has(n)) S.names.set(n, []); S.names.get(n).push(i); }\nfunction dropName(n, i) { const l = S.names.get(n); if (!l) return; const k = l.indexOf(i); if (k >= 0) l.splice(k, 1); if (!l.length) S.names.delete(n); }\nfunction makePart(o) {\n  o = o && typeof o === 'object' ? o : {};\n  if (S.madeCount >= 300) { print('Part limit reached (300 made by scripts)'); return null; }\n  const i = 10000 + S.made++;\n  const shape = SHAPES[String(o.shape || 'block').toLowerCase()] || 'box';\n  const mat = MATS.includes(String(o.material)) ? String(o.material) : 'concrete';\n  const pos = o.position != null ? vec(o.position) : [0, 5, 0];\n  const rot = o.rotation != null ? vec(o.rotation) : [0, 0, 0];\n  let size = o.size != null ? size3(o.size) : [2, 2, 2];\n  if (shape === 'ball') size = [size[0], size[0], size[0]];\n  if (shape === 'cyl') size = [size[0], size[1], size[0]];\n  const props = {};\n  const n = cleanName(o.name);\n  if (n) props.n = n;\n  if (o.anchored === false) props.an = 0;\n  if (o.canCollide === false) props.cc = 0;\n  const tr = o.transparency != null ? Math.min(1, Math.max(0, num(o.transparency))) : 0;\n  if (tr > 0) props.tr = tr;\n  const col = o.color != null ? colorHex(o.color) : null;\n  if (col) props.col = col;\n  if (o.mass != null && num(o.mass) > 0) props.ms = num(o.mass);\n  S.parts[i] = { i, n, t: shape, m: mat, made: 1, pos, rot, size, col, tr, cc: o.canCollide !== false, an: o.anchored !== false, ms: props.ms };\n  addName(n, i);\n  S.madeCount++;\n  cmd('new', i, [shape, mat, pos[0], pos[1], pos[2], rot[0], rot[1], rot[2], size[0], size[1], size[2], props]);\n  return partHandle(i);\n}\nconst GUI_DEF = { t: 'label', x: 50, y: 12, w: 30, h: 8, an: 1, tx: 'Label', ts: 24, tc: 'ffffff', bg: '15161a', bt: 0.3, r: 8, v: 1, f: 'bold', al: 'c' };\nconst ANCH = { topleft: 0, top: 1, topright: 2, left: 3, center: 4, right: 5, bottomleft: 6, bottom: 7, bottomright: 8 };\nfunction makeGui(o) {\n  o = o && typeof o === 'object' ? o : {};\n  if (S.gui.length >= 60) { print('GUI limit reached (60)'); return null; }\n  const i = S.gui.length;\n  const ty = String(o.type || 'label').toLowerCase();\n  const t = ty === 'button' || ty === 'textbutton' ? 'button' : ty === 'frame' ? 'frame' : 'label';\n  const d = { t, n: cleanName(o.name) || ('Gui' + i) };\n  const pa = o.parent && typeof o.parent === 'object' ? o.parent.name : o.parent;\n  if (pa) d.pa = cleanName(pa);\n  if (o.position != null) { const a = vec2(o.position); d.x = a[0]; d.y = a[1]; }\n  if (o.size != null) { const a = vec2(o.size); d.w = Math.max(0, a[0]); d.h = Math.max(0, a[1]); }\n  if (o.anchor != null) d.an = typeof o.anchor === 'number' ? Math.min(8, Math.max(0, Math.round(o.anchor))) : (ANCH[String(o.anchor).toLowerCase().replace(/[^a-z]/g, '')] ?? 1);\n  d.tx = o.text != null ? String(o.text).slice(0, 500) : (t === 'frame' ? '' : d.n);\n  if (o.textSize != null) d.ts = Math.min(96, Math.max(6, num(o.textSize)));\n  const tc = o.textColor != null ? colorHex(o.textColor) : null; if (tc) d.tc = tc;\n  const bg = o.background != null ? colorHex(o.background) : null; if (bg) d.bg = bg;\n  if (o.transparency != null) d.bt = Math.min(1, Math.max(0, num(o.transparency)));\n  if (o.corner != null) d.r = Math.min(60, Math.max(0, num(o.corner)));\n  if (o.visible === false) d.v = 0;\n  if (['bold', 'round', 'code'].includes(o.font)) d.f = o.font;\n  const al = { left: 'l', center: 'c', right: 'r' }[o.align]; if (al) d.al = al;\n  if (o.key != null && /^[a-z]$/i.test(String(o.key))) d.k = String(o.key).toUpperCase();\n  S.gui[i] = { n: d.n, t, p: Object.assign({}, GUI_DEF, d) };\n  if (!S.gname.has(d.n)) S.gname.set(d.n, i);\n  cmd('gnew', i, d);\n  return guiHandle(i, '*');\n}\nconst DEAD = { n: '', pos: [0, 0, 0], rot: [0, 0, 0], size: [1, 1, 1], col: null, tr: 1, cc: false, an: true, dead: 1 };\nfunction partHandle(i) {\n  const P = () => S.parts[i] || DEAD;\n  const h = {\n    get name() { return P().n; },\n    get position() { return P().pos.slice(); }, set position(v) { P().pos = vec(v); cmd('set', i, 'pos', P().pos); },\n    get rotation() { return P().rot.slice(); }, set rotation(v) { P().rot = vec(v); cmd('set', i, 'rot', P().rot); },\n    get size() { return P().size.slice(); }, set size(v) { P().size = vec(v).map(x => Math.min(200, Math.max(.1, x))); cmd('set', i, 'size', P().size); },\n    get color() { return P().col ? '#' + P().col : null; }, set color(v) { const c = colorHex(v); if (c) { P().col = c; cmd('set', i, 'color', c); } },\n    get transparency() { return P().tr; }, set transparency(v) { P().tr = Math.min(1, Math.max(0, num(v))); cmd('set', i, 'tr', P().tr); },\n    get canCollide() { return P().cc; }, set canCollide(v) { P().cc = !!v; cmd('set', i, 'cc', P().cc ? 1 : 0); },\n    get anchored() { return P().an; }, set anchored(v) { P().an = !!v; cmd('set', i, 'an', P().an ? 1 : 0); },\n    set velocity(v) { cmd('set', i, 'vel', vec(v)); },\n    get visible() { return P().tr < 1; }, set visible(v) { h.transparency = v ? 0 : 1; },\n    move(x, y, z) { const d = vec(x, y, z), p = P().pos; h.position = [p[0] + d[0], p[1] + d[1], p[2] + d[2]]; },\n    turn(x, y, z) { const d = vec(x, y, z), r = P().rot; h.rotation = [r[0] + d[0], r[1] + d[1], r[2] + d[2]]; },\n    get shape() { return P().t || null; }, get destroyed() { return !!P().dead; },\n    destroy() { const p = S.parts[i]; if (!p) return; if (p.made) { cmd('del', i); dropName(p.n, i); S.T.delete(i); delete S.parts[i]; S.madeCount--; } else { h.transparency = 1; h.canCollide = false; } },\n    clone(o) { const p = S.parts[i]; if (!p) return null; return makePart(Object.assign({ shape: p.t || 'block', material: p.m, position: p.pos, rotation: p.rot, size: p.size, color: p.col ? '#' + p.col : null, transparency: p.tr, canCollide: p.cc, anchored: p.an, name: p.n, mass: p.ms }, o || {})); },\n    on(ev, fn) { if (typeof fn !== 'function') return; let t = S.T.get(i); if (!t) S.T.set(i, t = { touch: [], end: [], click: [] }); if (ev === 'clicked') { t.click.push(wrap(fn)); cmd('listenc', i); return; } const k = ev === 'touchEnded' ? 'end' : 'touch'; t[k].push(wrap(fn)); if (!S.listen.includes(i)) { S.listen.push(i); cmd('listen', i); } },\n    get text() { return P().sg || ''; }, set text(v) { P().sg = String(v == null ? '' : v).slice(0, 60); cmd('set', i, 'sg', P().sg); },\n    get light() { return P().lt || 0; }, set light(v) { P().lt = Math.min(60, Math.max(0, Math.round(num(v)))); cmd('set', i, 'lt', P().lt); },\n  };\n  return Object.freeze(h);\n}\nfunction playerHandle(p) {\n  if (!p) return null;\n  const id = p.id;\n  return Object.freeze({\n    id, name: p.name, get position() { const q = S.players.find(x => x.id === id); return q ? q.p.slice() : p.p.slice(); }, get health() { const q = S.players.find(x => x.id === id); return q ? q.h : 0; },\n    damage(n) { cmd('dmg', id, Math.max(0, num(n))); }, heal(n) { cmd('heal', id, Math.max(0, num(n))); },\n    teleport(x, y, z) { cmd('tp', id, vec(x, y, z)); }, launch(x, y, z) { cmd('vel', id, vec(x, y, z)); }, kill() { cmd('dmg', id, 999); },\n    get look() { const q = S.players.find(x => x.id === id); return q && q.l ? q.l.slice() : [0, 0, -1]; },\n    get velocity() { const q = S.players.find(x => x.id === id); return q && q.v ? q.v.slice() : [0, 0, 0]; },\n    get speed() { return S.spd[id] || 1; }, set speed(v) { v = Math.min(3, Math.max(0.2, num(v) || 1)); S.spd[id] = v; cmd('spd', id, v); },\n    lookAt(x, y, z) { cmd('look', id, vec(x, y, z)); },\n    giveCoins(n) { cmd('coin', id, Math.max(0, Math.min(100, num(n)))); },\n    gui(name) { const i = guiFind(name); return i == null ? null : guiHandle(i, id); },\n  });\n}\nconst byName = n => S.names.get(String(n)) || [];\nconst game = Object.freeze({\n  on(ev, fn) { if (typeof fn === 'function') (S.H[ev] || (S.H[ev] = [])).push(wrap(fn)); },\n  part(name) { const l = byName(name); return l.length ? partHandle(l[0]) : null; },\n  parts(name) { return (name == null ? S.parts.map((p, i) => p ? i : -1).filter(i => i >= 0) : byName(name)).map(partHandle); },\n  players() { return S.players.map(playerHandle); },\n  player(id) { return playerHandle(S.players.find(p => p.id === id || p.name === id)); },\n  message(text, seconds) { cmd('msg', String(text).slice(0, 120), Math.min(20, Math.max(.5, num(seconds) || 3))); },\n  chat(text) { cmd('chat', String(text).slice(0, 120)); },\n  spawn(item, pos) { cmd('spawn', String(item), vec(pos)); },\n  zombie(type, pos) { cmd('zombie', String(type || 'walker'), vec(pos)); },\n  explode(pos, power) { cmd('boom', vec(pos), Math.min(3, Math.max(.2, num(power) || 1))); },\n  get time() { return S.time; }, get gravity() { return S.g; }, set gravity(v) { S.g = Math.min(3, Math.max(-1, num(v))); cmd('grav', S.g); },\n  random(a, b) { return a + Math.random() * (b - a); },\n  gui(name) { const i = guiFind(name); return i == null ? null : guiHandle(i, '*'); },\n  create(o) { return makePart(o); },\n  createGui(o) { return makeGui(o); },\n});\nfunction lockDown() {\n  const st = self.setTimeout.bind(self), si = self.setInterval.bind(self);\n  const guard = f => (fn, t, ...a) => typeof fn === 'function' ? f(fn, t, ...a) : 0;\n  Object.defineProperty(self, 'setTimeout', { value: guard(st), writable: false, configurable: false });\n  Object.defineProperty(self, 'setInterval', { value: guard(si), writable: false, configurable: false });\n  for (const F of [function () {}, async function () {}, function* () {}, async function* () {}]) { try { Object.defineProperty(Object.getPrototypeOf(F), 'constructor', { value: undefined, writable: false, configurable: false }); } catch (e) {} }\n  for (const k of ['eval', 'Function']) { try { delete self[k]; } catch (e) {} try { Object.defineProperty(self, k, { value: undefined, writable: false, configurable: false }); } catch (e) {} }\n}\nconst print = (...a) => { if (S.logs.length < 200) S.logs.push(a.map(x => typeof x === 'object' ? JSON.stringify(x) : String(x)).join(' ').slice(0, 300)); };\nconst wait = s => new Promise(r => setTimeout(r, Math.max(0, num(s)) * 1000));\nconst every = (s, fn) => { const f = wrap(fn); setInterval(f, Math.max(.05, num(s)) * 1000); };\nconst flush = () => { const m = { t: 'out' }; if (S.q.length) m.c = S.q.splice(0); if (S.logs.length) m.l = S.logs.splice(0); if (S.errs.length) m.e = S.errs.splice(0); post(m); };\nself.onunhandledrejection = e => { report('script', e.reason); };\nself.onerror = e => { report('script', e.error || e.message); return true; };\nself.onmessage = ev => {\n  const d = ev.data;\n  if (d.t === 'init') {\n    S.me = d.me; S.g = d.g;\n    for (const p of d.parts) { S.parts[p.i] = p; if (p.n) { if (!S.names.has(p.n)) S.names.set(p.n, []); S.names.get(p.n).push(p.i); } }\n    S.players = d.players || [];\n    for (const g of d.gui || []) { S.gui[g.i] = { n: g.n, t: g.t, p: g.p }; if (!S.gname.has(g.n)) S.gname.set(g.n, g.i); }\n    const fns = [];\n    for (const sc of d.scripts) {\n      if (/\\bimport\\b/.test(sc.src)) { report(sc.n, new Error('import is not allowed in map scripts')); continue; }\n      try { fns.push([sc.n, new Function('game', 'print', 'wait', 'every', sc.src)]); } catch (e) { report(sc.n, e); }\n    }\n    lockDown();\n    for (const [n, f] of fns) { curScript = n; try { f(game, print, wait, every); } catch (e) { report(n, e); } }\n    curScript = '';\n    fire(S.H.start);\n  } else if (d.t === 'tick') {\n    S.time = d.time; S.players = d.players;\n    if (d.dyn) for (const a of d.dyn) { const p = S.parts[a[0]]; if (p) { p.pos = [a[1], a[2], a[3]]; p.rot = [a[4], a[5], a[6]]; } }\n    if (d.ev) for (const e of d.ev) {\n      if (e[0] === 'touch' || e[0] === 'end') { const t = S.T.get(e[1]); const pl = playerHandle(S.players.find(p => p.id === e[2]) || { id: e[2], name: e[3], p: [0, 0, 0] }); if (t) fire(e[0] === 'touch' ? t.touch : t.end, pl); }\n      else if (e[0] === 'join') fire(S.H.playerJoined, playerHandle({ id: e[1], name: e[2], p: [0, 0, 0] }));\n      else if (e[0] === 'leave') fire(S.H.playerLeft, { id: e[1], name: e[2] });\n      else if (e[0] === 'died') fire(S.H.playerDied, playerHandle(S.players.find(p => p.id === e[1]) || { id: e[1], name: e[2], p: [0, 0, 0] }));\n      else if (e[0] === 'chat') fire(S.H.chat, playerHandle(S.players.find(p => p.id === e[1]) || { id: e[1], name: e[2], p: [0, 0, 0] }), e[3]);\n      else if (e[0] === 'pclick') { const t = S.T.get(e[1]); if (t && t.click) fire(t.click, playerHandle(S.players.find(p => p.id === e[2]) || { id: e[2], name: e[3], p: [0, 0, 0] })); }\n      else if (e[0] === 'click') { const L = S.GC.get(e[1]); if (L) fire(L, playerHandle(S.players.find(p => p.id === e[2]) || { id: e[2], name: e[3], p: [0, 0, 0] })); }\n    }\n    fire(S.H.tick, d.dt);\n  }\n  flush();\n};`;
 
 function scriptsOf(m) {
   const D = m && m.mkData;
@@ -14588,6 +15027,8 @@ function startScripts() {
     n: L.n,
     t: L.t,
     m: ((curMap && curMap.mkData && curMap.mkData.p || [])[L.i] || [])[1],
+    sg: L.deco && L.deco.sg || "",
+    lt: L.deco && L.deco.lt || 0,
     pos: [ q2(L.body.position.x), q2(L.body.position.y), q2(L.body.position.z) ],
     rot: mkRotOf(L),
     size: L.s.slice(),
@@ -14659,6 +15100,17 @@ function scCmd(c) {
     {
       const L = LIVE.byIdx.get(c[1]);
       if (L) L.touch = true;
+      break;
+    }
+
+   case "listenc":
+    {
+      const L = LIVE.byIdx.get(c[1]);
+      if (L && !L.click) {
+        L.click = true;
+        CLICKS.add(c[1]);
+        CLICKS.dirty = true;
+      }
       break;
     }
 
@@ -14767,6 +15219,7 @@ function scCmd(c) {
    case "vel":
    case "spd":
    case "look":
+   case "coin":
     {
       const id = c[1], val = c[2];
       if (id === LOCAL_ID()) scLocal(k, val); else if (NET.on && NET.peers.has(id)) sendTo(id, "sc", {
@@ -14792,6 +15245,8 @@ function scLocal(k, val) {
       player.position.set(clamp(val[0], -2e3, 2e3), clamp(val[1], -2e3, 2e3), clamp(val[2], -2e3, 2e3));
       player.velocity.setZero();
     }
+  } else if (k === "coin" && Number.isFinite(val)) {
+    zcScript(val);
   } else if (k === "spd" && Number.isFinite(val)) {
     spdMul = clamp(val, .2, 3);
   } else if (k === "look" && Array.isArray(val) && val.length === 3 && val.every(Number.isFinite)) {
@@ -14918,6 +15373,169 @@ function applyRules() {
   if (R.ns && spawnOpen()) closeSpawn();
 }
 
+const ATMOS = {
+  obj: null,
+  stars: null,
+  kind: "none",
+  pos: null,
+  vel: null
+};
+
+let atmosDotTex = null;
+
+function atmosDot() {
+  if (atmosDotTex) return atmosDotTex;
+  const c = document.createElement("canvas");
+  c.width = c.height = 32;
+  const g = c.getContext("2d"), gr = g.createRadialGradient(16, 16, 0, 16, 16, 16);
+  gr.addColorStop(0, "rgba(255,255,255,1)");
+  gr.addColorStop(.45, "rgba(255,255,255,.85)");
+  gr.addColorStop(1, "rgba(255,255,255,0)");
+  g.fillStyle = gr;
+  g.fillRect(0, 0, 32, 32);
+  atmosDotTex = new THREE.CanvasTexture(c);
+  return atmosDotTex;
+}
+
+function atmosClear() {
+  for (const k of [ "obj", "stars" ]) if (ATMOS[k]) {
+    scene.remove(ATMOS[k]);
+    ATMOS[k].geometry.dispose();
+    ATMOS[k].material.dispose();
+    ATMOS[k] = null;
+  }
+  ATMOS.kind = "none";
+}
+
+function atmosBuild(D) {
+  atmosClear();
+  const env = D && D.env || {};
+  if (env.sky === "space") {
+    const n = 1400, a = new Float32Array(n * 3);
+    for (let i = 0; i < n; i++) {
+      const u = Math.random() * 2 - 1, t = Math.random() * Math.PI * 2, r = 380, q = Math.sqrt(1 - u * u);
+      a[i * 3] = Math.cos(t) * q * r;
+      a[i * 3 + 1] = Math.abs(u) * r * .9 + 10;
+      a[i * 3 + 2] = Math.sin(t) * q * r;
+    }
+    const g = new THREE.BufferGeometry;
+    g.setAttribute("position", new THREE.BufferAttribute(a, 3));
+    ATMOS.stars = new THREE.Points(g, new THREE.PointsMaterial({
+      color: 16777215,
+      size: 1.6,
+      sizeAttenuation: false,
+      fog: false,
+      depthWrite: false
+    }));
+    ATMOS.stars.frustumCulled = false;
+    scene.add(ATMOS.stars);
+    if (scene.fog) scene.fog.far = Math.max(scene.fog.far, 420);
+  }
+  const wx = env.wx;
+  if (![ "rain", "snow", "fireflies" ].includes(wx)) return;
+  const n = wx === "rain" ? 1600 : wx === "snow" ? 1300 : 160;
+  const pos = new Float32Array(n * 3), vel = new Float32Array(n);
+  for (let i = 0; i < n; i++) {
+    pos[i * 3] = (Math.random() - .5) * 60;
+    pos[i * 3 + 1] = Math.random() * 30;
+    pos[i * 3 + 2] = (Math.random() - .5) * 60;
+    vel[i] = Math.random();
+  }
+  const g = new THREE.BufferGeometry;
+  g.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+  const mat = wx === "rain" ? new THREE.PointsMaterial({
+    color: 11061471,
+    size: .07,
+    map: atmosDot(),
+    transparent: true,
+    opacity: .6,
+    depthWrite: false
+  }) : wx === "snow" ? new THREE.PointsMaterial({
+    color: 16777215,
+    size: .12,
+    map: atmosDot(),
+    transparent: true,
+    opacity: .9,
+    depthWrite: false
+  }) : new THREE.PointsMaterial({
+    color: 15138645,
+    size: .22,
+    map: atmosDot(),
+    transparent: true,
+    opacity: .95,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+    toneMapped: false
+  });
+  ATMOS.obj = new THREE.Points(g, mat);
+  ATMOS.obj.frustumCulled = false;
+  ATMOS.pos = pos;
+  ATMOS.vel = vel;
+  ATMOS.kind = wx;
+  scene.add(ATMOS.obj);
+}
+
+let atmosT = 0;
+
+function atmosTick(dt) {
+  if (!ATMOS.obj) return;
+  atmosT += dt;
+  const P = ATMOS.pos, V = ATMOS.vel, n = V.length, cx = camera.position.x, cy = camera.position.y, cz = camera.position.z;
+  const k = ATMOS.kind, fall = k === "rain" ? 26 : k === "snow" ? 2.2 : 0;
+  for (let i = 0; i < n; i++) {
+    let x = P[i * 3], y = P[i * 3 + 1], z = P[i * 3 + 2];
+    if (k === "fireflies") {
+      x += Math.sin(atmosT * .7 + i) * dt * .8;
+      y += Math.cos(atmosT * .9 + i * 1.3) * dt * .5;
+      z += Math.cos(atmosT * .6 + i * .7) * dt * .8;
+    } else {
+      y -= fall * (.75 + V[i] * .5) * dt;
+      if (k === "snow") {
+        x += Math.sin(atmosT + i) * dt * .5;
+        z += Math.cos(atmosT * .8 + i) * dt * .5;
+      }
+    }
+    const rx = x - cx, rz = z - cz;
+    if (rx > 30) x -= 60; else if (rx < -30) x += 60;
+    if (rz > 30) z -= 60; else if (rz < -30) z += 60;
+    if (k === "fireflies") {
+      if (y < cy - 3) y += 12; else if (y > cy + 9) y -= 12;
+    } else if (y < cy - 12) y += 30; else if (y > cy + 22) y -= 30;
+    P[i * 3] = x;
+    P[i * 3 + 1] = y;
+    P[i * 3 + 2] = z;
+  }
+  ATMOS.obj.geometry.attributes.position.needsUpdate = true;
+  if (k === "fireflies") ATMOS.obj.material.opacity = .65 + Math.sin(atmosT * 3) * .3;
+}
+
+const CLICKS = new Set;
+
+CLICKS.dirty = false;
+
+let clickCd = 0;
+
+function tryPartClick() {
+  if (now < clickCd || !LIVE.list.length) return false;
+  const h = aim(10);
+  if (!h) return false;
+  const L = LIVE.list.find(l => l.body === h.body);
+  if (!L || !(L.click || CLICKS.has(L.i))) return false;
+  clickCd = now + .3;
+  if (!NET.on || NET.host) {
+    const me = scPlayers().find(p => p.id === LOCAL_ID());
+    scEvent("pclick", L.i, LOCAL_ID(), me ? me.name : "Player");
+  } else send("act", {
+    i: NET.id,
+    k: "pclick",
+    g: L.i
+  });
+  const el = $("cross");
+  el.classList.add("hot");
+  setTimeout(() => el.classList.remove("hot"), 160);
+  return true;
+}
+
 const MADE = {
   defs: new Map,
   dirty: [],
@@ -14950,6 +15568,7 @@ function liveMake(i, p) {
 function liveKill(i) {
   const L = LIVE.byIdx.get(i);
   if (!L || !L.made) return;
+  partDeco(L.mesh, null);
   mapGroup.remove(L.mesh);
   L.mesh.geometry.dispose();
   L.mat.dispose();
@@ -15071,7 +15690,7 @@ function sgVal(k, v) {
   const n = +v;
   switch (k) {
    case "tx":
-    return String(v == null ? "" : v).slice(0, 200);
+    return String(v == null ? "" : v).slice(0, 500);
 
    case "v":
     return v ? 1 : 0;
@@ -15495,7 +16114,7 @@ function stProps() {
       return;
     }
     const o = pProps(p);
-    h = `<div class="st-t">${stIcon("p")}${esc(partLabel(p, s.i))}</div>` + stField("Name", `<input type="text" data-prop="n" value="${esc(o.n || "")}" maxlength="32" placeholder="Name it to use it in scripts">`) + stField("Shape", stSel("t", [ [ "box", "Block" ], [ "ramp", "Ramp" ], [ "stairs", "Stairs" ], [ "cyl", "Cylinder" ], [ "ball", "Ball" ] ], p[0])) + stField("Material", stSel("m", MK_MATS.map(m => [ m.id, m.name ]), p[1])) + stField("Color", `<div class="st-row2"><input type="color" data-prop="col" value="#${o.col || "ffffff"}"><button class="st-mini" data-act="nocol" ${o.col ? "" : "disabled"}>USE MATERIAL</button></div>`) + stField("Transparency", `<div class="st-row2"><input type="range" data-prop="tr" min="0" max="1" step=".05" value="${o.tr || 0}"><em>${Math.round((o.tr || 0) * 100)}%</em></div>`) + stField("Anchored", stCheck("an", o.an !== 0)) + stField("Can collide", stCheck("cc", o.cc !== 0)) + (o.an === 0 ? stField("Mass", stNum("ms", o.ms || +(p[8] * p[9] * p[10] * .6).toFixed(1), 1)) : "") + stField("Position", stVec("pos", [ p[2], p[3], p[4] ], ED.grid || .25)) + stField("Rotation", stVec("rot", [ p[5], p[6], p[7] ], 15)) + stField("Size", stVec("size", [ p[8], p[9], p[10] ], ED.grid || .25)) + `<div class="st-note">${o.n ? `Scripts reach it with <code>game.part('${esc(o.n)}')</code>` : "Give it a name so scripts can find it."}</div>`;
+    h = `<div class="st-t">${stIcon("p")}${esc(partLabel(p, s.i))}</div>` + stField("Name", `<input type="text" data-prop="n" value="${esc(o.n || "")}" maxlength="32" placeholder="Name it to use it in scripts">`) + stField("Shape", stSel("t", [ [ "box", "Block" ], [ "ramp", "Ramp" ], [ "stairs", "Stairs" ], [ "cyl", "Cylinder" ], [ "ball", "Ball" ] ], p[0])) + stField("Material", stSel("m", MK_MATS.map(m => [ m.id, m.name ]), p[1])) + stField("Color", `<div class="st-row2"><input type="color" data-prop="col" value="#${o.col || "ffffff"}"><button class="st-mini" data-act="nocol" ${o.col ? "" : "disabled"}>USE MATERIAL</button></div>`) + stField("Transparency", `<div class="st-row2"><input type="range" data-prop="tr" min="0" max="1" step=".05" value="${o.tr || 0}"><em>${Math.round((o.tr || 0) * 100)}%</em></div>`) + stField("Anchored", stCheck("an", o.an !== 0)) + stField("Can collide", stCheck("cc", o.cc !== 0)) + stField("Sign text", `<input type="text" data-prop="sg" value="${esc(o.sg || "")}" maxlength="60" placeholder="Floating text above it">`) + stField("Light", `<div class="st-row2"><input type="range" data-prop="lt" min="0" max="40" step="1" value="${o.lt || 0}"><em>${o.lt ? o.lt + " m" : "off"}</em></div>`) + (o.an === 0 ? stField("Mass", stNum("ms", o.ms || +(p[8] * p[9] * p[10] * .6).toFixed(1), 1)) : "") + stField("Position", stVec("pos", [ p[2], p[3], p[4] ], ED.grid || .25)) + stField("Rotation", stVec("rot", [ p[5], p[6], p[7] ], 15)) + stField("Size", stVec("size", [ p[8], p[9], p[10] ], ED.grid || .25)) + `<div class="st-note">${o.n ? `Scripts reach it with <code>game.part('${esc(o.n)}')</code>` : "Give it a name so scripts can find it."}</div>`;
   } else if (s.kind === "it") {
     const it = ED.D.it[s.i];
     if (!it) {
@@ -15521,7 +16140,7 @@ function stProps() {
     }
     const p = Object.assign({}, SG_DEF, g), frames = edGuis().filter((x, j) => x.t === "frame" && j !== s.i).map(x => x.n);
     const v2 = (a, b, va, vb) => `<div class="st-v2"><input type="number" data-prop="${a}" value="${va}" step="1" aria-label="${a}"><input type="number" data-prop="${b}" value="${vb}" step="1" aria-label="${b}"></div>`;
-    h = `<div class="st-t">${stIcon("gui")}${esc(g.n)}</div>` + stField("Name", `<input type="text" data-prop="gn" value="${esc(g.n)}" maxlength="32">`) + stField("Class", stSel("gt", [ [ "frame", "Frame" ], [ "label", "TextLabel" ], [ "button", "TextButton" ] ], p.t)) + stField("Parent", stSel("gpa", [ [ "", "ScreenGUI" ], ...[ ...new Set(frames) ].map(n => [ n, n ]) ], g.pa || "")) + (p.t !== "frame" ? stField("Text", `<input type="text" data-prop="gtx" value="${esc(p.tx)}" maxlength="200">`) + stField("Text size", stNum("gts", p.ts, 1)) + stField("Text color", `<input type="color" data-prop="gtc" value="#${p.tc}">`) + stField("Font", stSel("gf", [ [ "bold", "Bold" ], [ "round", "Rounded" ], [ "code", "Code" ] ], p.f)) + stField("Align", stSel("gal", [ [ "l", "Left" ], [ "c", "Center" ], [ "r", "Right" ] ], p.al)) + (p.t === "button" ? stField("Key", `<input type="text" data-prop="gk" value="${esc(p.k || "")}" maxlength="1" placeholder="A–Z">`) : "") : "") + stField("Background", `<input type="color" data-prop="gbg" value="#${p.bg}">`) + stField("Bg see-through", `<div class="st-row2"><input type="range" data-prop="gbt" min="0" max="1" step=".05" value="${p.bt}"><em>${Math.round(p.bt * 100)}%</em></div>`) + stField("Corners", stNum("gr", p.r, 1)) + stField("Position %", v2("gx", "gy", p.x, p.y)) + stField("Size %", v2("gw", "gh", p.w, p.h)) + stField("Anchor", stSel("gan", [ "Top left", "Top", "Top right", "Left", "Center", "Right", "Bottom left", "Bottom", "Bottom right" ].map((t, k) => [ k, t ]), p.an)) + stField("Visible", stCheck("gv", p.v)) + `<div class="st-row2" style="margin-top:8px"><button class="st-btn" data-act="dupgui">DUPLICATE</button><button class="st-btn del" data-act="delgui">DELETE</button></div>` + `<div class="st-note">Position and size are percent of the screen${g.pa ? " (or of the parent frame)" : ""}. Scripts reach it with <code>game.gui('${esc(g.n)}')</code>${p.t === "button" ? ` and <code>.on('click', player =&gt; …)</code>` : ""}. Use <code>player.gui('${esc(g.n)}')</code> to change it for one player only.</div>`;
+    h = `<div class="st-t">${stIcon("gui")}${esc(g.n)}</div>` + stField("Name", `<input type="text" data-prop="gn" value="${esc(g.n)}" maxlength="32">`) + stField("Class", stSel("gt", [ [ "frame", "Frame" ], [ "label", "TextLabel" ], [ "button", "TextButton" ] ], p.t)) + stField("Parent", stSel("gpa", [ [ "", "ScreenGUI" ], ...[ ...new Set(frames) ].map(n => [ n, n ]) ], g.pa || "")) + (p.t !== "frame" ? stField("Text", `<input type="text" data-prop="gtx" value="${esc(p.tx)}" maxlength="500">`) + stField("Text size", stNum("gts", p.ts, 1)) + stField("Text color", `<input type="color" data-prop="gtc" value="#${p.tc}">`) + stField("Font", stSel("gf", [ [ "bold", "Bold" ], [ "round", "Rounded" ], [ "code", "Code" ] ], p.f)) + stField("Align", stSel("gal", [ [ "l", "Left" ], [ "c", "Center" ], [ "r", "Right" ] ], p.al)) + (p.t === "button" ? stField("Key", `<input type="text" data-prop="gk" value="${esc(p.k || "")}" maxlength="1" placeholder="A–Z">`) : "") : "") + stField("Background", `<input type="color" data-prop="gbg" value="#${p.bg}">`) + stField("Bg see-through", `<div class="st-row2"><input type="range" data-prop="gbt" min="0" max="1" step=".05" value="${p.bt}"><em>${Math.round(p.bt * 100)}%</em></div>`) + stField("Corners", stNum("gr", p.r, 1)) + stField("Position %", v2("gx", "gy", p.x, p.y)) + stField("Size %", v2("gw", "gh", p.w, p.h)) + stField("Anchor", stSel("gan", [ "Top left", "Top", "Top right", "Left", "Center", "Right", "Bottom left", "Bottom", "Bottom right" ].map((t, k) => [ k, t ]), p.an)) + stField("Visible", stCheck("gv", p.v)) + `<div class="st-row2" style="margin-top:8px"><button class="st-btn" data-act="dupgui">DUPLICATE</button><button class="st-btn del" data-act="delgui">DELETE</button></div>` + `<div class="st-note">Position and size are percent of the screen${g.pa ? " (or of the parent frame)" : ""}. Scripts reach it with <code>game.gui('${esc(g.n)}')</code>${p.t === "button" ? ` and <code>.on('click', player =&gt; …)</code>` : ""}. Use <code>player.gui('${esc(g.n)}')</code> to change it for one player only.</div>`;
   } else if (s.kind === "sc") {
     const sc = edScripts()[s.i];
     if (!sc) {
@@ -15544,6 +16163,10 @@ function stApply(e) {
   if (s.kind === "p") {
     const p = ED.D.p[s.i];
     if (!p) return;
+    if (prop === "lt" && e.type === "input") {
+      t.nextElementSibling.textContent = +val ? val + " m" : "off";
+      return;
+    }
     if (prop === "tr" && e.type === "input") {
       const o = pProps(p);
       const m = ED.meshes[s.i];
@@ -15560,7 +16183,7 @@ function stApply(e) {
       p[8] = c[0];
       p[9] = c[1];
       p[10] = c[2];
-    } else if (prop === "m") p[1] = val; else if (prop === "col") pSet(p, "col", String(val).replace("#", "").toLowerCase()); else if (prop === "tr") pSet(p, "tr", Math.round(+val * 100) / 100); else if (prop === "an") pSet(p, "an", val ? 1 : 0); else if (prop === "cc") pSet(p, "cc", val ? 1 : 0); else if (prop === "ms") {
+    } else if (prop === "sg") pSet(p, "sg", String(val).replace(/[\u0000-\u001f]/g, " ").trim().slice(0, 60) || null); else if (prop === "lt") pSet(p, "lt", +val > 0 ? clamp(Math.round(+val), 1, 60) : null); else if (prop === "m") p[1] = val; else if (prop === "col") pSet(p, "col", String(val).replace("#", "").toLowerCase()); else if (prop === "tr") pSet(p, "tr", Math.round(+val * 100) / 100); else if (prop === "an") pSet(p, "an", val ? 1 : 0); else if (prop === "cc") pSet(p, "cc", val ? 1 : 0); else if (prop === "ms") {
       const v = num(val);
       if (v != null) pSet(p, "ms", clamp(v, .1, 500));
     } else if (prop === "pos" && ax >= 0) {
@@ -15625,7 +16248,7 @@ function stApply(e) {
         sgPaint(s.i);
       } else if (prop === "gtx") {
         GUI.pers[s.i] = {
-          tx: String(val).slice(0, 200)
+          tx: String(val).slice(0, 500)
         };
         sgPaint(s.i);
       }
@@ -15741,7 +16364,7 @@ $("stProps").addEventListener("change", stApply);
 
 $("stProps").addEventListener("input", e => {
   const p = e.target.dataset.prop;
-  if (p === "tr" || p === "gbt" || p === "gtx") stApply(e);
+  if (p === "tr" || p === "gbt" || p === "gtx" || p === "lt") stApply(e);
 });
 
 $("stProps").addEventListener("click", e => {
@@ -15865,7 +16488,7 @@ function renderScHelp() {
   $("scSide").classList.toggle("hidden", !ST.help);
   if (!ST.help) return;
   const ex = (t, c) => `<div class="sc-ex"><b>${t}</b><pre>${esc(c)}</pre><button class="st-mini" data-ins="${esc(c)}">INSERT</button></div>`;
-  $("scSide").innerHTML = `<div class="sc-oh">API</div>\n  <div class="sc-api">\n  <p><code>game.on(event, fn)</code> events: <code>start</code>, <code>tick</code> (dt), <code>playerJoined</code>, <code>playerLeft</code>, <code>playerDied</code>, <code>chat</code> (player, text)</p>\n  <p><code>game.part(name)</code> one named part · <code>game.parts(name)</code> all with that name</p>\n  <p>Part: <code>position</code> <code>rotation</code> <code>size</code> <code>color</code> <code>transparency</code> <code>canCollide</code> <code>anchored</code> <code>velocity</code> <code>visible</code> · <code>move(x,y,z)</code> <code>turn(x,y,z)</code> <code>destroy()</code> · <code>on('touched', fn)</code> <code>on('touchEnded', fn)</code></p>\n  <p>Player: <code>name</code> <code>position</code> <code>health</code> · <code>damage(n)</code> <code>heal(n)</code> <code>teleport(x,y,z)</code> <code>launch(x,y,z)</code> <code>kill()</code> · <code>look</code> <code>velocity</code> <code>speed</code> <code>lookAt(x,y,z)</code></p>\n  <p><code>game.players()</code> <code>game.message(text, sec)</code> <code>game.chat(text)</code> <code>game.spawn('crate', [x,y,z])</code> <code>game.zombie('runner', [x,y,z])</code> <code>game.explode([x,y,z], power)</code> <code>game.gravity</code> <code>game.time</code> <code>game.random(a,b)</code></p>\n  <p><code>print(...)</code> <code>await wait(sec)</code> <code>every(sec, fn)</code></p>\n  <p>ScreenGUI: <code>game.gui(name)</code> for everyone · <code>player.gui(name)</code> for one player · <code>text</code> <code>visible</code> <code>textColor</code> <code>background</code> <code>transparency</code> <code>position</code> [x%, y%] <code>size</code> [w%, h%] <code>textSize</code> · <code>show()</code> <code>hide()</code> · <code>on('click', player =&gt; …)</code></p>\n  <p>Make things: <code>game.create({ shape, size, position, rotation, color, material, anchored, canCollide, transparency, name })</code> returns a part · <code>part.clone()</code> · <code>part.destroy()</code> · <code>game.createGui({ type, name, text, position, size, anchor, textColor, background, parent, key })</code> · <code>key: 'F'</code> lets PC players press F for a button</p>\n  </div>\n  ${ex("Kill brick", "game.part('Lava').on('touched', p => p.kill())")}\n  ${ex("Moving platform", "const plat = game.part('Platform')\nconst start = plat.position\ngame.on('tick', () => {\n  plat.position = [start[0], start[1] + Math.sin(game.time) * 3, start[2]]\n})")}\n  ${ex("Spinner", "const spin = game.part('Spinner')\ngame.on('tick', dt => spin.turn(0, 90 * dt, 0))")}\n  ${ex("Button opens a door", "const door = game.part('Door')\ngame.part('Button').on('touched', async p => {\n  door.canCollide = false\n  door.transparency = 0.8\n  await wait(3)\n  door.canCollide = true\n  door.transparency = 0\n})")}\n  ${ex("Checkpoint", "game.part('Checkpoint').on('touched', p => {\n  game.message(p.name + ' reached the checkpoint!', 2)\n})")}\n  ${ex("Jump pad", "game.part('Pad').on('touched', p => p.launch(0, 25, 0))")}\n  ${ex("Zombie waves", "every(10, () => game.zombie('walker', [game.random(-20, 20), 1, -30]))")}\n  ${ex("Falling floor", "for (const tile of game.parts('Tile')) {\n  tile.on('touched', async () => {\n    tile.color = '#d93a3a'\n    await wait(0.6)\n    tile.anchored = false\n  })\n}")}\n  ${ex("GUI: coin counter", "const coins = {}\nfor (const c of game.parts('Coin')) {\n  c.on('touched', p => {\n    coins[p.id] = (coins[p.id] || 0) + 1\n    c.destroy()\n    const label = p.gui('Coins')\n    if (label) label.text = 'Coins: ' + coins[p.id]\n  })\n}")}\n  ${ex("GUI: heal button", "const btn = game.gui('HealButton')\nif (btn) btn.on('click', async p => {\n  p.heal(50)\n  p.gui('HealButton').hide()\n  await wait(10)\n  p.gui('HealButton').show()\n})")}\n  ${ex("Make a kickable ball", "const ball = game.create({ shape: 'ball', size: 2, position: [0, 6, 0], color: '#ffffff', anchored: false })\nball.on('touched', p => {\n  const a = ball.position, b = p.position\n  const dx = a[0] - b[0], dz = a[2] - b[2], len = Math.hypot(dx, dz) || 1\n  ball.velocity = [dx / len * 16, 5, dz / len * 16]\n})")}\n  ${ex("Build a staircase", "for (let i = 0; i < 10; i++) {\n  game.create({ size: [4, 1, 4], position: [i * 5, i * 1.5, 0], color: '#3aa655' })\n}")}\n  ${ex("GUI: countdown", "const timer = game.gui('Timer')\nlet left = 60\nevery(1, () => {\n  if (left <= 0) return\n  left--\n  timer.text = 'Time: ' + left\n  if (left <= 10) timer.textColor = '#ff4d4d'\n})")}`;
+  $("scSide").innerHTML = `<div class="sc-oh">API</div>\n  <div class="sc-api">\n  <p><code>game.on(event, fn)</code> events: <code>start</code>, <code>tick</code> (dt), <code>playerJoined</code>, <code>playerLeft</code>, <code>playerDied</code>, <code>chat</code> (player, text)</p>\n  <p><code>game.part(name)</code> one named part · <code>game.parts(name)</code> all with that name</p>\n  <p>Part: <code>position</code> <code>rotation</code> <code>size</code> <code>color</code> <code>transparency</code> <code>canCollide</code> <code>anchored</code> <code>velocity</code> <code>visible</code> · <code>move(x,y,z)</code> <code>turn(x,y,z)</code> <code>destroy()</code> · <code>on('touched', fn)</code> <code>on('touchEnded', fn)</code> <code>on('clicked', fn)</code> · <code>text</code> (sign) <code>light</code> (range, 0 = off)</p>\n  <p>Player: <code>name</code> <code>position</code> <code>health</code> · <code>damage(n)</code> <code>heal(n)</code> <code>teleport(x,y,z)</code> <code>launch(x,y,z)</code> <code>kill()</code> · <code>look</code> <code>velocity</code> <code>speed</code> <code>lookAt(x,y,z)</code> <code>giveCoins(n)</code></p>\n  <p><code>game.players()</code> <code>game.message(text, sec)</code> <code>game.chat(text)</code> <code>game.spawn('crate', [x,y,z])</code> <code>game.zombie('runner', [x,y,z])</code> <code>game.explode([x,y,z], power)</code> <code>game.gravity</code> <code>game.time</code> <code>game.random(a,b)</code></p>\n  <p><code>print(...)</code> <code>await wait(sec)</code> <code>every(sec, fn)</code></p>\n  <p>ScreenGUI: <code>game.gui(name)</code> for everyone · <code>player.gui(name)</code> for one player · <code>text</code> <code>visible</code> <code>textColor</code> <code>background</code> <code>transparency</code> <code>position</code> [x%, y%] <code>size</code> [w%, h%] <code>textSize</code> · <code>show()</code> <code>hide()</code> · <code>on('click', player =&gt; …)</code></p>\n  <p>Make things: <code>game.create({ shape, size, position, rotation, color, material, anchored, canCollide, transparency, name })</code> returns a part · <code>part.clone()</code> · <code>part.destroy()</code> · <code>game.createGui({ type, name, text, position, size, anchor, textColor, background, parent, key })</code> · <code>key: 'F'</code> lets PC players press F for a button</p>\n  </div>\n  ${ex("Kill brick", "game.part('Lava').on('touched', p => p.kill())")}\n  ${ex("Moving platform", "const plat = game.part('Platform')\nconst start = plat.position\ngame.on('tick', () => {\n  plat.position = [start[0], start[1] + Math.sin(game.time) * 3, start[2]]\n})")}\n  ${ex("Spinner", "const spin = game.part('Spinner')\ngame.on('tick', dt => spin.turn(0, 90 * dt, 0))")}\n  ${ex("Button opens a door", "const door = game.part('Door')\ngame.part('Button').on('touched', async p => {\n  door.canCollide = false\n  door.transparency = 0.8\n  await wait(3)\n  door.canCollide = true\n  door.transparency = 0\n})")}\n  ${ex("Checkpoint", "game.part('Checkpoint').on('touched', p => {\n  game.message(p.name + ' reached the checkpoint!', 2)\n})")}\n  ${ex("Jump pad", "game.part('Pad').on('touched', p => p.launch(0, 25, 0))")}\n  ${ex("Zombie waves", "every(10, () => game.zombie('walker', [game.random(-20, 20), 1, -30]))")}\n  ${ex("Falling floor", "for (const tile of game.parts('Tile')) {\n  tile.on('touched', async () => {\n    tile.color = '#d93a3a'\n    await wait(0.6)\n    tile.anchored = false\n  })\n}")}\n  ${ex("GUI: coin counter", "const coins = {}\nfor (const c of game.parts('Coin')) {\n  c.on('touched', p => {\n    coins[p.id] = (coins[p.id] || 0) + 1\n    c.destroy()\n    const label = p.gui('Coins')\n    if (label) label.text = 'Coins: ' + coins[p.id]\n  })\n}")}\n  ${ex("GUI: heal button", "const btn = game.gui('HealButton')\nif (btn) btn.on('click', async p => {\n  p.heal(50)\n  p.gui('HealButton').hide()\n  await wait(10)\n  p.gui('HealButton').show()\n})")}\n  ${ex("Click a lamp to switch it", "const lamp = game.part('Lamp')\nlamp.on('clicked', p => {\n  lamp.light = lamp.light ? 0 : 20\n  lamp.text = lamp.light ? 'ON' : 'OFF'\n})")}\n  ${ex("Make a kickable ball", "const ball = game.create({ shape: 'ball', size: 2, position: [0, 6, 0], color: '#ffffff', anchored: false })\nball.on('touched', p => {\n  const a = ball.position, b = p.position\n  const dx = a[0] - b[0], dz = a[2] - b[2], len = Math.hypot(dx, dz) || 1\n  ball.velocity = [dx / len * 16, 5, dz / len * 16]\n})")}\n  ${ex("Build a staircase", "for (let i = 0; i < 10; i++) {\n  game.create({ size: [4, 1, 4], position: [i * 5, i * 1.5, 0], color: '#3aa655' })\n}")}\n  ${ex("GUI: countdown", "const timer = game.gui('Timer')\nlet left = 60\nevery(1, () => {\n  if (left <= 0) return\n  left--\n  timer.text = 'Time: ' + left\n  if (left <= 10) timer.textColor = '#ff4d4d'\n})")}`;
 }
 
 $("scSrc").addEventListener("input", scSync);
@@ -15930,6 +16553,141 @@ function renderHero() {
   const bw = (SD.stats.bestWave || {})[curMapId];
   $("heroDesc").textContent = (m.desc || "") + (mode === "survival" && bw ? ` Best wave here: ${bw}.` : "");
 }
+
+const ZC = {
+  t: 0,
+  moved: 0,
+  killT: 0,
+  killN: 0,
+  scrT: 0,
+  scrN: 0,
+  popT: null
+};
+
+function zcEarn(n, why) {
+  n = Math.floor(n);
+  if (!(n > 0)) return;
+  SD.zc += n;
+  SD.zlife = (SD.zlife || 0) + n;
+  persist();
+  zcRender();
+  const el = $("zcPop");
+  if (el) {
+    el.textContent = `+${n} Z${why ? "  ·  " + why : ""}`;
+    el.classList.add("show");
+    clearTimeout(ZC.popT);
+    ZC.popT = setTimeout(() => el.classList.remove("show"), 2200);
+  }
+}
+
+function zcSpend(n) {
+  if (SD.zc < n) return false;
+  SD.zc -= n;
+  persist(true);
+  zcRender();
+  return true;
+}
+
+function zcRender() {
+  const h = $("zcHud");
+  if (h) h.innerHTML = `<b>Z</b> ${zcFmt(SD.zc)}`;
+  const b = document.querySelector("#acct [data-a='zc']");
+  if (b) b.innerHTML = `<b>Z</b> ${zcFmt(SD.zc)}`;
+  if (!$("zcMenu").classList.contains("hidden")) renderZcMenu();
+  if ($("menuStats")) renderStats();
+}
+
+function zcTick(dt) {
+  if (state !== "play" || paused || ED.on || document.hidden) return;
+  ZC.t += dt;
+  if (curSpeed > .5) ZC.moved += dt;
+  ZC.killT += dt;
+  if (ZC.killT > 60) {
+    ZC.killT = 0;
+    ZC.killN = 0;
+  }
+  ZC.scrT += dt;
+  if (ZC.scrT > 600) {
+    ZC.scrT = 0;
+    ZC.scrN = 0;
+  }
+  if (ZC.t >= 60) {
+    if (ZC.moved >= 8) zcEarn(NET.on ? 3 : 2, NET.on ? "playing online" : "playing");
+    ZC.t = 0;
+    ZC.moved = 0;
+  }
+}
+
+function zcKill() {
+  if (ED.on || ZC.killN >= 30) return;
+  ZC.killN++;
+  zcEarn(1, "zombie");
+}
+
+function zcWave(w) {
+  if (ED.on) return;
+  zcEarn(5 + Math.min(40, w * 2), `wave ${w} cleared`);
+}
+
+function zcScript(n) {
+  if (state !== "play" || !Number.isFinite(n)) return;
+  n = Math.floor(clamp(n, 0, 100));
+  const room = 300 - ZC.scrN;
+  if (n <= 0 || room <= 0) return;
+  n = Math.min(n, room);
+  ZC.scrN += n;
+  zcEarn(n, "from the map");
+}
+
+function zcDaily() {
+  const d = (new Date).toDateString();
+  if (SD.zday === d) return;
+  SD.zday = d;
+  zcEarn(50, "daily bonus");
+  toast("Daily bonus: +50 Z", 2600);
+}
+
+function renderZcMenu() {
+  const owned = Object.keys(ZC_PRICE).filter(k => SD.zown.includes(k)).length, total = Object.keys(ZC_PRICE).length;
+  const next = new Date;
+  next.setHours(24, 0, 0, 0);
+  const hrs = Math.max(0, Math.ceil((next - Date.now()) / 36e5));
+  $("zcBody").innerHTML = `<div class="zc-big"><b>Z</b> ${zcFmt(SD.zc)}</div>
+    <p class="foot" style="text-align:center;margin-top:2px">Z Coins · ${zcFmt(SD.zlife || 0)} earned in total · ${owned}/${total} shop items owned</p>
+    <div class="sec">HOW TO EARN</div>
+    <div class="opts">
+      <div class="opt">PLAY ANY MAP <b>+2 Z / min</b></div>
+      <div class="opt">PLAY ONLINE <b>+3 Z / min</b></div>
+      <div class="opt">KILL A ZOMBIE <b>+1 Z</b></div>
+      <div class="opt">CLEAR A SURVIVAL WAVE <b>+5 Z and up</b></div>
+      <div class="opt">MAP REWARDS <b>set by the map</b></div>
+      <div class="opt">DAILY BONUS <b>${SD.zday === (new Date).toDateString() ? `claimed · next in ${hrs}h` : "+50 Z"}</b></div>
+    </div>
+    <p class="foot">You only earn while you're actually moving around, not when you leave the game idle.${user ? "" : " Log in to keep your coins on every device."}</p>
+    <button class="go" data-z="shop">OPEN THE SHOP</button><button class="go ghost" data-z="close">CLOSE</button>`;
+}
+
+function openZcMenu() {
+  renderZcMenu();
+  $("zcMenu").classList.remove("hidden");
+}
+
+$("zcMenu").addEventListener("click", e => {
+  const b = e.target.closest("[data-z]");
+  if (e.target.id === "zcMenu" || b && b.dataset.z === "close") {
+    $("zcMenu").classList.add("hidden");
+    return;
+  }
+  if (b && b.dataset.z === "shop") {
+    $("zcMenu").classList.add("hidden");
+    openAvEditor();
+    if (!curAvatar.custom) setAvatar("custom");
+    AVE.tab = "HATS";
+    AVE.o = avOutfit();
+    aveModel();
+    renderAve();
+  }
+});
 
 function renderHubMe() {
   const el = $("hubMe");
@@ -16092,6 +16850,9 @@ function loop() {
     world.step(1 / 60, dt * WSET.ts, 3);
     if (LIVE.list.length) liveUpdate(dt);
     if (SCR.w && (state === "play" || state === "dead")) scriptTick(dt);
+    zcTick(dt);
+    atmosTick(dt);
+    clickAim(dt);
     updateRockets(dt);
     updateVRockets(dt);
     syncAll();
@@ -16247,6 +17008,7 @@ loadCharacter().then(() => {
   $("wsBtn").disabled = false;
   $("onlineBtn").disabled = false;
   initAuth();
+  setTimeout(zcDaily, 1500);
 }).catch(err => {
   console.error(err);
   $("startBtn").textContent = "MODEL FAILED TO LOAD";
