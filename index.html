@@ -507,6 +507,7 @@
   @media (hover:hover) and (pointer:fine){.slot{width:54px;height:54px}.slot svg.i{width:26px;height:26px}#toolName{top:calc(74px + env(safe-area-inset-top))}}
   #sgui{position:fixed;inset:0;pointer-events:none;display:none;font-family:'Barlow Condensed',system-ui,sans-serif;--k:1;overflow:hidden}
   body.playing:not(.editing) #sgui,body.editing.studio #sgui{display:block}
+  body.playing:not(.editing) #sgui{z-index:3}
   #sgui .sg{position:absolute;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;white-space:pre-wrap;word-break:break-word;line-height:1.1;font-weight:800;letter-spacing:.02em;padding:0 calc(6px * var(--k));box-sizing:border-box}
   #sgui .sg.al-l{justify-content:flex-start;text-align:left}
   #sgui .sg.al-r{justify-content:flex-end;text-align:right}
@@ -528,7 +529,7 @@
   .st-sw.img{background-size:cover;background-position:center}
   #sgui .sg[data-k]::after{content:attr(data-k);position:absolute;right:calc(4px * var(--k));top:calc(3px * var(--k));font:700 calc(11px * var(--k))/1 ui-monospace,Consolas,monospace;padding:calc(2px * var(--k)) calc(4px * var(--k));border-radius:3px;background:rgba(0,0,0,.35);color:#fff;opacity:.85}
   #sgHint{position:absolute;left:50%;bottom:calc(66px + env(safe-area-inset-bottom));transform:translateX(-50%);font-size:13px;font-weight:700;letter-spacing:.12em;color:#cfcac0;text-shadow:0 1px 3px rgba(0,0,0,.85);white-space:nowrap}
-  body.r-ns:not(.editing) #spawnBtn,body.r-ns:not(.editing) #undoBtn,body.r-ns:not(.editing) #hotbar{display:none}
+  body.r-ns:not(.editing) #spawnBtn,body.r-ns:not(.editing) #undoBtn,body.r-ns:not(.editing):not(.has-st) #hotbar{display:none}
   .st-v2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}
   #zcHud{margin-top:5px;font-size:14px;font-weight:800;letter-spacing:.08em;color:#ffd23f;white-space:nowrap}
   #zcHud b,.sb.zc b,.zc-big b{display:inline-flex;align-items:center;justify-content:center;width:1.25em;height:1.25em;border-radius:50%;background:#ffd23f;color:#3a2a00;font-weight:900;font-size:.85em;margin-right:4px;box-shadow:inset 0 -2px 0 rgba(0,0,0,.18)}
@@ -537,6 +538,58 @@
   .hb-top .sb.zc{background:#fff;color:#191b1f;border-color:#fff;font-weight:900;display:flex;align-items:center;gap:2px}
   .hb-top .sb.zc b{background:#ffd23f}
   .zcp{max-width:440px}
+  .hb-logo img{width:30px;height:30px;border-radius:7px;vertical-align:-6px;margin-right:9px;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+  .admlogo{width:34px;height:34px;border-radius:8px;flex:0 0 auto;box-shadow:0 0 0 1px rgba(255,255,255,.12),0 2px 10px rgba(245,165,36,.35)}
+  .admhead{display:flex;align-items:center;gap:10px;margin:12px 0 2px}
+  .admhead b{font-family:'Barlow Condensed',sans-serif;font-size:22px;letter-spacing:.06em}
+  .admhead small{display:block;color:var(--dim);font-size:12px;letter-spacing:.12em}
+  .admrow .dt.msg{white-space:normal;line-height:1.35;margin-top:3px}
+  .admrow .tagk{display:inline-block;font-size:11px;letter-spacing:.12em;padding:1px 6px;border-radius:5px;background:rgba(245,165,36,.18);color:var(--acc);margin-right:6px}
+  .fld textarea{width:100%;box-sizing:border-box;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:#0d0e11;color:var(--txt);font:inherit;font-size:15px;letter-spacing:0;resize:vertical;outline:none;user-select:text;-webkit-user-select:text}
+  .lt .fld textarea{background:#fff;color:#191b1f;border-color:#cfd5dc}
+  .lt .fld textarea:focus{border-color:#1d77f0}
+  .socp{max-width:620px;height:min(720px,100%)}
+  .soc-find{display:flex;gap:8px;padding:10px 14px 0}
+  .soc-find input{flex:1;min-width:0;background:#fff;color:#191b1f;border:1px solid #cfd5dc;border-radius:9px;padding:10px 12px;font:inherit;font-size:16px;outline:none}
+  .soc-find input:focus{border-color:#1d77f0}
+  .soc-list{display:flex;flex-direction:column;gap:7px}
+  .soc-row{display:flex;align-items:center;gap:11px;background:#f3f5f8;border:1px solid #e3e7ec;border-radius:11px;padding:9px 11px;cursor:pointer;text-align:left;font:inherit;color:#191b1f;width:100%}
+  .soc-row:hover{border-color:#1d77f0}
+  .soc-row .av{width:40px;height:40px;border-radius:50%;flex:0 0 auto;background:#dbe6f5 center/cover no-repeat;display:flex;align-items:center;justify-content:center;font-weight:900;color:#1d77f0;font-size:18px}
+  .soc-row .tx{flex:1;min-width:0}
+  .soc-row .tx b{display:block;font-size:16px}
+  .soc-row .tx small{display:block;color:#6b7280;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .soc-row em{font-style:normal;font-size:12px;color:#6b7280;white-space:nowrap}
+  .ctag{display:inline-block;font-size:11px;font-weight:900;letter-spacing:.06em;padding:2px 6px;border-radius:5px;color:#fff;margin-right:5px;vertical-align:1px}
+  .soc-prof{display:flex;gap:14px;align-items:center;margin-top:6px}
+  .soc-prof .big{width:96px;height:128px;border-radius:12px;background:#e8f1fd center/contain no-repeat;flex:0 0 auto}
+  .soc-prof h3{margin:0;font-size:24px;font-weight:900}
+  .soc-prof .bio{margin:4px 0 0;color:#374151;font-size:15px;white-space:pre-wrap;word-break:break-word}
+  .soc-nums{display:flex;gap:16px;margin-top:8px;font-size:14px;color:#6b7280}
+  .soc-nums b{color:#191b1f;font-size:17px;margin-right:3px}
+  .soc-btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .soc-btns .go{flex:1;min-width:120px;margin:0;padding:11px 10px;font-size:15px}
+  .soc-maps{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
+  .soc-map{background:#f3f5f8;border:1px solid #e3e7ec;border-radius:10px;overflow:hidden;cursor:pointer;padding:0;text-align:left;font:inherit;color:#191b1f}
+  .soc-map i{display:block;aspect-ratio:16/10;background:#dbe6f5 center/cover no-repeat}
+  .soc-map span{display:block;padding:6px 8px;font-weight:800;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .soc-cols{display:flex;flex-wrap:wrap;gap:6px}
+  .soc-cols button{width:30px;height:30px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px #cfd5dc;cursor:pointer}
+  .soc-cols button.on{box-shadow:0 0 0 3px #1d77f0}
+  .soc-msg{min-height:18px;margin:8px 0 0;font-size:14px;color:#00a862;font-weight:700}
+  .soc-msg.bad{color:#d93a3a}
+  .wsdet .by .lnk{background:none;border:0;padding:0;font:inherit;font-weight:800;color:#1d77f0;cursor:pointer;text-decoration:underline}
+  .banp{max-width:460px;text-align:center}
+  .banp .zl{width:72px;height:72px;border-radius:16px;margin:2px auto 6px;display:block}
+  .banp .fld,.banp .foot{text-align:left}
+  .banp h2{color:#d93a3a!important}
+  .repp{max-width:440px}
+  .rep-why{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .avhat{display:flex;flex-direction:column;gap:9px;background:#f3f5f8;border:1px solid #e3e7ec;border-radius:11px;padding:12px;margin-top:6px}
+  .avhat label{display:flex;align-items:center;gap:10px;font-weight:800;font-size:14px;color:#374151}
+  .avhat label input[type=range]{flex:1}
+  .avhat .go{margin:0}
+  .avtile .x.del2{background:#d93a3a;color:#fff}
   .zc-big{font-family:'Barlow Condensed',sans-serif;font-size:56px;font-weight:800;text-align:center;line-height:1;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:6px}
   .avchip.lock{border-style:dashed;color:#6b7280}
   .avchip.lock em{font-style:normal;font-weight:900;color:#b7791f;margin-left:6px;font-size:12.5px}
@@ -599,7 +652,7 @@
 
 <div class="hub" id="mainMenu">
   <header class="hb-top">
-    <div class="hb-logo">PLAYGROUND <b>Z</b></div>
+    <div class="hb-logo"><img src="data:image/png;base64,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" alt="">PLAYGROUND <b>Z</b></div>
     <nav class="hb-links"><button data-go="home">Play</button><button data-go="ws">Workshop</button><button data-go="maker">Create</button><button data-go="online">Online</button></nav>
     <label class="hb-search"><svg class="i" viewBox="0 0 24 24"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4"/></svg><input id="hubQ" maxlength="32" placeholder="Search the Workshop" autocomplete="off" spellcheck="false" enterkeyhint="search"></label>
     <div class="acct" id="acct"></div>
@@ -611,6 +664,8 @@
     <button data-go="online"><svg class="i" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3 12h18M12 3c2.5 2.6 3.7 5.6 3.7 9s-1.2 6.4-3.7 9c-2.5-2.6-3.7-5.6-3.7-9S9.5 5.6 12 3z"/></svg>Play Online</button>
     <button data-go="maker"><svg class="i" viewBox="0 0 24 24"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9zM12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg>Map Maker</button>
     <button data-go="ws"><svg class="i" viewBox="0 0 24 24"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></svg>Workshop</button>
+    <button data-go="people"><svg class="i" viewBox="0 0 24 24"><path d="M9 4a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7zM2.5 20c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5M16 4.5a3 3 0 0 1 0 6M18 14.5c2 .6 3.2 2.4 3.5 5.5"/></svg>People</button>
+    <button data-go="clubs"><svg class="i" viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>Clubs</button>
     <button data-go="stats"><svg class="i" viewBox="0 0 24 24"><path d="M5 20V11M12 20V4M19 20v-6"/></svg>Stats</button>
     <button data-go="admin" class="hidden" id="hubAdmin"><svg class="i" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/></svg>Admin Panel</button>
   </aside>
@@ -717,7 +772,7 @@
 
 <div class="ov hidden" id="adminMenu">
   <div class="panel spawn adminp">
-    <div class="head"><div class="tabs" id="admTabs"></div><div class="ib" id="admClose"></div></div>
+    <div class="head"><img class="admlogo" src="data:image/png;base64,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" alt="Z"><div class="tabs" id="admTabs"></div><div class="ib" id="admClose"></div></div>
     <div class="admbody" id="admBody"></div>
   </div>
 </div>
@@ -789,7 +844,7 @@
     <div class="joinrow hidden" id="tsText"><input id="tsTextIn" maxlength="20" placeholder="Type, then tap the shirt" autocomplete="off"></div>
     <div class="avchips"><button class="avchip" id="tsUndo">UNDO</button><button class="avchip" id="tsClear">CLEAR</button><label class="avchip file">UPLOAD IMAGE<input type="file" id="tsFile" accept="image/*"></label></div>
     <label class="fld">NAME<input id="tsName" maxlength="20" placeholder="My design" autocomplete="off"></label>
-    <button class="go" id="tsSave">SAVE DESIGN</button>
+    <button class="go" id="tsSave">SAVE DESIGN · 30 Z</button>
     <button class="go ghost" id="tsCancel">CANCEL</button>
   </div>
 </div>
@@ -801,6 +856,39 @@
   </div>
 </div>
 <div class="ov hidden" id="vidMenu"><div class="panel vidp"><div class="vid-head"><b>VIDEO</b><button class="sb" data-vid="close">CLOSE</button></div><div class="vid-box" id="vidFrame"></div></div></div>
+<div class="ov hidden lt" id="socMenu">
+  <div class="panel spawn socp">
+    <div class="head"><div class="tabs" id="socTabs"></div><div class="ib" id="socClose"></div></div>
+    <div class="soc-find" id="socFind"><input id="socQ" maxlength="24" placeholder="Search players" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search"><button class="sb save" id="socGo">SEARCH</button></div>
+    <div class="wsbody" id="socBody"></div>
+  </div>
+</div>
+<div class="ov hidden lt" id="repMenu">
+  <div class="panel pause repp">
+    <h2 id="repTitle">REPORT</h2>
+    <p class="foot" style="margin-top:4px">Reports go straight to the admin. Only report real problems.</p>
+    <div class="rep-why" id="repWhy"></div>
+    <label class="fld" style="margin-top:10px">WHAT HAPPENED<textarea id="repTxt" maxlength="250" rows="3" placeholder="Tell the admin what they did"></textarea></label>
+    <p class="err" id="repErr"></p>
+    <button class="go" id="repSend">SEND REPORT</button>
+    <button class="go ghost" id="repCancel">CANCEL</button>
+  </div>
+</div>
+<div class="ov hidden lt" id="banMenu">
+  <div class="panel pause banp">
+    <img class="zl" src="data:image/png;base64,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" alt="">
+    <h2>BANNED</h2>
+    <p class="foot" id="banWhy" style="text-align:center"></p>
+    <div class="sec">APPEAL</div>
+    <p class="foot">Think this was a mistake? Tell the admin what happened. You can send one appeal at a time.</p>
+    <label class="fld">USERNAME<input id="apUser" maxlength="16" autocomplete="off" autocapitalize="off" spellcheck="false" style="text-transform:none;letter-spacing:.04em"></label>
+    <label class="fld" style="margin-top:8px">MESSAGE<textarea id="apMsg" maxlength="500" rows="4" placeholder="Why should you be unbanned?"></textarea></label>
+    <button class="go" id="apSend">SEND APPEAL</button>
+    <p class="foot" id="apStatus" style="text-align:center"></p>
+    <button class="go ghost" id="apCheck">CHECK MY APPEAL</button>
+    <button class="go ghost hidden" id="banBack">BACK</button>
+  </div>
+</div>
 <div class="ov lt hidden" id="zcMenu"><div class="panel zcp"><h2>Z COINS</h2><div id="zcBody"></div></div></div>
 <div class="toast" id="toast"></div>
 
@@ -980,6 +1068,8 @@ const ZC_PRICE = {
 };
 
 const ZC_SLOTS = [ "hat", "fw", "back", "neck" ];
+
+const UGC_HAT_PRICE = 2e3, UGC_SHIRT_PRICE = 30, UGC_HAT_TRIS = 2500;
 
 function zcInit() {
   if (!Number.isFinite(SD.zc) || SD.zc < 0) SD.zc = 0;
@@ -3772,6 +3862,8 @@ function killPlayer() {
   }
 }
 
+const STOOLS = [];
+
 const TOOLS = [ {
   id: "hands",
   name: "HANDS",
@@ -3879,6 +3971,11 @@ function primary() {
   if (state !== "play" || cd > 0 || uiBlocked()) return;
   if (ED.on) {
     edPrimary();
+    return;
+  }
+  if (String(tool).startsWith("st_")) {
+    stUse();
+    cd = .25;
     return;
   }
   switch (tool) {
@@ -4624,6 +4721,8 @@ function startGame() {
 
 function toMenu() {
   if ((state === "play" || state === "dead") && isAuth()) autosave();
+  stClear();
+  mdFlush();
   if (NET.on) leaveRoom();
   state = "menu";
   paused = false;
@@ -4951,7 +5050,7 @@ addEventListener("keydown", e => {
     break;
 
    default:
-    if (/^Digit[1-6]$/.test(e.code)) {
+    if (/^Digit[1-9]$/.test(e.code)) {
       const t = curTools()[+e.code.slice(5) - 1];
       if (t) setTool(t.id);
     }
@@ -6346,7 +6445,16 @@ function setUser(u) {
   renderAcct();
   if (user && user.id !== prev) {
     setTimeout(cloudPull, 0);
-    setTimeout(checkBan, 0);
+    setTimeout(async () => {
+      await regDevice();
+      await checkBan();
+      profileSync();
+      socMine(true);
+    }, 0);
+  }
+  if (!user) {
+    SOC.mine = [];
+    SOC.following = new Set;
   }
   if (!isAdmin()) {
     ADM.fly = ADM.god = ADM.noclip = ADM.jump = false;
@@ -6361,6 +6469,7 @@ async function initAuth() {
   try {
     const s = await getSB();
     const {data: data} = await s.auth.getSession();
+    if (!data.session) checkDevBan();
     setUser(data.session ? data.session.user : null);
     fetchCustomMaps();
     fetchNews();
@@ -6496,6 +6605,14 @@ function onDirect(p) {
     scLocal(p.a, p.v);
     return;
   }
+  if (p.k === "pdreq") {
+    mdLoad().then(j => send("act", {
+      i: NET.id,
+      k: "pdata",
+      d: j
+    }));
+    return;
+  }
   if (p.k === "gui") {
     sgMine(p.g);
     return;
@@ -6552,6 +6669,12 @@ async function openRoom(code, asHost) {
     } else if (p.k === "pclick") {
       const Rm = NET.peers.get(p.i);
       scEvent("pclick", +p.g | 0, p.i, Rm ? Rm.name : "");
+    } else if (p.k === "tact") {
+      const Rm = NET.peers.get(p.i);
+      scEvent("tact", +p.g | 0, p.i, Rm ? Rm.name : "");
+    } else if (p.k === "pdata") {
+      const Rm = NET.peers.get(p.i);
+      if (Rm) scEvent("pdata", p.i, Rm.name, typeof p.d === "string" && p.d.length <= 8e3 ? p.d : "{}");
     } else if (actOk(p.k, p)) runAct(p.i, p.k, p);
   });
   ch.on("broadcast", {
@@ -6562,7 +6685,7 @@ async function openRoom(code, asHost) {
   }, m => {
     const p = m.payload;
     if (p && p.m) {
-      addChat(p.n, p.m, p.ad);
+      addChat(p.n, p.m, p.ad, p.ct && typeof p.ct === "object" ? p.ct : null);
       if (p.i) scEvent("chat", p.i, String(p.n || ""), String(p.m).slice(0, 120));
     }
   });
@@ -7574,12 +7697,14 @@ $("chatIn").addEventListener("keydown", e => {
     e.preventDefault();
     const t = $("chatIn").value.trim().slice(0, 120);
     if (t) {
-      addChat(NET.name, t, isAdmin());
+      const ct = user ? socTag() : null;
+      addChat(NET.name, t, isAdmin(), ct);
       send("chat", {
         n: NET.name,
         m: t,
         ad: isAdmin() ? 1 : 0,
-        i: NET.id
+        i: NET.id,
+        ct: ct
       });
       scEvent("chat", NET.id, NET.name, t);
     }
@@ -7595,10 +7720,11 @@ $("chatIn").addEventListener("blur", () => {
   if (chatOpen) setTimeout(closeChat, 120);
 });
 
-function addChat(name, text, adm) {
+function addChat(name, text, adm, ct) {
   const el = document.createElement("div");
   el.className = "cl";
-  el.innerHTML = name ? `<b class="${adm ? "adm" : ""}">${adm ? "★ " : ""}${esc(name)}</b>${esc(text)}` : `<i>${esc(text)}</i>`;
+  const tag = ct && /^[A-Z0-9]{2,4}$/.test(ct.t) ? `<span class="ctag" style="background:#${/^[0-9a-f]{6}$/.test(ct.c) ? ct.c : "f5a524"}">${ct.t}</span>` : "";
+  el.innerHTML = name ? `${tag}<b class="${adm ? "adm" : ""}">${adm ? "★ " : ""}${esc(name)}</b>${esc(text)}` : `<i>${esc(text)}</i>`;
   const log = $("chatLog");
   log.appendChild(el);
   while (log.children.length > 7) log.firstChild.remove();
@@ -9153,7 +9279,136 @@ async function checkKick() {
   } catch (e) {}
 }
 
+const DEV_ID = (() => {
+  try {
+    let d = localStorage.getItem("pz_dev");
+    if (!d || !/^[a-z0-9]{16,40}$/.test(d)) {
+      d = Array.from(crypto.getRandomValues(new Uint8Array(16)), b => (b % 36).toString(36)).join("");
+      localStorage.setItem("pz_dev", d);
+    }
+    return d;
+  } catch (e) {
+    return "tmp" + Math.random().toString(36).slice(2, 15);
+  }
+})();
+
+const BAN = {
+  on: false,
+  dev: false,
+  name: ""
+};
+
+async function regDevice() {
+  if (!user) return;
+  try {
+    const s = await getSB();
+    await s.from("pz_devices").upsert({
+      device: DEV_ID,
+      user_id: user.id,
+      username: user.name,
+      seen_at: (new Date).toISOString()
+    }, {
+      onConflict: "device,user_id"
+    });
+  } catch (e) {}
+}
+
+async function checkDevBan() {
+  try {
+    const s = await getSB();
+    const {data: data, error: error} = await s.rpc("pz_device_banned", {
+      dev: DEV_ID
+    });
+    if (error || !data || typeof data !== "string") return false;
+    showBanned(data, user ? user.name : "", true);
+    if (user) {
+      try {
+        await s.auth.signOut();
+      } catch (e) {}
+      setUser(null);
+    }
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function showBanned(reason, name, dev) {
+  if (NET.on || state === "play" || state === "dead") toMenu();
+  BAN.on = true;
+  BAN.dev = !!dev || BAN.dev;
+  BAN.name = name || BAN.name || "";
+  for (const id of [ "mainMenu", "onlineMenu", "loginMenu", "socMenu", "avMenu", "wsMenu", "adminMenu", "zcMenu" ]) $(id) && $(id).classList.add("hidden");
+  $("banWhy").textContent = (BAN.dev ? "This device is banned from Playground Z" : "This account is banned") + (reason && reason !== "banned" ? ": " + reason : ".");
+  $("apUser").value = BAN.name;
+  $("apMsg").value = "";
+  $("apStatus").textContent = "";
+  $("banBack").classList.toggle("hidden", BAN.dev);
+  $("banMenu").classList.remove("hidden");
+  apCheck(true);
+}
+
+async function apCheck(quiet) {
+  const el = $("apStatus");
+  try {
+    const s = await getSB();
+    const {data: data, error: error} = await s.rpc("pz_appeal_status", {
+      uname: ($("apUser").value || "").trim().toLowerCase(),
+      dev: DEV_ID
+    });
+    if (error) throw error;
+    const a = Array.isArray(data) ? data[0] : data;
+    if (!a) {
+      if (!quiet) el.textContent = "You haven't sent an appeal yet.";
+      return;
+    }
+    el.textContent = a.status === "open" ? "Your appeal is waiting for the admin." : a.status === "accepted" ? "Your appeal was accepted! Reload the game to play again." + (a.reply ? " Admin: " + a.reply : "") : "Your appeal was denied." + (a.reply ? " Admin: " + a.reply : "");
+  } catch (e) {
+    if (!quiet) el.textContent = "Could not reach the server.";
+  }
+}
+
+$("apSend").onclick = async () => {
+  const u = ($("apUser").value || "").trim().toLowerCase(), m = ($("apMsg").value || "").trim();
+  const el = $("apStatus");
+  if (!m) {
+    el.textContent = "Write a message first.";
+    return;
+  }
+  $("apSend").disabled = true;
+  try {
+    const s = await getSB();
+    const {data: data, error: error} = await s.rpc("pz_appeal", {
+      uname: u,
+      dev: DEV_ID,
+      message: m.slice(0, 500)
+    });
+    if (error) throw error;
+    el.textContent = {
+      sent: "Appeal sent. Check back later.",
+      "already open": "You already have an appeal waiting.",
+      "too many": "You sent too many appeals today. Try again tomorrow.",
+      "not banned": "That account isn't banned."
+    }[data] || String(data);
+    if (data === "sent") $("apMsg").value = "";
+  } catch (e) {
+    el.textContent = "Could not send the appeal.";
+  }
+  $("apSend").disabled = false;
+};
+
+$("apCheck").onclick = () => apCheck(false);
+
+$("banBack").onclick = () => {
+  if (BAN.dev) return;
+  BAN.on = false;
+  $("banMenu").classList.add("hidden");
+  $("lerr").textContent = "";
+  $("loginMenu").classList.remove("hidden");
+};
+
 async function checkBan() {
+  if (await checkDevBan()) return;
   if (!user) return;
   try {
     const s = await getSB(), name = user.name;
@@ -9164,16 +9419,30 @@ async function checkBan() {
       await s.auth.signOut();
     } catch (e) {}
     setUser(null);
-    $("mainMenu").classList.add("hidden");
-    $("onlineMenu").classList.add("hidden");
-    $("loginMenu").classList.remove("hidden");
-    $("lerr").textContent = "This account is banned" + (data.reason ? ": " + data.reason : ".");
+    showBanned(data.reason || "", name, false);
   } catch (e) {}
 }
 
-const ADM_TABS = [ "MAPS", "PLAYERS", "WORLD", "POWERS", "NEWS" ];
+const ADM_TABS = [ "MAPS", "PLAYERS", "USERS", "REPORTS", "APPEALS", "WORLD", "POWERS", "NEWS" ];
+
+ADM.counts = {
+  REPORTS: 0,
+  APPEALS: 0
+};
+
+ADM.users = null;
+
+ADM.reps = null;
+
+ADM.apps = null;
+
+ADM.dbans = null;
+
+ADM.repAll = false;
 
 ADM.form = {
+  admUserQ: "",
+  admReply: "",
   admName: "",
   admDesc: "",
   admScale: "1",
@@ -9251,11 +9520,14 @@ function friendlyAdm(e) {
 }
 
 function renderAdmin() {
-  $("admTabs").innerHTML = ADM_TABS.map(t => `<button class="tab ${t === ADM.tab ? "on" : ""}" data-t="${t}">${t}</button>`).join("");
+  $("admTabs").innerHTML = ADM_TABS.map(t => `<button class="tab ${t === ADM.tab ? "on" : ""}" data-t="${t}">${t}${ADM.counts[t] ? ` <b style="color:#e5484d">${ADM.counts[t]}</b>` : ""}</button>`).join("");
   const st = $("admBody").scrollTop;
   $("admBody").innerHTML = {
     MAPS: admMapsHTML,
     PLAYERS: admPlayersHTML,
+    USERS: admUsersHTML,
+    REPORTS: admReportsHTML,
+    APPEALS: admAppealsHTML,
     WORLD: admWorldHTML,
     POWERS: admPowersHTML,
     NEWS: admNewsHTML
@@ -9266,6 +9538,45 @@ function renderAdmin() {
 async function loadAdminLists() {
   try {
     const s = await getSB();
+    const [c1, c2] = await Promise.all([ s.from("pz_reports").select("id", {
+      count: "exact",
+      head: true
+    }).eq("status", "open"), s.from("pz_appeals").select("id", {
+      count: "exact",
+      head: true
+    }).eq("status", "open") ]);
+    ADM.counts.REPORTS = c1.count || 0;
+    ADM.counts.APPEALS = c2.count || 0;
+    if (ADM.tab === "USERS") {
+      const q = (ADM.form.admUserQ || "").trim().toLowerCase().replace(/[^a-z0-9_]/g, "");
+      let r = s.from("pz_profiles").select("user_id,username,bio,updated_at");
+      r = q ? r.ilike("username", q.replace(/_/g, "\\_") + "%").order("username") : r.order("updated_at", {
+        ascending: false
+      });
+      const [u, d, b] = await Promise.all([ r.limit(40), s.from("pz_device_bans").select("device,username,reason,created_at").order("created_at", {
+        ascending: false
+      }).limit(40), s.from("pz_bans").select("username,reason") ]);
+      ADM.users = u.error ? [] : u.data || [];
+      ADM.uerr = u.error ? friendlyAdm(u.error) : "";
+      ADM.dbans = d.data || [];
+      ADM.banned = new Set((b.data || []).map(x => x.username));
+    }
+    if (ADM.tab === "REPORTS") {
+      let r = s.from("pz_reports").select("*").order("created_at", {
+        ascending: false
+      }).limit(60);
+      if (!ADM.repAll) r = r.eq("status", "open");
+      const {data: data, error: error} = await r;
+      ADM.reps = data || [];
+      ADM.rerr = error ? friendlyAdm(error) : "";
+    }
+    if (ADM.tab === "APPEALS") {
+      const {data: data, error: error} = await s.from("pz_appeals").select("*").order("created_at", {
+        ascending: false
+      }).limit(40);
+      ADM.apps = data || [];
+      ADM.aerr = error ? friendlyAdm(error) : "";
+    }
     if (ADM.tab === "PLAYERS") {
       const {data: data} = await s.from("pz_bans").select("username,reason").order("created_at", {
         ascending: false
@@ -9351,6 +9662,47 @@ function admPlayersHTML() {
   return h;
 }
 
+const admAgo = t => {
+  const s = (Date.now() - new Date(t).getTime()) / 1e3;
+  return s < 60 ? "just now" : s < 3600 ? Math.floor(s / 60) + "m ago" : s < 86400 ? Math.floor(s / 3600) + "h ago" : Math.floor(s / 86400) + "d ago";
+};
+
+function admHead(title, sub) {
+  return `<div class="admhead"><img class="admlogo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAIAAADdvvtQAAAH8ElEQVR4nO3de4xU1R3A8XPnsTO781hYikKLFHxFw8NHrK2hrVZro8ZHqryyooKAvFZA0rQpIY1SkxpDLCwuYBUWRSgv0VhrDDYlNDW0FaIsYi20YEVhiwG7M7OP2Xn1D9tUd1HO3d/M3sf5fv4ehjM3371nZuf+9lqJ5EAF9FXA6QXA2wgIIgQEEQKCCAFBhIAgQkAQISCIEBBECAgiBAQRAoIIAUGEgCBCQBAhIIgQEEQICCIEBBECgggBQYSAIEJAECEgiBAQRAgIIgQEEQKCCAFBJFS5p25dPahyTw5bhsw5VaFn5gwEEQKCCAFBhIAgQkAQqeCnsN4q91kAn9Wfn385A0GEgCBCQBAhIIgQEEQICCIEBBECgggBQYSAIEJAECEgiBAQRAgIIgQEEQKCCAFBhIAgQkAQISCIEBBECAgiBAQRAoIIAUGkXydT3eDhu2Kzvx91ehWf8/MXO5p2djq9ij4y7gw0dnjQ6SX09M6xvNNL6DvjAhp1nutOui0fEJBHjBgcrK22nF7F5xz/pPhJe8npVfSdWQGNPs91+5enTz/KtIDGum//8vQbIGVaQGOGuy6glmMFp5cgYlhA7tvCDrCFecXQAYGvJNz1ek9liif+XXR6FSLuOqAV5cL9a/8/vb1/KaMCGuuy/et0pvTwC+1Or0LKdT+UlfP8H7OvvNVdoScfEAs8PSM+OKn7A9nWWZrUmDp0wvNnIIMCam0rtrZV5JkTUWvFvTbqac+W6lemDnj8A/ynDNrCKqQmYm1sSF72dd0fxa5caUpTet9RP9SjCEgoEraenZ24+gLdenJ5NW1Nes/hXEVX1Z8IqO/CQbXugfh3LglrPj5fVDOfSe961z/1KALqs2BArZ6euGF0lebjiyXV0Jx5bX+l3sU7hYD6ImCpxvvit16hW0+ppBZtyLy0N1vRVTmCgGyzLPV4feyuqyP6/2TxlvbNe3xYjyKgPlg6Pjbl2zYuil26o6N5d1fl1uMsArJn8R01M6+3Uc+yVzpWve7V6511EJAND91cPf+mav3Hr3q9c9lv/VyPIiB9s26I/uT2Gv3HN+/uWrqjo3LrcQkC0nLfd6OPjI/pP37znuziLZ7/olQHAZ3dxG9FHptso56X9mYXbciUPHylvA0EdBa3XVn1y3vilvYox2v7uxuaM0Uz6lEE9OVuHFO16v5EUPsg7Xo3N/OZdN7b1xjaQ0Bf6NpLw2sfiIe1r0Lbczg3bU0655Nv2XUR0Jl988Lw+tmJqpDu1rXvaH5KU7orZ8zW9T8EdAZXjAhtnJeortKt58CxfP3KVHvWuHoUAfU2alho84PJeFS3nr+dKExqTLV1mliPIqAeLhoS3LogUVujW8/RjwsTlqdOZwytRxHQZ40YHNy2MDkorntMPjxdHL88dTJl0oeuXgjov75WF9i+MDmkVveAtLYVxy9PfXTa6HoUAX3q3NrA9oXJYXW6R+NUpjhheer9jz0/lCNHQKoubm1bkBw5WPcXPm0dpYkr0odbqUcpAqqttrbMT148VLeeTFdp8srUwQ8N+3XhFzM6oFjE+vWDyTHafzSos7t0d1P6rfep5//MDSgatp6fl7hypG493fnS1DXpP//dV0M5coYGVBWy1s9JXHOR7khXrqBmPJ3Z/Vfq6cnEgEIB9asZ8esu1a2nUFTzmtM7W/w20lUWxgUUsFTTtMRNl9kY6XpoQ+blfdRzZmYFZFnqiXvid1ylW49S6qeb27f+yZ8jXWVhVkC/mBSbfI2NgcBHXuhY/wffjnSVhUEB/ezOmqnX2hjpevw3Hat/5/OhHDlTAvrxbTVzb7Qx0vXkzs4nXqWeszMioIYfVC+6xUY9a3d1Pfqi/0e6ysL/AU3/XnTJD20MBG56I7tkmxEjXWXh84Dqx0UenWBjpGvHm9kfbTRlpKss/BzQnd+ILLvbxkjXq293z19v0EhXWfg2oFsur2qcGg9o1/P7g7lZa80a6SoLfwZ0/ajwU9MTIe0X98ah3P1PGTfSVRY+DGjcxeF1sxJh7b+AvfdI/t5VJo50lYXfArrq/NBzcxPRsPZI1wf5+icNHekqC18FNGZ4aFNDMhbRree944WJjamUqSNdZeGfgC75anDr/GRS+5aoR04WJq5Iefp+pW7gk3tlXHBucNuC5MCYbj3prtKSre11casu3k+38DmZKvpy/tAPAQ2rC2xfkNS/14lSKhG1NjUkK7ek3uauy+x404eXhfhhC6sfFx060O0vpMUX9+bpze3HXYcL74TaQ0e2dORf/pwj80NAo913M+8eDn5U8Os3JJ4PaFA8MHSA21+F12/N/CXcfujPyv37l1KqhYBcy/37l1LqwDF/vgFSPghIfzDZKd350qETnIHcarTrt7D3jhdyvj0BeTygWMQaeY7bA/LxGyDl9YBGDQvqXzLmFB+/AVJe/yrjL//ID5lzyulVGM3bZyA4joAgQkAQISCIEBBECAgiBAQRAoIIAUGEgCBCQBAhIIgQEEQICCIEBBECgggBQYSAIEJAECEgiBAQRAgIIgQEEQKCCAFBpF8nU1tXD+rP/w79gDMQRAgIIgQEEQKCCAFBxEokBzq9BngYZyCIEBBECAgiBAQRAoIIAUGEgCBCQBAhIIgQEEQICCIEBBECgggBQYSAIEJAECEgiBAQRAgIIgQEEQKCCAFBhIAgQkAQISCIEBBECAgiBAQRAoLIfwAJ3uEbahLhDgAAAABJRU5ErkJggg==" alt=""><div><b>${title}</b><small>${sub}</small></div></div>`;
+}
+
+function admUsersHTML() {
+  let h = admHead("PLAYERS", "Search accounts, ban them, or ban their devices");
+  h += `<div class="joinrow" style="margin-top:10px"><input id="admUserQ" maxlength="16" placeholder="search username" value="${esc(ADM.form.admUserQ || "")}" autocomplete="off" autocapitalize="off" spellcheck="false" style="text-transform:none;letter-spacing:.04em"><button class="sb save" data-a="ufind">SEARCH</button></div>`;
+  h += `<label class="fld">BAN REASON (OPTIONAL)<input id="admBanWhy2" maxlength="60" autocomplete="off"></label>${msgHTML()}`;
+  h += `<div class="sec">${(ADM.form.admUserQ || "").trim() ? "RESULTS" : "RECENTLY ACTIVE"}</div>`;
+  if (!ADM.users) h += '<div class="empty">Loading…</div>'; else if (ADM.uerr) h += `<div class="empty">${esc(ADM.uerr)}</div>`; else if (!ADM.users.length) h += '<div class="empty">Nobody found.</div>'; else h += ADM.users.map(u => {
+    const ban = ADM.banned && ADM.banned.has(u.username), me = u.username === ADMIN_NAME;
+    return `<div class="admrow"><div class="info"><div class="nm">${esc(u.username)}${ban ? ' <span class="tagk" style="color:#e5484d">BANNED</span>' : ""}</div><div class="dt">${esc(u.bio || "No bio")} · seen ${admAgo(u.updated_at)}</div></div><button class="sb" data-a="uview" data-id="${esc(u.user_id)}" data-u="${esc(u.username)}">VIEW</button>${me ? "" : ban ? `<button class="sb" data-a="uunban" data-u="${esc(u.username)}">UNBAN</button>` : `<button class="sb del" data-a="uban" data-u="${esc(u.username)}">BAN</button><button class="sb del" data-a="udban" data-u="${esc(u.username)}">DEVICE BAN</button>`}</div>`;
+  }).join("");
+  h += '<div class="sec">BANNED DEVICES</div>' + (ADM.dbans ? ADM.dbans.length ? ADM.dbans.map(d => `<div class="admrow"><div class="info"><div class="nm">${esc(d.username || "unknown")}</div><div class="dt">Device ${esc(String(d.device).slice(0, 8))}… · ${esc(d.reason || "No reason")} · ${admAgo(d.created_at)}</div></div><button class="sb" data-a="uunban" data-u="${esc(d.username || "")}">UNBAN</button></div>`).join("") : '<div class="empty">No devices are banned.</div>' : '<div class="empty">Loading…</div>');
+  h += '<div class="admnote">A device ban blocks the phone or computer itself, so making a new account won\'t help them. Banned players can send an appeal from the ban screen.</div>';
+  return h;
+}
+
+function admReportsHTML() {
+  let h = admHead("REPORTS", `${ADM.counts.REPORTS} waiting`);
+  h += `<div class="chips" style="margin-top:10px"><button class="chip ${ADM.repAll ? "" : "on"}" data-a="rmode" data-v="0">OPEN</button><button class="chip ${ADM.repAll ? "on" : ""}" data-a="rmode" data-v="1">ALL</button></div>${msgHTML()}`;
+  if (!ADM.reps) return h + '<div class="empty">Loading…</div>';
+  if (ADM.rerr) return h + `<div class="empty">${esc(ADM.rerr)}</div>`;
+  if (!ADM.reps.length) return h + '<div class="empty">No reports. Nice and quiet.</div>';
+  return h + ADM.reps.map(r => `<div class="admrow"><div class="info"><div class="nm"><span class="tagk">${esc(r.kind.toUpperCase())}</span>${esc(r.target_name || r.target)}${r.status === "done" ? ' <span class="tagk" style="color:#3aa655">DONE</span>' : ""}</div><div class="dt msg">${esc(r.reason)}</div><div class="dt">by ${esc(r.reporter_name || "someone")} · ${admAgo(r.created_at)}</div></div><button class="sb" data-a="rview" data-id="${+r.id}">VIEW</button>${r.kind === "user" && r.target_name !== ADMIN_NAME ? `<button class="sb del" data-a="udban" data-u="${esc(r.target_name)}" data-rid="${+r.id}">BAN</button>` : ""}${r.status === "open" ? `<button class="sb save" data-a="rdone" data-id="${+r.id}">DONE</button>` : ""}</div>`).join("");
+}
+
+function admAppealsHTML() {
+  let h = admHead("APPEALS", `${ADM.counts.APPEALS} waiting`);
+  h += `<label class="fld">REPLY (THEY SEE THIS)<input id="admReply" maxlength="200" value="${esc(ADM.form.admReply || "")}" autocomplete="off"></label>${msgHTML()}`;
+  if (!ADM.apps) return h + '<div class="empty">Loading…</div>';
+  if (ADM.aerr) return h + `<div class="empty">${esc(ADM.aerr)}</div>`;
+  if (!ADM.apps.length) return h + '<div class="empty">No appeals.</div>';
+  return h + ADM.apps.map(a => `<div class="admrow"><div class="info"><div class="nm">${esc(a.username || "unknown")} <span class="tagk" style="${a.status === "open" ? "" : a.status === "accepted" ? "color:#3aa655" : "color:#e5484d"}">${a.status.toUpperCase()}</span></div><div class="dt msg">“${esc(a.msg)}”</div><div class="dt">${a.device ? "Device " + esc(String(a.device).slice(0, 8)) + "… · " : ""}${admAgo(a.created_at)}${a.reply ? " · You said: " + esc(a.reply) : ""}</div></div>${a.status === "open" ? `<button class="sb save" data-a="apok" data-id="${+a.id}">UNBAN</button><button class="sb del" data-a="apno" data-id="${+a.id}">DENY</button>` : ""}</div>`).join("");
+}
+
 function admWorldHTML() {
   const can = canWorld(), live = can && inGame();
   const chips = (a, list, cur) => `<div class="chips ${can ? "" : "off"}">${list.map(([v, t]) => `<button class="chip ${cur === v ? "on" : ""}" data-a="${a}" data-v="${v}">${t}</button>`).join("")}</div>`;
@@ -9382,6 +9734,14 @@ $("admTabs").addEventListener("click", e => {
   ADM.confirm = null;
   renderAdmin();
   loadAdminLists();
+});
+
+$("admBody").addEventListener("keydown", e => {
+  if (e.target.id === "admUserQ" && e.key === "Enter") {
+    e.preventDefault();
+    ADM.form.admUserQ = e.target.value;
+    admAction("ufind", e.target).catch(() => {});
+  }
 });
 
 $("admBody").addEventListener("input", e => {
@@ -9693,11 +10053,17 @@ async function admKick(Rm, ban) {
   const s = await getSB();
   if (ban && Rm.u) {
     if (Rm.u === ADMIN_NAME) throw new Error("You can't ban yourself.");
-    const {error: error} = await s.from("pz_bans").upsert({
-      username: Rm.u,
-      reason: "Banned by an admin"
+    const r = await s.rpc("pz_ban_devices", {
+      uname: Rm.u,
+      why: "Banned by an admin"
     });
-    if (error) throw error;
+    if (r.error) {
+      const {error: error} = await s.from("pz_bans").upsert({
+        username: Rm.u,
+        reason: "Banned by an admin"
+      });
+      if (error) throw error;
+    }
   }
   const {error: error} = await s.from("pz_kicks").insert({
     pid: Rm.id,
@@ -9838,6 +10204,129 @@ async function admAction(a, b) {
     {
       const Rm = NET.peers.get(id);
       if (Rm) await admKick(Rm, a === "ban");
+      await loadAdminLists();
+      break;
+    }
+
+   case "ufind":
+    ADM.users = null;
+    renderAdmin();
+    await loadAdminLists();
+    break;
+
+   case "uview":
+    closeAdmin();
+    openSoc("PEOPLE");
+    socOpenProf(b.dataset.id, b.dataset.u);
+    break;
+
+   case "uban":
+   case "udban":
+    {
+      const u = b.dataset.u, why = (($("admBanWhy2") || {}).value || "").trim().slice(0, 60) || "Banned by an admin";
+      if (!u || u === ADMIN_NAME) {
+        setMsg("You can't ban yourself.", true);
+        break;
+      }
+      const s = await getSB();
+      if (a === "udban") {
+        const {data: data, error: error} = await s.rpc("pz_ban_devices", {
+          uname: u,
+          why: why
+        });
+        if (error) throw error;
+        ADM.msg = `${u} is banned on ${data || 0} device${data === 1 ? "" : "s"} and their account.`;
+      } else {
+        const {error: error} = await s.from("pz_bans").upsert({
+          username: u,
+          reason: why
+        });
+        if (error) throw error;
+        ADM.msg = `${u} is banned.`;
+      }
+      ADM.bad = false;
+      if (b.dataset.rid) await s.from("pz_reports").update({
+        status: "done"
+      }).eq("id", +b.dataset.rid);
+      for (const Rm of NET.peers.values()) if (Rm.u === u) await admKick(Rm, false);
+      await loadAdminLists();
+      break;
+    }
+
+   case "uunban":
+    {
+      const u = b.dataset.u, s = await getSB();
+      const {error: error} = await s.rpc("pz_unban", {
+        uname: u
+      });
+      if (error) {
+        const r = await s.from("pz_bans").delete().eq("username", u);
+        if (r.error) throw r.error;
+      }
+      ADM.msg = `${u} can play again.`;
+      ADM.bad = false;
+      await loadAdminLists();
+      break;
+    }
+
+   case "rmode":
+    ADM.repAll = b.dataset.v === "1";
+    ADM.reps = null;
+    renderAdmin();
+    await loadAdminLists();
+    break;
+
+   case "rdone":
+    {
+      const s = await getSB();
+      const {error: error} = await s.from("pz_reports").update({
+        status: "done"
+      }).eq("id", +id);
+      if (error) throw error;
+      await loadAdminLists();
+      break;
+    }
+
+   case "rview":
+    {
+      const r = (ADM.reps || []).find(x => x.id === +id);
+      if (!r) break;
+      if (r.kind === "map") {
+        const s = await getSB();
+        const {data: data} = await s.from("pz_workshop").select(WS_COLS).eq("id", r.target).maybeSingle();
+        if (!data) {
+          setMsg("That map was already deleted.", true);
+          break;
+        }
+        closeAdmin();
+        openWorkshop("menu");
+        WS.detail = data;
+        renderWs();
+      } else {
+        closeAdmin();
+        openSoc(r.kind === "club" ? "CLUBS" : "PEOPLE");
+        if (r.kind === "club") {
+          SOC.club = {
+            id: r.target
+          };
+          socLoad();
+        } else socOpenProf(r.target, r.target_name);
+      }
+      break;
+    }
+
+   case "apok":
+   case "apno":
+    {
+      const s = await getSB();
+      const {error: error} = await s.rpc("pz_appeal_decide", {
+        appeal: +id,
+        accept: a === "apok",
+        answer: (ADM.form.admReply || "").trim().slice(0, 200)
+      });
+      if (error) throw error;
+      ADM.msg = a === "apok" ? "Appeal accepted. They are unbanned." : "Appeal denied.";
+      ADM.bad = false;
       await loadAdminLists();
       break;
     }
@@ -10789,7 +11278,7 @@ const ED_TOOLS = [ {
 } ];
 
 function curTools() {
-  return ED.on ? ED_TOOLS : mapRules().ns ? TOOLS.slice(0, 1) : TOOLS;
+  return ED.on ? ED_TOOLS : (mapRules().ns ? TOOLS.slice(0, 1) : TOOLS).concat(STOOLS);
 }
 
 const GRIDS = [ .25, .5, 1, 2, 0 ];
@@ -12450,7 +12939,7 @@ function wsDetailHTML(r) {
       if (WS.detail === r) renderWs();
     }).catch(() => {});
   }
-  return `<div class="wsdet">\n    <button class="sb" data-w="back">‹ BACK</button>\n    <div class="pv">${r.thumb ? `<img src="${esc(r.thumb)}" alt="">` : ""}</div>\n    <h3>${esc(r.name)}</h3>\n    <div class="by">by <b>${esc(r.author_name || "someone")}</b> · ${fmtDate(new Date(r.updated_at || r.created_at).getTime())}</div>\n    ${r.descr ? `<p class="ds">${esc(r.descr)}</p>` : ""}\n    <div class="ct"><span>♥ ${r.likes || 0} likes</span><span>▶ ${r.plays || 0} plays</span>${r.featured ? '<span class="feat">FEATURED</span>' : ""}</div>\n    <div class="row2"><button class="go" data-w="play" ${WS.busy ? "disabled" : ""}>PLAY</button><button class="go alt" data-w="host" ${WS.busy ? "disabled" : ""}>PLAY ONLINE</button></div>\n    <div class="opts">\n      ${user ? `<button class="opt" data-w="like">${liked ? "LIKED" : "LIKE THIS MAP"} <b>${liked ? "♥" : "♡"}</b></button>` : '<p class="foot">Log in to like maps.</p>'}\n      ${noCopy ? '<p class="foot">The creator turned off copying for this map.</p>' : `<button class="opt" data-w="remix">${mine ? "EDIT IN MAP MAKER" : "COPY INTO MAP MAKER"} <b>›</b></button>`}\n      ${mine || isAdmin() ? `<button class="opt danger" data-w="del">${WS.confirm === r.id ? "TAP AGAIN TO DELETE" : "DELETE FROM WORKSHOP"}</button>` : ""}\n      ${isAdmin() ? `<button class="opt" data-w="feat" style="color:var(--acc)">${r.featured ? "UNFEATURE" : "FEATURE THIS MAP"} <b>★</b></button>` : ""}\n    </div>\n    <p class="err" id="wsErr"></p>\n  </div>`;
+  return `<div class="wsdet">\n    <button class="sb" data-w="back">‹ BACK</button>\n    <div class="pv">${r.thumb ? `<img src="${esc(r.thumb)}" alt="">` : ""}</div>\n    <h3>${esc(r.name)}</h3>\n    <div class="by">by ${r.author ? `<button class="lnk" data-w="author">${esc(r.author_name || "someone")}</button>` : `<b>${esc(r.author_name || "someone")}</b>`} · ${fmtDate(new Date(r.updated_at || r.created_at).getTime())}</div>\n    ${r.descr ? `<p class="ds">${esc(r.descr)}</p>` : ""}\n    <div class="ct"><span>♥ ${r.likes || 0} likes</span><span>▶ ${r.plays || 0} plays</span>${r.featured ? '<span class="feat">FEATURED</span>' : ""}</div>\n    <div class="row2"><button class="go" data-w="play" ${WS.busy ? "disabled" : ""}>PLAY</button><button class="go alt" data-w="host" ${WS.busy ? "disabled" : ""}>PLAY ONLINE</button></div>\n    <div class="opts">\n      ${user ? `<button class="opt" data-w="like">${liked ? "LIKED" : "LIKE THIS MAP"} <b>${liked ? "♥" : "♡"}</b></button>` : '<p class="foot">Log in to like maps.</p>'}\n      ${noCopy ? '<p class="foot">The creator turned off copying for this map.</p>' : `<button class="opt" data-w="remix">${mine ? "EDIT IN MAP MAKER" : "COPY INTO MAP MAKER"} <b>›</b></button>`}\n      ${mine || isAdmin() ? `<button class="opt danger" data-w="del">${WS.confirm === r.id ? "TAP AGAIN TO DELETE" : "DELETE FROM WORKSHOP"}</button>` : ""}\n      ${isAdmin() ? `<button class="opt" data-w="feat" style="color:var(--acc)">${r.featured ? "UNFEATURE" : "FEATURE THIS MAP"} <b>★</b></button>` : ""}\n      ${user && !mine ? '<button class="opt danger" data-w="report">REPORT THIS MAP</button>' : ""}\n    </div>\n    <p class="err" id="wsErr"></p>\n  </div>`;
 }
 
 async function wsGetData(r) {
@@ -12617,6 +13106,18 @@ async function wsAction(a, b) {
       toast("Deleted");
       return;
     }
+
+   case "author":
+    {
+      closeWorkshop();
+      openSoc("PEOPLE");
+      socOpenProf(r.author, r.author_name);
+      return;
+    }
+
+   case "report":
+    openReport("map", r.id, r.name);
+    return;
 
    case "feat":
     {
@@ -13253,7 +13754,7 @@ function avClean(o) {
     pants: pick(o.pants, AV_PANTS, "pants"),
     pc: hex(o.pc, AV_DEFAULT.pc),
     shoes: o.shoes === "none" ? "none" : hex(o.shoes, AV_DEFAULT.shoes),
-    hat: pick(o.hat, AV_HATS, "none"),
+    hat: typeof o.hat === "string" && /^u:[a-z0-9]{2,16}$/.test(o.hat) ? o.hat : pick(o.hat, AV_HATS, "none"),
     hc: hex(o.hc, AV_DEFAULT.hc),
     face: pick(o.face, AV_FACES, "classic"),
     fw: pick(o.fw, AV_FACEWEAR, "none"),
@@ -13263,8 +13764,89 @@ function avClean(o) {
   };
 }
 
+const avHats = () => Array.isArray(SD.hats) ? SD.hats : SD.hats = [];
+
+const avHatData = id => {
+  if (id === "u:new") return AVE.hatNew ? AVE.hatNew.m : null;
+  const h = avHats().find(x => "u:" + x.id === id);
+  return h ? h.m : null;
+};
+
+const HATGEO = new Map;
+
+function hatParse(m) {
+  if (typeof m !== "string" || m.length > 7e4 || !m.startsWith("h1:")) return null;
+  if (HATGEO.has(m)) return HATGEO.get(m);
+  let out = null;
+  try {
+    const [, sc, oy, b64] = m.split(":");
+    const bin = atob(b64), n = bin.length >> 1;
+    if (n && n % 9 === 0 && n <= UGC_HAT_TRIS * 9) {
+      const a = new Float32Array(n);
+      for (let i = 0; i < n; i++) {
+        let v = bin.charCodeAt(2 * i) | bin.charCodeAt(2 * i + 1) << 8;
+        if (v > 32767) v -= 65536;
+        a[i] = v / 32767;
+      }
+      const g = new THREE.BufferGeometry;
+      g.setAttribute("position", new THREE.BufferAttribute(a, 3));
+      out = {
+        geo: toCreasedNormals(g, .7),
+        s: clamp(+sc || 1, .3, 3),
+        y: clamp(+oy || 0, -1, 1)
+      };
+    }
+  } catch (e) {
+    out = null;
+  }
+  if (HATGEO.size > 40) HATGEO.clear();
+  HATGEO.set(m, out);
+  return out;
+}
+
+function hatEncode(text) {
+  const root = (new OBJLoader).parse(text);
+  root.updateMatrixWorld(true);
+  const pos = [];
+  const v = new THREE.Vector3;
+  root.traverse(o => {
+    if (!o.isMesh || !o.geometry || !o.geometry.attributes.position) return;
+    const g = o.geometry.index ? o.geometry.toNonIndexed() : o.geometry, p = g.attributes.position;
+    for (let i = 0; i < p.count; i++) {
+      v.fromBufferAttribute(p, i).applyMatrix4(o.matrixWorld);
+      pos.push(v.x, v.y, v.z);
+    }
+  });
+  const tris = pos.length / 9 | 0;
+  if (!tris) throw new Error("That file has no 3D shape in it.");
+  if (tris > UGC_HAT_TRIS) throw new Error(`Too detailed: ${tris.toLocaleString()} triangles. Hats can have ${UGC_HAT_TRIS.toLocaleString()} at most. Simplify it (Decimate in Blender) and try again.`);
+  let x0 = Infinity, y0 = Infinity, z0 = Infinity, x1 = -Infinity, y1 = -Infinity, z1 = -Infinity;
+  for (let i = 0; i < pos.length; i += 3) {
+    x0 = Math.min(x0, pos[i]);
+    x1 = Math.max(x1, pos[i]);
+    y0 = Math.min(y0, pos[i + 1]);
+    y1 = Math.max(y1, pos[i + 1]);
+    z0 = Math.min(z0, pos[i + 2]);
+    z1 = Math.max(z1, pos[i + 2]);
+  }
+  const span = Math.max(x1 - x0, y1 - y0, z1 - z0) || 1, k = 2 / span, cx = (x0 + x1) / 2, cz = (z0 + z1) / 2;
+  let bin = "";
+  for (let i = 0; i < tris * 9; i++) {
+    const a = i % 3, r = a === 0 ? (pos[i] - cx) * k : a === 1 ? (pos[i] - y0) * k - 1 : (pos[i] - cz) * k;
+    let q = Math.round(clamp(r, -1, 1) * 32767);
+    if (q < 0) q += 65536;
+    bin += String.fromCharCode(q & 255, q >> 8);
+  }
+  return {
+    b64: btoa(bin),
+    tris: tris
+  };
+}
+
+const hatStr = H => `h1:${H.s.toFixed(2)}:${H.y.toFixed(2)}:${H.b64}`;
+
 const avHash = o => {
-  const s = JSON.stringify(avClean(o)) + (o.design && o.design.startsWith("u:") ? (avShirtImg(o.design) || "").length : "");
+  const s = JSON.stringify(avClean(o)) + (o.design && o.design.startsWith("u:") ? (avShirtImg(o.design) || "").length : "") + (o.hat && String(o.hat).startsWith("u:") ? (avHatData(o.hat) || "").slice(0, 16) + (avHatData(o.hat) || "").length : "");
   let h = 2166136261;
   for (let i = 0; i < s.length; i++) {
     h ^= s.charCodeAt(i);
@@ -13692,7 +14274,7 @@ const avStd = (hex, o = {}) => new THREE.MeshStandardMaterial(Object.assign({
   roughness: .55
 }, o));
 
-function avAcc(kind, id, box, col) {
+function avAcc(kind, id, box, col, ud) {
   const g = new THREE.Group;
   if (!box || id === "none") return g;
   const c = box.getCenter(new THREE.Vector3), sz = box.getSize(new THREE.Vector3);
@@ -13710,6 +14292,14 @@ function avAcc(kind, id, box, col) {
   }), dark = avStd(1447450, {
     roughness: .3
   });
+  if (kind === "hat" && String(id).startsWith("u:")) {
+    const U = hatParse(ud);
+    if (U) {
+      const sc = R * 1.3 * U.s, m = add(U.geo, mat, c.x, top - H * .2 + U.y * R + sc, c.z);
+      m.scale.setScalar(sc);
+    }
+    return g;
+  }
   if (kind === "hat") {
     const y0 = top - H * .32;
     switch (id) {
@@ -13963,7 +14553,7 @@ function buildCustomModel(look) {
     sm.castShadow = true;
     sm.frustumCulled = false;
     const B = T.av.boxes;
-    avAttach(m, "head", avAcc("hat", o.hat, B.head, o.hc));
+    avAttach(m, "head", avAcc("hat", o.hat, B.head, o.hc, String(o.hat).startsWith("u:") ? look && look.hm !== undefined ? look.hm : avHatData(o.hat) : null));
     avAttach(m, "head", avAcc("fw", o.fw, B.head, o.hc));
     avAttach(m, "chest", avAcc("back", o.back, B.torso, o.hc));
     avAttach(m, "neck", avAcc("neck", o.neck, B.neck || B.head, o.hc));
@@ -13989,7 +14579,8 @@ function myLook() {
   return {
     h: avHash(avOutfit()),
     o: o,
-    t: o.design.startsWith("u:") ? avShirtImg(o.design) : null
+    t: o.design.startsWith("u:") ? avShirtImg(o.design) : null,
+    hm: o.hat.startsWith("u:") ? avHatData(o.hat) : null
   };
 }
 
@@ -14004,7 +14595,8 @@ function sendLook(force) {
     i: NET.id,
     h: L.h,
     o: L.o,
-    t: L.t
+    t: L.t,
+    hm: L.hm
   });
 }
 
@@ -14012,10 +14604,12 @@ function onLook(p) {
   if (!p || !p.i || p.i === NET.id || !p.o || typeof p.h !== "string") return;
   if (p.t && (typeof p.t !== "string" || p.t.length > 2e5 || !/^data:image\/(png|jpeg|webp);base64,/.test(p.t))) p.t = null;
   const Rm = getRemote(p.i, null, null);
+  if (p.hm && (typeof p.hm !== "string" || p.hm.length > 7e4 || !/^h1:[0-9.\-]+:[0-9.\-]+:[A-Za-z0-9+/=]+$/.test(p.hm))) p.hm = null;
   Rm.look = {
     h: p.h,
     o: avClean(p.o),
-    t: p.t
+    t: p.t,
+    hm: p.hm || null
   };
   if (Rm.av && String(Rm.av).startsWith("custom:")) {
     const want = Rm.av;
@@ -14054,6 +14648,9 @@ function openAvEditor() {
 
 function closeAvEditor() {
   aveBuyCancel();
+  hatCancel();
+  AVE.delHat = null;
+  profileSync();
   $("avMenu").classList.add("hidden");
   cancelAnimationFrame(AVE.raf);
   AVE.raf = 0;
@@ -14218,6 +14815,7 @@ function texThumb(kind, id) {
 }
 
 function renderAve() {
+  if (AVE.tab !== "HATS" && AVE.hatNew) hatCancel();
   $("aveTabs").innerHTML = AVE_TABS.map(t => `<button class="tab ${t === AVE.tab ? "on" : ""}" data-t="${t}">${t}</button>`).join("");
   const o = AVE.o, cust = curAvatar.custom;
   let h = "";
@@ -14229,11 +14827,20 @@ function renderAve() {
     h = `<div class="sec">SKIN</div><div class="sws">${AV_SKINS.map(c => aveSw(c, o.skin === c, "skin")).join("")}</div>\n    <div class="sec">FACE</div>${aveTiles(AV_FACES, o.face, "face", v => v === "none" ? "" : `<img src="${texThumb("f", v)}" alt="">`)}`;
   } else if (AVE.tab === "SHIRTS") {
     const mine = avShirts();
-    h = `<div class="sec">STYLE</div>${aveChips(AV_SHIRTS, o.shirt, "shirt")}\n    <div class="sec">COLOR</div><div class="sws">${AV_COLS.map(c => aveSw(c, o.sc === c, "sc")).join("")}</div>\n    <div class="sec">T-SHIRT DESIGN</div>\n    <div class="avtiles">\n      <button class="avtile make" data-make="1"><i>+</i><span>Create</span></button>\n      <button class="avtile ${o.design === "none" ? "on" : ""}" data-k="design" data-v="none"><i></i><span>Plain</span></button>\n      ${mine.map(s => `<button class="avtile ${o.design === "u:" + s.id ? "on" : ""}" data-k="design" data-v="u:${s.id}"><i><img src="${esc(s.img)}" alt=""></i><span>${esc(s.name || "My design")}</span><b class="x" data-delshirt="${s.id}">✕</b></button>`).join("")}\n      ${AV_DESIGNS.map(([v, n]) => `<button class="avtile ${o.design === v ? "on" : ""}" data-k="design" data-v="${v}"><i><img src="${texThumb("d", v)}" alt=""></i><span>${n}</span></button>`).join("")}\n    </div>`;
+    h = `<div class="sec">STYLE</div>${aveChips(AV_SHIRTS, o.shirt, "shirt")}\n    <div class="sec">COLOR</div><div class="sws">${AV_COLS.map(c => aveSw(c, o.sc === c, "sc")).join("")}</div>\n    <div class="sec">T-SHIRT DESIGN</div>\n    <div class="avtiles">\n      <button class="avtile make" data-make="1"><i>+</i><span>Create<br><b style="color:#b7791f">${UGC_SHIRT_PRICE} Z</b></span></button>\n      <button class="avtile ${o.design === "none" ? "on" : ""}" data-k="design" data-v="none"><i></i><span>Plain</span></button>\n      ${mine.map(s => `<button class="avtile ${o.design === "u:" + s.id ? "on" : ""}" data-k="design" data-v="u:${s.id}"><i><img src="${esc(s.img)}" alt=""></i><span>${esc(s.name || "My design")}</span><b class="x" data-delshirt="${s.id}">✕</b></button>`).join("")}\n      ${AV_DESIGNS.map(([v, n]) => `<button class="avtile ${o.design === v ? "on" : ""}" data-k="design" data-v="${v}"><i><img src="${texThumb("d", v)}" alt=""></i><span>${n}</span></button>`).join("")}\n    </div>`;
   } else if (AVE.tab === "PANTS") {
     h = `<div class="sec">STYLE</div>${aveChips(AV_PANTS, o.pants, "pants")}\n    <div class="sec">COLOR</div><div class="sws">${AV_COLS.map(c => aveSw(c, o.pc === c, "pc")).join("")}</div>\n    <div class="sec">SHOES</div><div class="sws"><button class="sw none ${o.shoes === "none" ? "on" : ""}" data-k="shoes" data-v="none">✕</button>${AV_COLS.map(c => aveSw(c, o.shoes === c, "shoes")).join("")}</div>`;
   } else if (AVE.tab === "HATS") {
-    h = `<div class="sec">HAT</div>${aveChips(AV_HATS, o.hat, "hat")}\n    <div class="sec">ACCESSORY COLOR</div><div class="sws">${AV_COLS.map(c => aveSw(c, o.hc === c, "hc")).join("")}</div>`;
+    const N = AVE.hatNew, mine = avHats();
+    const mk = N ? `<div class="avhat"><b>${esc(N.file)}</b><span class="foot" style="margin:0">${N.tris.toLocaleString()} triangles · it uses the accessory color below</span>
+      <label class="fld" style="margin:0">NAME<input id="hatName" maxlength="20" value="${esc(N.name)}" autocomplete="off"></label>
+      <label>SIZE<input type="range" id="hatS" min="0.4" max="2.4" step="0.05" value="${N.s}"></label>
+      <label>HEIGHT<input type="range" id="hatY" min="-1" max="1" step="0.05" value="${N.y}"></label>
+      ${SD.zc >= UGC_HAT_PRICE ? `<button class="go" data-hat="buy">BUY &amp; SAVE · ${zcFmt(UGC_HAT_PRICE)} Z</button>` : `<p class="foot" style="margin:0">Making a hat costs <b>${zcFmt(UGC_HAT_PRICE)} Z</b>. You need ${zcFmt(UGC_HAT_PRICE - SD.zc)} more. Play maps to earn them.</p>`}
+      <button class="go ghost" data-hat="cancel">CANCEL</button></div>` : "";
+    h = `<div class="sec">MY HATS</div><div class="avtiles"><label class="avtile make"><i>+</i><span>Make from .obj<br><b style="color:#b7791f">${zcFmt(UGC_HAT_PRICE)} Z</b></span><input type="file" id="hatFile" accept=".obj" style="display:none"></label>${mine.map(x => `<button class="avtile ${o.hat === "u:" + x.id ? "on" : ""}" data-k="hat" data-v="u:${x.id}"><i style="display:flex;align-items:center;justify-content:center;font-size:26px">🎩</i><span>${esc(x.name)}</span><b class="x ${AVE.delHat === x.id ? "del2" : ""}" data-delhat="${x.id}">${AVE.delHat === x.id ? "SURE?" : "✕"}</b></button>`).join("")}</div>${mk}
+    <p class="foot">Upload a 3D model (.obj) and wear it as a hat. Everyone online sees it.</p>
+    <div class="sec">HAT</div>${aveChips(AV_HATS, o.hat, "hat")}\n    <div class="sec">ACCESSORY COLOR</div><div class="sws">${AV_COLS.map(c => aveSw(c, o.hc === c, "hc")).join("")}</div>`;
   } else if (AVE.tab === "EXTRAS") {
     h = `<div class="sec">FACE</div>${aveChips(AV_FACEWEAR, o.fw, "fw")}\n    <div class="sec">BACK</div>${aveChips(AV_BACK, o.back, "back")}\n    <div class="sec">NECK</div>${aveChips(AV_NECK, o.neck, "neck")}\n    <div class="sec">ACCESSORY COLOR</div><div class="sws">${AV_COLS.map(c => aveSw(c, o.hc === c, "hc")).join("")}</div>`;
   }
@@ -14242,6 +14849,7 @@ function renderAve() {
 
 function aveApply() {
   for (const k of ZC_SLOTS) if (!zcOwns(k, AVE.o[k])) AVE.o[k] = "none";
+  if (String(AVE.o.hat).startsWith("u:") && !avHats().some(x => "u:" + x.id === AVE.o.hat)) AVE.o.hat = "none";
   SD.settings.outfit = avClean(AVE.o);
   persist();
   aveModel();
@@ -14324,6 +14932,116 @@ $("aveBody").addEventListener("click", e => {
   aveApply();
   renderAve();
 });
+
+function hatCancel() {
+  if (!AVE.hatNew) return;
+  AVE.o.hat = AVE.hatNew.prev;
+  AVE.hatNew = null;
+  aveModel();
+}
+
+function hatPreview() {
+  const N = AVE.hatNew;
+  if (!N) return;
+  N.m = hatStr(N);
+  AVE.o.hat = "u:new";
+  aveModel();
+}
+
+$("aveBody").addEventListener("change", async e => {
+  const t = e.target;
+  if (t.id !== "hatFile" || !t.files[0]) return;
+  const f = t.files[0];
+  t.value = "";
+  if (avHats().length >= 6) {
+    toast("You can keep 6 hats you made. Delete one first.", 2600);
+    return;
+  }
+  if (f.size > 4e6) {
+    toast("That file is too big (4 MB max).", 2600);
+    return;
+  }
+  try {
+    const E = hatEncode(await f.text());
+    if (AVE.buy) aveBuyCancel();
+    const prev = AVE.hatNew ? AVE.hatNew.prev : AVE.o.hat;
+    AVE.hatNew = {
+      file: f.name.slice(0, 40),
+      name: f.name.replace(/\.[^.]+$/, "").replace(/[_\-]+/g, " ").trim().slice(0, 20) || "My hat",
+      b64: E.b64,
+      tris: E.tris,
+      s: 1,
+      y: 0,
+      prev: prev === "u:new" ? "none" : prev
+    };
+    hatPreview();
+    renderAve();
+  } catch (er) {
+    toast(er && er.message && er.message.length < 160 ? er.message : "Could not read that .obj file.", 3600);
+  }
+});
+
+$("aveBody").addEventListener("input", e => {
+  const N = AVE.hatNew, t = e.target;
+  if (!N) return;
+  if (t.id === "hatS" || t.id === "hatY") {
+    N[t.id === "hatS" ? "s" : "y"] = +t.value;
+    hatPreview();
+  } else if (t.id === "hatName") N.name = t.value;
+});
+
+$("aveBody").addEventListener("click", e => {
+  const del = e.target.closest("[data-delhat]");
+  if (del) {
+    e.stopPropagation();
+    e.preventDefault();
+    const id = del.dataset.delhat;
+    if (AVE.delHat !== id) {
+      AVE.delHat = id;
+      renderAve();
+      return;
+    }
+    AVE.delHat = null;
+    const L = avHats(), i = L.findIndex(x => x.id === id);
+    if (i >= 0) {
+      L.splice(i, 1);
+      if (AVE.o.hat === "u:" + id) AVE.o.hat = "none";
+      persist(true);
+      aveApply();
+    }
+    renderAve();
+    return;
+  }
+  const b = e.target.closest("[data-hat]");
+  if (!b) return;
+  e.stopPropagation();
+  if (b.dataset.hat === "cancel") {
+    hatCancel();
+    renderAve();
+    return;
+  }
+  const N = AVE.hatNew;
+  if (!N) return;
+  if (!zcSpend(UGC_HAT_PRICE)) {
+    renderAve();
+    return;
+  }
+  const id = Date.now().toString(36);
+  avHats().unshift({
+    id: id,
+    name: (($("hatName") || {}).value || N.name || "My hat").trim().slice(0, 20) || "My hat",
+    m: hatStr(N)
+  });
+  AVE.hatNew = null;
+  AVE.o.hat = "u:" + id;
+  persist(true);
+  aveApply();
+  renderAve();
+  sfx.pop && sfx.pop();
+  toast("Your hat is ready! It's yours forever.", 2400);
+}, true);
+
+$("aveBody").addEventListener("keydown", e => e.stopPropagation());
 
 $("aveClose").innerHTML = icon("close");
 
@@ -14546,6 +15264,10 @@ $("tsMenu").addEventListener("click", e => {
     const c = $("tsCan"), img = c.toDataURL("image/png");
     if (img.length > 12e4) {
       toast("That design is too detailed. Try fewer colors.", 2600);
+      return;
+    }
+    if (!zcSpend(UGC_SHIRT_PRICE)) {
+      toast(`A new design costs ${UGC_SHIRT_PRICE} Z. You have ${zcFmt(SD.zc)} Z. Play maps to earn more.`, 3e3);
       return;
     }
     const d = {
@@ -15107,7 +15829,7 @@ const SCR = {
   lastPlayers: new Set
 };
 
-const SCR_BOOT = `"use strict";\nconst post = self.postMessage.bind(self);\n(() => {\n  const bad = ['fetch','XMLHttpRequest','importScripts','WebSocket','WebSocketStream','EventSource','indexedDB','caches','BroadcastChannel','Worker','SharedWorker','WebTransport','navigator','location','FileReader','FileReaderSync','OffscreenCanvas','createImageBitmap','Notification','Request','Response','Headers','FormData','Blob','File','URL','close','postMessage','queueMicrotask','reportError','structuredClone'];\n  for (const k of bad) {\n    let o = self;\n    while (o && o !== Object.prototype) { try { delete o[k]; } catch (e) {} o = Object.getPrototypeOf(o); }\n    try { Object.defineProperty(self, k, { value: undefined, writable: false, configurable: false }); } catch (e) {}\n  }\n})();\nconst S = { parts: [], names: new Map(), players: [], me: '', time: 0, g: 1, H: {}, T: new Map(), q: [], logs: [], errs: [], listen: [], gui: [], gname: new Map(), gp: new Map(), GC: new Map(), made: 0, madeCount: 0, spd: {}, imgs: [] };\nlet curScript = '';\nconst lineOf = e => { const m = String(e && e.stack || '').match(/<anonymous>:(\\d+):(\\d+)/); return m ? (+m[1] - 2) : 0; };\nconst report = (name, e) => { S.errs.push([name, lineOf(e), String(e && e.message || e).slice(0, 200)]); };\nconst wrap = fn => { const name = curScript; return (...a) => { try { const r = fn(...a); if (r && typeof r.then === 'function') r.then(null, e => report(name, e)); } catch (e) { report(name, e); } }; };\nconst fire = (list, ...a) => { if (list) for (const f of list.slice()) f(...a); };\nconst num = v => { v = +v; return Number.isFinite(v) ? v : 0; };\nconst vec = (v, y, z) => { if (Array.isArray(v)) return [num(v[0]), num(v[1]), num(v[2])]; if (v && typeof v === 'object') return [num(v.x), num(v.y), num(v.z)]; return [num(v), num(y), num(z)]; };\nconst cmd = (...a) => { if (S.q.length < 2000) S.q.push(a); };\nconst colorHex = c => { c = String(c || '').trim().replace('#', ''); if (/^[0-9a-f]{3}$/i.test(c)) c = c.split('').map(x => x + x).join(''); return /^[0-9a-f]{6}$/i.test(c) ? c.toLowerCase() : null; };\nconst vec2 = (v, y) => { if (Array.isArray(v)) return [num(v[0]), num(v[1])]; if (v && typeof v === 'object') return [num(v.x), num(v.y)]; return [num(v), num(y)]; };\nfunction guiHandle(i, tgt) {\n  const G = () => S.gui[i];\n  const mine = () => { const k = tgt + '|' + i; let o = S.gp.get(k); if (!o) S.gp.set(k, o = {}); return o; };\n  const get = k => tgt === '*' ? G().p[k] : (k in mine() ? mine()[k] : G().p[k]);\n  const set = (k, v) => { if (tgt === '*') G().p[k] = v; else mine()[k] = v; cmd('gui', tgt, i, k, v); };\n  const h = {\n    get name() { return G().n; }, get type() { return G().t; },\n    get text() { const t = get('tx'); return t == null ? '' : String(t); }, set text(v) { set('tx', String(v == null ? '' : v).slice(0, 500)); },\n    get visible() { return !!get('v'); }, set visible(v) { set('v', v ? 1 : 0); },\n    get textColor() { return '#' + get('tc'); }, set textColor(v) { const c = colorHex(v); if (c) set('tc', c); },\n    get background() { return '#' + get('bg'); }, set background(v) { const c = colorHex(v); if (c) set('bg', c); },\n    get transparency() { return get('bt'); }, set transparency(v) { set('bt', Math.min(1, Math.max(0, num(v)))); },\n    get position() { return [get('x'), get('y')]; }, set position(v) { const a = vec2(v); set('x', a[0]); set('y', a[1]); },\n    get size() { return [get('w'), get('h')]; }, set size(v) { const a = vec2(v); set('w', Math.max(0, a[0])); set('h', Math.max(0, a[1])); },\n    get textSize() { return get('ts'); }, set textSize(v) { set('ts', Math.min(96, Math.max(6, num(v)))); },\n    get image() { return get('im') || ''; }, set image(v) { set('im', String(v == null ? '' : v)); },\n    get video() { return get('yt') || ''; }, set video(v) { set('yt', String(v == null ? '' : v).slice(0, 200)); },\n    show() { h.visible = true; }, hide() { h.visible = false; }, destroy() { h.visible = false; },\n    on(ev, fn) { if (ev !== 'click' || typeof fn !== 'function') return; let L = S.GC.get(i); if (!L) S.GC.set(i, L = []); const f = wrap(fn); L.push(tgt === '*' ? f : pl => { if (pl && pl.id === tgt) f(pl); }); },\n  };\n  return Object.freeze(h);\n}\nconst guiFind = name => { const i = S.gname.get(String(name)); return i == null ? null : i; };\nconst SHAPES = { block: 'box', box: 'box', part: 'box', ball: 'ball', sphere: 'ball', cylinder: 'cyl', cyl: 'cyl', ramp: 'ramp', wedge: 'ramp', stairs: 'stairs' };\nconst MATS = ['grass','dirt','sand','snow','rock','concrete','brick','wood','metal','asphalt','dev','white','black','red','orange','yellow','green','blue','purple','glass','ice','lava','bounce','invis'];\nconst cleanName = v => String(v == null ? '' : v).replace(/[^\\w \\-]/g, '').trim().slice(0, 32);\nconst size3 = v => { if (typeof v === 'number') return [v, v, v].map(x => Math.min(200, Math.max(0.1, num(x)))); return vec(v).map(x => Math.min(200, Math.max(0.1, x || 1))); };\nfunction addName(n, i) { if (!n) return; if (!S.names.has(n)) S.names.set(n, []); S.names.get(n).push(i); }\nfunction dropName(n, i) { const l = S.names.get(n); if (!l) return; const k = l.indexOf(i); if (k >= 0) l.splice(k, 1); if (!l.length) S.names.delete(n); }\nfunction makePart(o) {\n  o = o && typeof o === 'object' ? o : {};\n  if (S.madeCount >= 300) { print('Part limit reached (300 made by scripts)'); return null; }\n  const i = 10000 + S.made++;\n  const shape = SHAPES[String(o.shape || 'block').toLowerCase()] || 'box';\n  const mat = MATS.includes(String(o.material)) ? String(o.material) : 'concrete';\n  const pos = o.position != null ? vec(o.position) : [0, 5, 0];\n  const rot = o.rotation != null ? vec(o.rotation) : [0, 0, 0];\n  let size = o.size != null ? size3(o.size) : [2, 2, 2];\n  if (shape === 'ball') size = [size[0], size[0], size[0]];\n  if (shape === 'cyl') size = [size[0], size[1], size[0]];\n  const props = {};\n  const n = cleanName(o.name);\n  if (n) props.n = n;\n  if (o.anchored === false) props.an = 0;\n  if (o.canCollide === false) props.cc = 0;\n  const tr = o.transparency != null ? Math.min(1, Math.max(0, num(o.transparency))) : 0;\n  if (tr > 0) props.tr = tr;\n  const col = o.color != null ? colorHex(o.color) : null;\n  if (col) props.col = col;\n  if (o.mass != null && num(o.mass) > 0) props.ms = num(o.mass);\n  S.parts[i] = { i, n, t: shape, m: mat, made: 1, pos, rot, size, col, tr, cc: o.canCollide !== false, an: o.anchored !== false, ms: props.ms };\n  addName(n, i);\n  S.madeCount++;\n  cmd('new', i, [shape, mat, pos[0], pos[1], pos[2], rot[0], rot[1], rot[2], size[0], size[1], size[2], props]);\n  return partHandle(i);\n}\nconst GUI_DEF = { t: 'label', x: 50, y: 12, w: 30, h: 8, an: 1, tx: 'Label', ts: 24, tc: 'ffffff', bg: '15161a', bt: 0.3, r: 8, v: 1, f: 'bold', al: 'c' };\nconst ANCH = { topleft: 0, top: 1, topright: 2, left: 3, center: 4, right: 5, bottomleft: 6, bottom: 7, bottomright: 8 };\nfunction makeGui(o) {\n  o = o && typeof o === 'object' ? o : {};\n  if (S.gui.length >= 60) { print('GUI limit reached (60)'); return null; }\n  const i = S.gui.length;\n  const ty = String(o.type || 'label').toLowerCase();\n  const t = ty === 'button' || ty === 'textbutton' ? 'button' : ty === 'frame' ? 'frame' : ty === 'image' || ty === 'imagelabel' ? 'image' : ty === 'video' || ty === 'videoframe' ? 'video' : 'label';\n  const d = { t, n: cleanName(o.name) || ('Gui' + i) };\n  const pa = o.parent && typeof o.parent === 'object' ? o.parent.name : o.parent;\n  if (pa) d.pa = cleanName(pa);\n  if (o.position != null) { const a = vec2(o.position); d.x = a[0]; d.y = a[1]; }\n  if (o.size != null) { const a = vec2(o.size); d.w = Math.max(0, a[0]); d.h = Math.max(0, a[1]); }\n  if (o.anchor != null) d.an = typeof o.anchor === 'number' ? Math.min(8, Math.max(0, Math.round(o.anchor))) : (ANCH[String(o.anchor).toLowerCase().replace(/[^a-z]/g, '')] ?? 1);\n  d.tx = o.text != null ? String(o.text).slice(0, 500) : (t === 'frame' ? '' : d.n);\n  if (o.textSize != null) d.ts = Math.min(96, Math.max(6, num(o.textSize)));\n  const tc = o.textColor != null ? colorHex(o.textColor) : null; if (tc) d.tc = tc;\n  const bg = o.background != null ? colorHex(o.background) : null; if (bg) d.bg = bg;\n  if (o.transparency != null) d.bt = Math.min(1, Math.max(0, num(o.transparency)));\n  if (o.corner != null) d.r = Math.min(60, Math.max(0, num(o.corner)));\n  if (o.visible === false) d.v = 0;\n  if (['bold', 'round', 'code'].includes(o.font)) d.f = o.font;\n  const al = { left: 'l', center: 'c', right: 'r' }[o.align]; if (al) d.al = al;\n  if (o.key != null && /^[a-z]$/i.test(String(o.key))) d.k = String(o.key).toUpperCase();\n  if (o.image != null) d.im = String(o.image);\n  if (o.video != null) d.yt = String(o.video).slice(0, 200);\n  S.gui[i] = { n: d.n, t, p: Object.assign({}, GUI_DEF, d) };\n  if (!S.gname.has(d.n)) S.gname.set(d.n, i);\n  cmd('gnew', i, d);\n  return guiHandle(i, '*');\n}\nconst DEAD = { n: '', pos: [0, 0, 0], rot: [0, 0, 0], size: [1, 1, 1], col: null, tr: 1, cc: false, an: true, dead: 1 };\nfunction partHandle(i) {\n  const P = () => S.parts[i] || DEAD;\n  const h = {\n    get name() { return P().n; },\n    get position() { return P().pos.slice(); }, set position(v) { P().pos = vec(v); cmd('set', i, 'pos', P().pos); },\n    get rotation() { return P().rot.slice(); }, set rotation(v) { P().rot = vec(v); cmd('set', i, 'rot', P().rot); },\n    get size() { return P().size.slice(); }, set size(v) { P().size = vec(v).map(x => Math.min(200, Math.max(.1, x))); cmd('set', i, 'size', P().size); },\n    get color() { return P().col ? '#' + P().col : null; }, set color(v) { const c = colorHex(v); if (c) { P().col = c; cmd('set', i, 'color', c); } },\n    get transparency() { return P().tr; }, set transparency(v) { P().tr = Math.min(1, Math.max(0, num(v))); cmd('set', i, 'tr', P().tr); },\n    get canCollide() { return P().cc; }, set canCollide(v) { P().cc = !!v; cmd('set', i, 'cc', P().cc ? 1 : 0); },\n    get anchored() { return P().an; }, set anchored(v) { P().an = !!v; cmd('set', i, 'an', P().an ? 1 : 0); },\n    set velocity(v) { cmd('set', i, 'vel', vec(v)); },\n    get visible() { return P().tr < 1; }, set visible(v) { h.transparency = v ? 0 : 1; },\n    move(x, y, z) { const d = vec(x, y, z), p = P().pos; h.position = [p[0] + d[0], p[1] + d[1], p[2] + d[2]]; },\n    turn(x, y, z) { const d = vec(x, y, z), r = P().rot; h.rotation = [r[0] + d[0], r[1] + d[1], r[2] + d[2]]; },\n    get shape() { return P().t || null; }, get destroyed() { return !!P().dead; },\n    destroy() { const p = S.parts[i]; if (!p) return; if (p.made) { cmd('del', i); dropName(p.n, i); S.T.delete(i); delete S.parts[i]; S.madeCount--; } else { h.transparency = 1; h.canCollide = false; } },\n    clone(o) { const p = S.parts[i]; if (!p) return null; return makePart(Object.assign({ shape: p.t || 'block', material: p.m, position: p.pos, rotation: p.rot, size: p.size, color: p.col ? '#' + p.col : null, transparency: p.tr, canCollide: p.cc, anchored: p.an, name: p.n, mass: p.ms }, o || {})); },\n    on(ev, fn) { if (typeof fn !== 'function') return; let t = S.T.get(i); if (!t) S.T.set(i, t = { touch: [], end: [], click: [] }); if (ev === 'clicked') { t.click.push(wrap(fn)); cmd('listenc', i); return; } const k = ev === 'touchEnded' ? 'end' : 'touch'; t[k].push(wrap(fn)); if (!S.listen.includes(i)) { S.listen.push(i); cmd('listen', i); } },\n    get text() { return P().sg || ''; }, set text(v) { P().sg = String(v == null ? '' : v).slice(0, 60); cmd('set', i, 'sg', P().sg); },\n    get light() { return P().lt || 0; }, set light(v) { P().lt = Math.min(60, Math.max(0, Math.round(num(v)))); cmd('set', i, 'lt', P().lt); },\n    get decal() { return P().dc || ''; }, set decal(v) { P().dc = String(v == null ? '' : v).slice(0, 12); cmd('set', i, 'dc', P().dc); },\n  };\n  return Object.freeze(h);\n}\nfunction playerHandle(p) {\n  if (!p) return null;\n  const id = p.id;\n  return Object.freeze({\n    id, name: p.name, get position() { const q = S.players.find(x => x.id === id); return q ? q.p.slice() : p.p.slice(); }, get health() { const q = S.players.find(x => x.id === id); return q ? q.h : 0; },\n    damage(n) { cmd('dmg', id, Math.max(0, num(n))); }, heal(n) { cmd('heal', id, Math.max(0, num(n))); },\n    teleport(x, y, z) { cmd('tp', id, vec(x, y, z)); }, launch(x, y, z) { cmd('vel', id, vec(x, y, z)); }, kill() { cmd('dmg', id, 999); },\n    get look() { const q = S.players.find(x => x.id === id); return q && q.l ? q.l.slice() : [0, 0, -1]; },\n    get velocity() { const q = S.players.find(x => x.id === id); return q && q.v ? q.v.slice() : [0, 0, 0]; },\n    get speed() { return S.spd[id] || 1; }, set speed(v) { v = Math.min(3, Math.max(0.2, num(v) || 1)); S.spd[id] = v; cmd('spd', id, v); },\n    lookAt(x, y, z) { cmd('look', id, vec(x, y, z)); },\n    giveCoins(n) { cmd('coin', id, Math.max(0, Math.min(100, num(n)))); },\n    gui(name) { const i = guiFind(name); return i == null ? null : guiHandle(i, id); },\n  });\n}\nconst byName = n => S.names.get(String(n)) || [];\nconst game = Object.freeze({\n  on(ev, fn) { if (typeof fn === 'function') (S.H[ev] || (S.H[ev] = [])).push(wrap(fn)); },\n  part(name) { const l = byName(name); return l.length ? partHandle(l[0]) : null; },\n  parts(name) { return (name == null ? S.parts.map((p, i) => p ? i : -1).filter(i => i >= 0) : byName(name)).map(partHandle); },\n  players() { return S.players.map(playerHandle); },\n  player(id) { return playerHandle(S.players.find(p => p.id === id || p.name === id)); },\n  message(text, seconds) { cmd('msg', String(text).slice(0, 120), Math.min(20, Math.max(.5, num(seconds) || 3))); },\n  chat(text) { cmd('chat', String(text).slice(0, 120)); },\n  spawn(item, pos) { cmd('spawn', String(item), vec(pos)); },\n  zombie(type, pos) { cmd('zombie', String(type || 'walker'), vec(pos)); },\n  explode(pos, power) { cmd('boom', vec(pos), Math.min(3, Math.max(.2, num(power) || 1))); },\n  get time() { return S.time; }, get gravity() { return S.g; }, set gravity(v) { S.g = Math.min(3, Math.max(-1, num(v))); cmd('grav', S.g); },\n  random(a, b) { return a + Math.random() * (b - a); },\n  gui(name) { const i = guiFind(name); return i == null ? null : guiHandle(i, '*'); },\n  create(o) { return makePart(o); },\n  createGui(o) { return makeGui(o); },\n  images() { return S.imgs.slice(); },\n});\nfunction lockDown() {\n  const st = self.setTimeout.bind(self), si = self.setInterval.bind(self);\n  const guard = f => (fn, t, ...a) => typeof fn === 'function' ? f(fn, t, ...a) : 0;\n  Object.defineProperty(self, 'setTimeout', { value: guard(st), writable: false, configurable: false });\n  Object.defineProperty(self, 'setInterval', { value: guard(si), writable: false, configurable: false });\n  for (const F of [function () {}, async function () {}, function* () {}, async function* () {}]) { try { Object.defineProperty(Object.getPrototypeOf(F), 'constructor', { value: undefined, writable: false, configurable: false }); } catch (e) {} }\n  for (const k of ['eval', 'Function']) { try { delete self[k]; } catch (e) {} try { Object.defineProperty(self, k, { value: undefined, writable: false, configurable: false }); } catch (e) {} }\n}\nconst print = (...a) => { if (S.logs.length < 200) S.logs.push(a.map(x => typeof x === 'object' ? JSON.stringify(x) : String(x)).join(' ').slice(0, 300)); };\nconst wait = s => new Promise(r => setTimeout(r, Math.max(0, num(s)) * 1000));\nconst every = (s, fn) => { const f = wrap(fn); setInterval(f, Math.max(.05, num(s)) * 1000); };\nconst flush = () => { const m = { t: 'out' }; if (S.q.length) m.c = S.q.splice(0); if (S.logs.length) m.l = S.logs.splice(0); if (S.errs.length) m.e = S.errs.splice(0); post(m); };\nself.onunhandledrejection = e => { report('script', e.reason); };\nself.onerror = e => { report('script', e.error || e.message); return true; };\nself.onmessage = ev => {\n  const d = ev.data;\n  if (d.t === 'init') {\n    S.me = d.me; S.g = d.g;\n    for (const p of d.parts) { S.parts[p.i] = p; if (p.n) { if (!S.names.has(p.n)) S.names.set(p.n, []); S.names.get(p.n).push(p.i); } }\n    S.players = d.players || [];\n    S.imgs = (d.imgs || []).slice(0, 12);\n    for (const g of d.gui || []) { S.gui[g.i] = { n: g.n, t: g.t, p: g.p }; if (!S.gname.has(g.n)) S.gname.set(g.n, g.i); }\n    const fns = [];\n    for (const sc of d.scripts) {\n      if (/\\bimport\\b/.test(sc.src)) { report(sc.n, new Error('import is not allowed in map scripts')); continue; }\n      try { fns.push([sc.n, new Function('game', 'print', 'wait', 'every', sc.src)]); } catch (e) { report(sc.n, e); }\n    }\n    lockDown();\n    for (const [n, f] of fns) { curScript = n; try { f(game, print, wait, every); } catch (e) { report(n, e); } }\n    curScript = '';\n    fire(S.H.start);\n  } else if (d.t === 'tick') {\n    S.time = d.time; S.players = d.players;\n    if (d.dyn) for (const a of d.dyn) { const p = S.parts[a[0]]; if (p) { p.pos = [a[1], a[2], a[3]]; p.rot = [a[4], a[5], a[6]]; } }\n    if (d.ev) for (const e of d.ev) {\n      if (e[0] === 'touch' || e[0] === 'end') { const t = S.T.get(e[1]); const pl = playerHandle(S.players.find(p => p.id === e[2]) || { id: e[2], name: e[3], p: [0, 0, 0] }); if (t) fire(e[0] === 'touch' ? t.touch : t.end, pl); }\n      else if (e[0] === 'join') fire(S.H.playerJoined, playerHandle({ id: e[1], name: e[2], p: [0, 0, 0] }));\n      else if (e[0] === 'leave') fire(S.H.playerLeft, { id: e[1], name: e[2] });\n      else if (e[0] === 'died') fire(S.H.playerDied, playerHandle(S.players.find(p => p.id === e[1]) || { id: e[1], name: e[2], p: [0, 0, 0] }));\n      else if (e[0] === 'chat') fire(S.H.chat, playerHandle(S.players.find(p => p.id === e[1]) || { id: e[1], name: e[2], p: [0, 0, 0] }), e[3]);\n      else if (e[0] === 'pclick') { const t = S.T.get(e[1]); if (t && t.click) fire(t.click, playerHandle(S.players.find(p => p.id === e[2]) || { id: e[2], name: e[3], p: [0, 0, 0] })); }\n      else if (e[0] === 'click') { const L = S.GC.get(e[1]); if (L) fire(L, playerHandle(S.players.find(p => p.id === e[2]) || { id: e[2], name: e[3], p: [0, 0, 0] })); }\n    }\n    fire(S.H.tick, d.dt);\n  }\n  flush();\n};`;
+const SCR_BOOT = `"use strict";\nconst post = self.postMessage.bind(self);\n(() => {\n  const bad = ['fetch','XMLHttpRequest','importScripts','WebSocket','WebSocketStream','EventSource','indexedDB','caches','BroadcastChannel','Worker','SharedWorker','WebTransport','navigator','location','FileReader','FileReaderSync','OffscreenCanvas','createImageBitmap','Notification','Request','Response','Headers','FormData','Blob','File','URL','close','postMessage','queueMicrotask','reportError','structuredClone'];\n  for (const k of bad) {\n    let o = self;\n    while (o && o !== Object.prototype) { try { delete o[k]; } catch (e) {} o = Object.getPrototypeOf(o); }\n    try { Object.defineProperty(self, k, { value: undefined, writable: false, configurable: false }); } catch (e) {}\n  }\n})();\nconst S = { parts: [], names: new Map(), players: [], me: '', time: 0, g: 1, H: {}, T: new Map(), q: [], logs: [], errs: [], listen: [], gui: [], gname: new Map(), gp: new Map(), GC: new Map(), made: 0, madeCount: 0, spd: {}, imgs: [], data: {}, dl: new Set(), tools: new Map(), tn: 0 };\nlet curScript = '';\nconst lineOf = e => { const m = String(e && e.stack || '').match(/<anonymous>:(\\d+):(\\d+)/); return m ? (+m[1] - 2) : 0; };\nconst report = (name, e) => { S.errs.push([name, lineOf(e), String(e && e.message || e).slice(0, 200)]); };\nconst wrap = fn => { const name = curScript; return (...a) => { try { const r = fn(...a); if (r && typeof r.then === 'function') r.then(null, e => report(name, e)); } catch (e) { report(name, e); } }; };\nconst fire = (list, ...a) => { if (list) for (const f of list.slice()) f(...a); };\nconst num = v => { v = +v; return Number.isFinite(v) ? v : 0; };\nconst vec = (v, y, z) => { if (Array.isArray(v)) return [num(v[0]), num(v[1]), num(v[2])]; if (v && typeof v === 'object') return [num(v.x), num(v.y), num(v.z)]; return [num(v), num(y), num(z)]; };\nconst cmd = (...a) => { if (S.q.length < 2000) S.q.push(a); };\nconst colorHex = c => { c = String(c || '').trim().replace('#', ''); if (/^[0-9a-f]{3}$/i.test(c)) c = c.split('').map(x => x + x).join(''); return /^[0-9a-f]{6}$/i.test(c) ? c.toLowerCase() : null; };\nconst vec2 = (v, y) => { if (Array.isArray(v)) return [num(v[0]), num(v[1])]; if (v && typeof v === 'object') return [num(v.x), num(v.y)]; return [num(v), num(y)]; };\nfunction guiHandle(i, tgt) {\n  const G = () => S.gui[i];\n  const mine = () => { const k = tgt + '|' + i; let o = S.gp.get(k); if (!o) S.gp.set(k, o = {}); return o; };\n  const get = k => tgt === '*' ? G().p[k] : (k in mine() ? mine()[k] : G().p[k]);\n  const set = (k, v) => { if (tgt === '*') G().p[k] = v; else mine()[k] = v; cmd('gui', tgt, i, k, v); };\n  const h = {\n    get name() { return G().n; }, get type() { return G().t; },\n    get text() { const t = get('tx'); return t == null ? '' : String(t); }, set text(v) { set('tx', String(v == null ? '' : v).slice(0, 500)); },\n    get visible() { return !!get('v'); }, set visible(v) { set('v', v ? 1 : 0); },\n    get textColor() { return '#' + get('tc'); }, set textColor(v) { const c = colorHex(v); if (c) set('tc', c); },\n    get background() { return '#' + get('bg'); }, set background(v) { const c = colorHex(v); if (c) set('bg', c); },\n    get transparency() { return get('bt'); }, set transparency(v) { set('bt', Math.min(1, Math.max(0, num(v)))); },\n    get position() { return [get('x'), get('y')]; }, set position(v) { const a = vec2(v); set('x', a[0]); set('y', a[1]); },\n    get size() { return [get('w'), get('h')]; }, set size(v) { const a = vec2(v); set('w', Math.max(0, a[0])); set('h', Math.max(0, a[1])); },\n    get textSize() { return get('ts'); }, set textSize(v) { set('ts', Math.min(96, Math.max(6, num(v)))); },\n    get image() { return get('im') || ''; }, set image(v) { set('im', String(v == null ? '' : v)); },\n    get video() { return get('yt') || ''; }, set video(v) { set('yt', String(v == null ? '' : v).slice(0, 200)); },\n    show() { h.visible = true; }, hide() { h.visible = false; }, destroy() { h.visible = false; },\n    on(ev, fn) { if (ev !== 'click' || typeof fn !== 'function') return; let L = S.GC.get(i); if (!L) S.GC.set(i, L = []); const f = wrap(fn); L.push(tgt === '*' ? f : pl => { if (pl && pl.id === tgt) f(pl); }); },\n  };\n  return Object.freeze(h);\n}\nconst guiFind = name => { const i = S.gname.get(String(name)); return i == null ? null : i; };\nconst SHAPES = { block: 'box', box: 'box', part: 'box', ball: 'ball', sphere: 'ball', cylinder: 'cyl', cyl: 'cyl', ramp: 'ramp', wedge: 'ramp', stairs: 'stairs' };\nconst MATS = ['grass','dirt','sand','snow','rock','concrete','brick','wood','metal','asphalt','dev','white','black','red','orange','yellow','green','blue','purple','glass','ice','lava','bounce','invis'];\nconst cleanName = v => String(v == null ? '' : v).replace(/[^\\w \\-]/g, '').trim().slice(0, 32);\nconst size3 = v => { if (typeof v === 'number') return [v, v, v].map(x => Math.min(200, Math.max(0.1, num(x)))); return vec(v).map(x => Math.min(200, Math.max(0.1, x || 1))); };\nfunction addName(n, i) { if (!n) return; if (!S.names.has(n)) S.names.set(n, []); S.names.get(n).push(i); }\nfunction dropName(n, i) { const l = S.names.get(n); if (!l) return; const k = l.indexOf(i); if (k >= 0) l.splice(k, 1); if (!l.length) S.names.delete(n); }\nfunction makePart(o) {\n  o = o && typeof o === 'object' ? o : {};\n  if (S.madeCount >= 300) { print('Part limit reached (300 made by scripts)'); return null; }\n  const i = 10000 + S.made++;\n  const shape = SHAPES[String(o.shape || 'block').toLowerCase()] || 'box';\n  const mat = MATS.includes(String(o.material)) ? String(o.material) : 'concrete';\n  const pos = o.position != null ? vec(o.position) : [0, 5, 0];\n  const rot = o.rotation != null ? vec(o.rotation) : [0, 0, 0];\n  let size = o.size != null ? size3(o.size) : [2, 2, 2];\n  if (shape === 'ball') size = [size[0], size[0], size[0]];\n  if (shape === 'cyl') size = [size[0], size[1], size[0]];\n  const props = {};\n  const n = cleanName(o.name);\n  if (n) props.n = n;\n  if (o.anchored === false) props.an = 0;\n  if (o.canCollide === false) props.cc = 0;\n  const tr = o.transparency != null ? Math.min(1, Math.max(0, num(o.transparency))) : 0;\n  if (tr > 0) props.tr = tr;\n  const col = o.color != null ? colorHex(o.color) : null;\n  if (col) props.col = col;\n  if (o.mass != null && num(o.mass) > 0) props.ms = num(o.mass);\n  S.parts[i] = { i, n, t: shape, m: mat, made: 1, pos, rot, size, col, tr, cc: o.canCollide !== false, an: o.anchored !== false, ms: props.ms };\n  addName(n, i);\n  S.madeCount++;\n  cmd('new', i, [shape, mat, pos[0], pos[1], pos[2], rot[0], rot[1], rot[2], size[0], size[1], size[2], props]);\n  return partHandle(i);\n}\nconst GUI_DEF = { t: 'label', x: 50, y: 12, w: 30, h: 8, an: 1, tx: 'Label', ts: 24, tc: 'ffffff', bg: '15161a', bt: 0.3, r: 8, v: 1, f: 'bold', al: 'c' };\nconst ANCH = { topleft: 0, top: 1, topright: 2, left: 3, center: 4, right: 5, bottomleft: 6, bottom: 7, bottomright: 8 };\nfunction makeGui(o) {\n  o = o && typeof o === 'object' ? o : {};\n  if (S.gui.length >= 60) { print('GUI limit reached (60)'); return null; }\n  const i = S.gui.length;\n  const ty = String(o.type || 'label').toLowerCase();\n  const t = ty === 'button' || ty === 'textbutton' || ty === 'imagebutton' ? 'button' : ty === 'frame' ? 'frame' : ty === 'image' || ty === 'imagelabel' ? 'image' : ty === 'video' || ty === 'videoframe' ? 'video' : 'label';\n  const d = { t, n: cleanName(o.name) || ('Gui' + i) };\n  const pa = o.parent && typeof o.parent === 'object' ? o.parent.name : o.parent;\n  if (pa) d.pa = cleanName(pa);\n  if (o.position != null) { const a = vec2(o.position); d.x = a[0]; d.y = a[1]; }\n  if (o.size != null) { const a = vec2(o.size); d.w = Math.max(0, a[0]); d.h = Math.max(0, a[1]); }\n  if (o.anchor != null) d.an = typeof o.anchor === 'number' ? Math.min(8, Math.max(0, Math.round(o.anchor))) : (ANCH[String(o.anchor).toLowerCase().replace(/[^a-z]/g, '')] ?? 1);\n  d.tx = o.text != null ? String(o.text).slice(0, 500) : (t === 'frame' || ty === 'imagebutton' ? '' : d.n);\n  if (o.textSize != null) d.ts = Math.min(96, Math.max(6, num(o.textSize)));\n  const tc = o.textColor != null ? colorHex(o.textColor) : null; if (tc) d.tc = tc;\n  const bg = o.background != null ? colorHex(o.background) : null; if (bg) d.bg = bg;\n  if (o.transparency != null) d.bt = Math.min(1, Math.max(0, num(o.transparency)));\n  if (o.corner != null) d.r = Math.min(60, Math.max(0, num(o.corner)));\n  if (o.visible === false) d.v = 0;\n  if (['bold', 'round', 'code'].includes(o.font)) d.f = o.font;\n  const al = { left: 'l', center: 'c', right: 'r' }[o.align]; if (al) d.al = al;\n  if (o.key != null && /^[a-z]$/i.test(String(o.key))) d.k = String(o.key).toUpperCase();\n  if (o.image != null) d.im = String(o.image);\n  if (o.video != null) d.yt = String(o.video).slice(0, 200);\n  S.gui[i] = { n: d.n, t, p: Object.assign({}, GUI_DEF, d) };\n  if (!S.gname.has(d.n)) S.gname.set(d.n, i);\n  cmd('gnew', i, d);\n  return guiHandle(i, '*');\n}\nconst DEAD = { n: '', pos: [0, 0, 0], rot: [0, 0, 0], size: [1, 1, 1], col: null, tr: 1, cc: false, an: true, dead: 1 };\nfunction partHandle(i) {\n  const P = () => S.parts[i] || DEAD;\n  const h = {\n    get name() { return P().n; },\n    get position() { return P().pos.slice(); }, set position(v) { P().pos = vec(v); cmd('set', i, 'pos', P().pos); },\n    get rotation() { return P().rot.slice(); }, set rotation(v) { P().rot = vec(v); cmd('set', i, 'rot', P().rot); },\n    get size() { return P().size.slice(); }, set size(v) { P().size = vec(v).map(x => Math.min(200, Math.max(.1, x))); cmd('set', i, 'size', P().size); },\n    get color() { return P().col ? '#' + P().col : null; }, set color(v) { const c = colorHex(v); if (c) { P().col = c; cmd('set', i, 'color', c); } },\n    get transparency() { return P().tr; }, set transparency(v) { P().tr = Math.min(1, Math.max(0, num(v))); cmd('set', i, 'tr', P().tr); },\n    get canCollide() { return P().cc; }, set canCollide(v) { P().cc = !!v; cmd('set', i, 'cc', P().cc ? 1 : 0); },\n    get anchored() { return P().an; }, set anchored(v) { P().an = !!v; cmd('set', i, 'an', P().an ? 1 : 0); },\n    set velocity(v) { cmd('set', i, 'vel', vec(v)); },\n    get visible() { return P().tr < 1; }, set visible(v) { h.transparency = v ? 0 : 1; },\n    move(x, y, z) { const d = vec(x, y, z), p = P().pos; h.position = [p[0] + d[0], p[1] + d[1], p[2] + d[2]]; },\n    turn(x, y, z) { const d = vec(x, y, z), r = P().rot; h.rotation = [r[0] + d[0], r[1] + d[1], r[2] + d[2]]; },\n    get shape() { return P().t || null; }, get destroyed() { return !!P().dead; },\n    destroy() { const p = S.parts[i]; if (!p) return; if (p.made) { cmd('del', i); dropName(p.n, i); S.T.delete(i); delete S.parts[i]; S.madeCount--; } else { h.transparency = 1; h.canCollide = false; } },\n    clone(o) { const p = S.parts[i]; if (!p) return null; return makePart(Object.assign({ shape: p.t || 'block', material: p.m, position: p.pos, rotation: p.rot, size: p.size, color: p.col ? '#' + p.col : null, transparency: p.tr, canCollide: p.cc, anchored: p.an, name: p.n, mass: p.ms }, o || {})); },\n    on(ev, fn) { if (typeof fn !== 'function') return; let t = S.T.get(i); if (!t) S.T.set(i, t = { touch: [], end: [], click: [] }); if (ev === 'clicked') { t.click.push(wrap(fn)); cmd('listenc', i); return; } const k = ev === 'touchEnded' ? 'end' : 'touch'; t[k].push(wrap(fn)); if (!S.listen.includes(i)) { S.listen.push(i); cmd('listen', i); } },\n    get text() { return P().sg || ''; }, set text(v) { P().sg = String(v == null ? '' : v).slice(0, 60); cmd('set', i, 'sg', P().sg); },\n    get light() { return P().lt || 0; }, set light(v) { P().lt = Math.min(60, Math.max(0, Math.round(num(v)))); cmd('set', i, 'lt', P().lt); },\n    get decal() { return P().dc || ''; }, set decal(v) { P().dc = String(v == null ? '' : v).slice(0, 12); cmd('set', i, 'dc', P().dc); },\n  };\n  return Object.freeze(h);\n}\nfunction playerHandle(p) {\n  if (!p) return null;\n  const id = p.id;\n  return Object.freeze({\n    id, name: p.name, get position() { const q = S.players.find(x => x.id === id); return q ? q.p.slice() : p.p.slice(); }, get health() { const q = S.players.find(x => x.id === id); return q ? q.h : 0; },\n    damage(n) { cmd('dmg', id, Math.max(0, num(n))); }, heal(n) { cmd('heal', id, Math.max(0, num(n))); },\n    teleport(x, y, z) { cmd('tp', id, vec(x, y, z)); }, launch(x, y, z) { cmd('vel', id, vec(x, y, z)); }, kill() { cmd('dmg', id, 999); },\n    get look() { const q = S.players.find(x => x.id === id); return q && q.l ? q.l.slice() : [0, 0, -1]; },\n    get velocity() { const q = S.players.find(x => x.id === id); return q && q.v ? q.v.slice() : [0, 0, 0]; },\n    get speed() { return S.spd[id] || 1; }, set speed(v) { v = Math.min(3, Math.max(0.2, num(v) || 1)); S.spd[id] = v; cmd('spd', id, v); },\n    lookAt(x, y, z) { cmd('look', id, vec(x, y, z)); },\n    giveCoins(n) { cmd('coin', id, Math.max(0, Math.min(100, num(n)))); },\n    gui(name) { const i = guiFind(name); return i == null ? null : guiHandle(i, id); },\n    get data() { const v = S.data[id]; return v ? JSON.parse(JSON.stringify(v)) : {}; },\n    get loaded() { return S.dl.has(id); },\n    save(v) {\n      if (!S.dl.has(id)) { print('save() ignored: wait for playerLoaded before saving'); return false; }\n      let j; try { j = JSON.stringify(v == null ? {} : v); } catch (e) { print('save() only takes plain data'); return false; }\n      if (!j || j.length > 8000) { print('save() data is too big (8000 characters max)'); return false; }\n      S.data[id] = JSON.parse(j); cmd('psave', id, j); return true;\n    },\n    giveTool(o) {\n      o = o && typeof o === 'object' ? o : { name: o };\n      let n = 0; for (const t of S.tools.values()) if (t.p === id) n++;\n      if (n >= 6) { print('Tool limit reached (6 per player)'); return null; }\n      const tid = ++S.tn, T = { p: id, n: cleanName(o.name) || 'Tool', ic: String(o.icon || 'star').toLowerCase().slice(0, 12), fns: [], gone: false };\n      S.tools.set(tid, T);\n      cmd('tool', id, [tid, T.n, T.ic]);\n      const th = { get name() { return T.n; }, get removed() { return T.gone; },\n        on(ev, fn) { if (ev === 'activated' && typeof fn === 'function') T.fns.push(wrap(fn)); },\n        remove() { if (T.gone) return; T.gone = true; S.tools.delete(tid); cmd('untool', id, tid); } };\n      return Object.freeze(th);\n    },\n    removeTools() { for (const [tid, t] of [...S.tools]) if (t.p === id) { t.gone = true; S.tools.delete(tid); cmd('untool', id, tid); } },\n  });\n}\nconst byName = n => S.names.get(String(n)) || [];\nconst game = Object.freeze({\n  on(ev, fn) { if (typeof fn === 'function') (S.H[ev] || (S.H[ev] = [])).push(wrap(fn)); },\n  part(name) { const l = byName(name); return l.length ? partHandle(l[0]) : null; },\n  parts(name) { return (name == null ? S.parts.map((p, i) => p ? i : -1).filter(i => i >= 0) : byName(name)).map(partHandle); },\n  players() { return S.players.map(playerHandle); },\n  player(id) { return playerHandle(S.players.find(p => p.id === id || p.name === id)); },\n  message(text, seconds) { cmd('msg', String(text).slice(0, 120), Math.min(20, Math.max(.5, num(seconds) || 3))); },\n  chat(text) { cmd('chat', String(text).slice(0, 120)); },\n  spawn(item, pos) { cmd('spawn', String(item), vec(pos)); },\n  zombie(type, pos) { cmd('zombie', String(type || 'walker'), vec(pos)); },\n  explode(pos, power) { cmd('boom', vec(pos), Math.min(3, Math.max(.2, num(power) || 1))); },\n  get time() { return S.time; }, get gravity() { return S.g; }, set gravity(v) { S.g = Math.min(3, Math.max(-1, num(v))); cmd('grav', S.g); },\n  random(a, b) { return a + Math.random() * (b - a); },\n  gui(name) { const i = guiFind(name); return i == null ? null : guiHandle(i, '*'); },\n  create(o) { return makePart(o); },\n  createGui(o) { return makeGui(o); },\n  images() { return S.imgs.slice(); },\n});\nfunction lockDown() {\n  const st = self.setTimeout.bind(self), si = self.setInterval.bind(self);\n  const guard = f => (fn, t, ...a) => typeof fn === 'function' ? f(fn, t, ...a) : 0;\n  Object.defineProperty(self, 'setTimeout', { value: guard(st), writable: false, configurable: false });\n  Object.defineProperty(self, 'setInterval', { value: guard(si), writable: false, configurable: false });\n  for (const F of [function () {}, async function () {}, function* () {}, async function* () {}]) { try { Object.defineProperty(Object.getPrototypeOf(F), 'constructor', { value: undefined, writable: false, configurable: false }); } catch (e) {} }\n  for (const k of ['eval', 'Function']) { try { delete self[k]; } catch (e) {} try { Object.defineProperty(self, k, { value: undefined, writable: false, configurable: false }); } catch (e) {} }\n}\nconst print = (...a) => { if (S.logs.length < 200) S.logs.push(a.map(x => typeof x === 'object' ? JSON.stringify(x) : String(x)).join(' ').slice(0, 300)); };\nconst wait = s => new Promise(r => setTimeout(r, Math.max(0, num(s)) * 1000));\nconst every = (s, fn) => { const f = wrap(fn); setInterval(f, Math.max(.05, num(s)) * 1000); };\nconst flush = () => { const m = { t: 'out' }; if (S.q.length) m.c = S.q.splice(0); if (S.logs.length) m.l = S.logs.splice(0); if (S.errs.length) m.e = S.errs.splice(0); post(m); };\nself.onunhandledrejection = e => { report('script', e.reason); };\nself.onerror = e => { report('script', e.error || e.message); return true; };\nself.onmessage = ev => {\n  const d = ev.data;\n  if (d.t === 'init') {\n    S.me = d.me; S.g = d.g;\n    for (const p of d.parts) { S.parts[p.i] = p; if (p.n) { if (!S.names.has(p.n)) S.names.set(p.n, []); S.names.get(p.n).push(p.i); } }\n    S.players = d.players || [];\n    S.imgs = (d.imgs || []).slice(0, 12);\n    for (const g of d.gui || []) { S.gui[g.i] = { n: g.n, t: g.t, p: g.p }; if (!S.gname.has(g.n)) S.gname.set(g.n, g.i); }\n    const fns = [];\n    for (const sc of d.scripts) {\n      if (/\\bimport\\b/.test(sc.src)) { report(sc.n, new Error('import is not allowed in map scripts')); continue; }\n      try { fns.push([sc.n, new Function('game', 'print', 'wait', 'every', sc.src)]); } catch (e) { report(sc.n, e); }\n    }\n    lockDown();\n    for (const [n, f] of fns) { curScript = n; try { f(game, print, wait, every); } catch (e) { report(n, e); } }\n    curScript = '';\n    fire(S.H.start);\n  } else if (d.t === 'tick') {\n    S.time = d.time; S.players = d.players;\n    if (d.dyn) for (const a of d.dyn) { const p = S.parts[a[0]]; if (p) { p.pos = [a[1], a[2], a[3]]; p.rot = [a[4], a[5], a[6]]; } }\n    if (d.ev) for (const e of d.ev) {\n      if (e[0] === 'touch' || e[0] === 'end') { const t = S.T.get(e[1]); const pl = playerHandle(S.players.find(p => p.id === e[2]) || { id: e[2], name: e[3], p: [0, 0, 0] }); if (t) fire(e[0] === 'touch' ? t.touch : t.end, pl); }\n      else if (e[0] === 'join') fire(S.H.playerJoined, playerHandle({ id: e[1], name: e[2], p: [0, 0, 0] }));\n      else if (e[0] === 'leave') { fire(S.H.playerLeft, { id: e[1], name: e[2] }); delete S.data[e[1]]; S.dl.delete(e[1]); for (const [tid, t] of [...S.tools]) if (t.p === e[1]) S.tools.delete(tid); }\n      else if (e[0] === 'pdata') { let v = {}; try { v = JSON.parse(e[3] || '{}'); } catch (er) {} if (!v || typeof v !== 'object') v = {}; S.data[e[1]] = v; S.dl.add(e[1]); fire(S.H.playerLoaded, playerHandle(S.players.find(p => p.id === e[1]) || { id: e[1], name: e[2], p: [0, 0, 0] }), JSON.parse(JSON.stringify(v))); }\n      else if (e[0] === 'tact') { const T = S.tools.get(e[1]); if (T && T.p === e[2]) fire(T.fns, playerHandle(S.players.find(p => p.id === e[2]) || { id: e[2], name: e[3], p: [0, 0, 0] })); }\n      else if (e[0] === 'died') fire(S.H.playerDied, playerHandle(S.players.find(p => p.id === e[1]) || { id: e[1], name: e[2], p: [0, 0, 0] }));\n      else if (e[0] === 'chat') fire(S.H.chat, playerHandle(S.players.find(p => p.id === e[1]) || { id: e[1], name: e[2], p: [0, 0, 0] }), e[3]);\n      else if (e[0] === 'pclick') { const t = S.T.get(e[1]); if (t && t.click) fire(t.click, playerHandle(S.players.find(p => p.id === e[2]) || { id: e[2], name: e[3], p: [0, 0, 0] })); }\n      else if (e[0] === 'click') { const L = S.GC.get(e[1]); if (L) fire(L, playerHandle(S.players.find(p => p.id === e[2]) || { id: e[2], name: e[3], p: [0, 0, 0] })); }\n    }\n    fire(S.H.tick, d.dt);\n  }\n  flush();\n};`;
 
 function scriptsOf(m) {
   const D = m && m.mkData;
@@ -15126,6 +15848,8 @@ function stopScripts() {
   SCR.busy = false;
   SCR.ev.length = 0;
   SCR.lastPlayers.clear();
+  stClear();
+  mdFlush();
 }
 
 function scPlayers() {
@@ -15209,7 +15933,10 @@ function startScripts() {
       src: s.src
     }))
   });
-  for (const p of scPlayers()) SCR.lastPlayers.add(p.id);
+  for (const p of scPlayers()) {
+    SCR.lastPlayers.add(p.id);
+    mdRequest(p.id, p.name);
+  }
 }
 
 function mkRotOf(L) {
@@ -15373,6 +16100,9 @@ function scCmd(c) {
    case "spd":
    case "look":
    case "coin":
+   case "psave":
+   case "tool":
+   case "untool":
     {
       const id = c[1], val = c[2];
       if (id === LOCAL_ID()) scLocal(k, val); else if (NET.on && NET.peers.has(id)) sendTo(id, "sc", {
@@ -15402,6 +16132,12 @@ function scLocal(k, val) {
     zcScript(val);
   } else if (k === "spd" && Number.isFinite(val)) {
     spdMul = clamp(val, .2, 3);
+  } else if (k === "psave" && typeof val === "string") {
+    mdSave(val);
+  } else if (k === "tool") {
+    stAdd(val);
+  } else if (k === "untool" && Number.isInteger(val)) {
+    stDel(val);
   } else if (k === "look" && Array.isArray(val) && val.length === 3 && val.every(Number.isFinite)) {
     const dx = val[0] - player.position.x, dy = val[1] - player.position.y, dz = val[2] - player.position.z, h = Math.hypot(dx, dz);
     if (h > .01) {
@@ -15440,7 +16176,10 @@ function scTouch() {
     L.touching = now_;
   }
   const ids = new Set(P.map(p => p.id));
-  for (const p of P) if (!SCR.lastPlayers.has(p.id)) SCR.ev.push([ "join", p.id, p.name ]);
+  for (const p of P) if (!SCR.lastPlayers.has(p.id)) {
+    SCR.ev.push([ "join", p.id, p.name ]);
+    mdRequest(p.id, p.name);
+  }
   for (const id of SCR.lastPlayers) if (!ids.has(id)) SCR.ev.push([ "leave", id, "" ]);
   SCR.lastPlayers = ids;
 }
@@ -15484,6 +16223,150 @@ function scriptTick(dt) {
     dyn: dyn.length ? dyn : null,
     ev: SCR.ev.length ? SCR.ev.splice(0) : null
   });
+}
+
+const MD = {
+  t: new Map,
+  pend: new Map
+};
+
+function mdKey() {
+  return (ED.testing ? "test:" : "") + String(curMapId || "map").slice(0, 58);
+}
+
+const mdCloud = k => !!user && !k.startsWith("test:");
+
+function mdLocal(k) {
+  try {
+    return localStorage.getItem("pz_md:" + k) || "{}";
+  } catch (e) {
+    return "{}";
+  }
+}
+
+async function mdLoad() {
+  const k = mdKey();
+  if (!mdCloud(k)) return mdLocal(k);
+  try {
+    const s = await getSB();
+    const r = await Promise.race([ s.from("pz_mapsaves").select("data").eq("user_id", user.id).eq("map_id", k).maybeSingle(), new Promise(ok => setTimeout(() => ok({
+      error: "timeout"
+    }), 6e3)) ]);
+    if (r.error) return mdLocal(k);
+    return r.data && r.data.data != null ? JSON.stringify(r.data.data) : mdLocal(k);
+  } catch (e) {
+    return mdLocal(k);
+  }
+}
+
+function mdSave(j) {
+  if (typeof j !== "string" || j.length > 8e3) return;
+  let v;
+  try {
+    v = JSON.parse(j);
+  } catch (e) {
+    return;
+  }
+  const k = mdKey();
+  try {
+    localStorage.setItem("pz_md:" + k, j);
+  } catch (e) {}
+  if (!mdCloud(k)) return;
+  MD.pend.set(k, v);
+  clearTimeout(MD.t.get(k));
+  MD.t.set(k, setTimeout(() => mdPush(k), 2500));
+}
+
+async function mdPush(k) {
+  if (!MD.pend.has(k) || !user) return;
+  const v = MD.pend.get(k);
+  MD.pend.delete(k);
+  clearTimeout(MD.t.get(k));
+  try {
+    const s = await getSB();
+    await s.from("pz_mapsaves").upsert({
+      user_id: user.id,
+      map_id: k,
+      data: v,
+      updated_at: (new Date).toISOString()
+    }, {
+      onConflict: "user_id,map_id"
+    });
+  } catch (e) {}
+}
+
+function mdFlush() {
+  for (const k of [ ...MD.pend.keys() ]) mdPush(k);
+}
+
+function mdRequest(id, name) {
+  if (id === LOCAL_ID()) mdLoad().then(j => scEvent("pdata", id, name, j)); else if (NET.on && NET.peers.has(id)) sendTo(id, "pdreq", {});
+}
+
+const ST_ICONS = {
+  sword: "M14.5 3H21v6.5L9 21.5 2.5 15zM5 12.5l6.5 6.5M3 21l3-3",
+  star: "M12 3l2.7 5.8 6.3.7-4.7 4.3 1.3 6.2L12 17l-5.6 3 1.3-6.2L3 9.5l6.3-.7z",
+  bolt: "M13 2L4 14h7l-1 8 9-12h-7z",
+  heart: "M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7a4.3 4.3 0 0 1 7.5 3c0 5.4-7.5 10-7.5 10z",
+  wand: "M4 20L15 9M14 4v3M19 9h-3M17.5 5.5l-2 2M10 5l1 1M18 13l1 1",
+  gun: "M3 9h16v4h-6l-2 6H7l1-6H3z",
+  key: "M8 15a4 4 0 1 1 3.5-6H21v3h-2v3h-3v-3h-4.5A4 4 0 0 1 8 15z",
+  flag: "M5 21V4M5 4h11l-2 4 2 4H5"
+};
+
+for (const [k, v] of Object.entries(ST_ICONS)) if (!ICON[k]) ICON[k] = v;
+
+function stClear() {
+  if (!STOOLS.length) return;
+  STOOLS.length = 0;
+  document.body.classList.remove("has-st");
+  if (String(tool).startsWith("st_")) tool = "hands";
+  renderHotbar();
+}
+
+function stAdd(v) {
+  if (!Array.isArray(v) || !Number.isInteger(v[0]) || v[0] < 1) return;
+  const tid = v[0], name = String(v[1] || "Tool").replace(/[^\w \-]/g, "").slice(0, 24) || "Tool", ic = ICON[v[2]] ? String(v[2]) : "star";
+  const i = STOOLS.findIndex(t => t.tid === tid);
+  const T = {
+    id: "st_" + tid,
+    tid: tid,
+    name: name.toUpperCase(),
+    icon: ic,
+    hint: () => isTouch ? "FIRE to use" : "Click to use"
+  };
+  if (i >= 0) STOOLS[i] = T; else {
+    if (STOOLS.length >= 6) return;
+    STOOLS.push(T);
+  }
+  document.body.classList.add("has-st");
+  renderHotbar();
+  if (i < 0) toast(`You got ${T.name}  ·  press ${curTools().indexOf(T) + 1} to hold it`, 2200);
+}
+
+function stDel(tid) {
+  const i = STOOLS.findIndex(t => t.tid === tid);
+  if (i < 0) return;
+  const was = STOOLS[i].id;
+  STOOLS.splice(i, 1);
+  document.body.classList.toggle("has-st", STOOLS.length > 0);
+  if (tool === was) setTool("hands"); else renderHotbar();
+}
+
+function stUse() {
+  const T = STOOLS.find(t => t.id === tool);
+  if (!T) return;
+  if (!NET.on || NET.host) {
+    const me = scPlayers().find(p => p.id === LOCAL_ID());
+    scEvent("tact", T.tid, LOCAL_ID(), me ? me.name : "Player");
+  } else send("act", {
+    i: NET.id,
+    k: "tact",
+    g: T.tid
+  });
+  const el = $("cross");
+  el.classList.add("hot");
+  setTimeout(() => el.classList.remove("hot"), 160);
 }
 
 function scEvent(...e) {
@@ -16022,6 +16905,13 @@ function sgPaint(i) {
     }
     return;
   }
+  if (p.t === "button") {
+    const src = p.im && IMG.src.get(p.im);
+    s.backgroundImage = src ? `url("${src}")` : "";
+    s.backgroundSize = "contain";
+    s.backgroundRepeat = "no-repeat";
+    s.backgroundPosition = "center";
+  } else s.backgroundImage = "";
   if (p.t !== "frame") {
     let t = el.firstChild && el.firstChild.nodeType === 3 ? el.firstChild : null;
     if (!t) {
@@ -16318,7 +17208,7 @@ function stRender(force) {
     video: "VideoFrame"
   };
   const imgs = ST.fold.im ? "" : edImgs().map((m, i) => `<div class="st-row ${sel.kind === "im" && sel.i === i ? "on" : ""}" data-k="im" data-i="${i}"><i class="st-sw img" style="background-image:url('${m.src}')"></i>${stIcon("im", 'style="color:#ffcb6b"')}<span>${esc(m.n)}</span></div>`).join("");
-  const guis = ST.fold.gui ? "" : edGuis().map((g, i) => row("gui", i, g.n + " · " + GN[g.t] + (g.pa ? " in " + g.pa : ""), stIcon("gui", `style="color:${g.t === "button" ? "#3ad06b" : g.t === "frame" ? "#c792ea" : "#ffcb6b"}"`))).join("");
+  const guis = ST.fold.gui ? "" : edGuis().map((g, i) => row("gui", i, g.n + " · " + (g.t === "button" && g.im ? "ImageButton" : GN[g.t]) + (g.pa ? " in " + g.pa : ""), stIcon("gui", `style="color:${g.t === "button" ? "#3ad06b" : g.t === "frame" ? "#c792ea" : "#ffcb6b"}"`))).join("");
   $("stTree").innerHTML = `<div class="st-root">${stIcon("ws")}<span>Workspace</span></div>` + sect("p", "Parts", D.p.length, parts) + sect("it", "Props", D.it.length, items) + sect("sp", "Spawns", 1 + D.zs.length, spawns) + sect("sc", "Scripts", edScripts().length, scripts, '<button class="st-add" data-act="newsc" title="New script">+</button>') + sect("gui", "ScreenGUI", edGuis().length, guis, '<button class="st-add" data-act="newgui" title="New GUI element">+</button>') + sect("im", "Images", edImgs().length, imgs, '<label class="st-add" title="Upload an image" style="display:inline-flex;align-items:center;justify-content:center;cursor:pointer">+<input type="file" accept="image/*" id="stImgIn" style="display:none"></label>');
   GUI.sel = sel.kind === "gui" ? sel.i : -1;
   imgUse(edImgs());
@@ -16395,7 +17285,7 @@ function stProps() {
     }
     const p = Object.assign({}, SG_DEF, g), frames = edGuis().filter((x, j) => x.t === "frame" && j !== s.i).map(x => x.n);
     const v2 = (a, b, va, vb) => `<div class="st-v2"><input type="number" data-prop="${a}" value="${va}" step="1" aria-label="${a}"><input type="number" data-prop="${b}" value="${vb}" step="1" aria-label="${b}"></div>`;
-    h = `<div class="st-t">${stIcon("gui")}${esc(g.n)}</div>` + stField("Name", `<input type="text" data-prop="gn" value="${esc(g.n)}" maxlength="32">`) + stField("Class", stSel("gt", [ [ "frame", "Frame" ], [ "label", "TextLabel" ], [ "button", "TextButton" ], [ "image", "ImageLabel" ], [ "video", "VideoFrame" ] ], p.t)) + stField("Parent", stSel("gpa", [ [ "", "ScreenGUI" ], ...[ ...new Set(frames) ].map(n => [ n, n ]) ], g.pa || "")) + (p.t === "image" ? stField("Image", stSel("gim", [ [ "", edImgs().length ? "None" : "None · upload in Images" ], ...edImgs().map(m => [ m.id, m.n ]) ], p.im || "")) : "") + (p.t === "video" ? stField("YouTube", `<input type="text" data-prop="gyt" value="${p.yt ? "https://youtu.be/" + p.yt : ""}" placeholder="Paste a YouTube link">`) : "") + (p.t !== "frame" && p.t !== "image" && p.t !== "video" ? stField("Text", `<input type="text" data-prop="gtx" value="${esc(p.tx)}" maxlength="500">`) + stField("Text size", stNum("gts", p.ts, 1)) + stField("Text color", `<input type="color" data-prop="gtc" value="#${p.tc}">`) + stField("Font", stSel("gf", [ [ "bold", "Bold" ], [ "round", "Rounded" ], [ "code", "Code" ] ], p.f)) + stField("Align", stSel("gal", [ [ "l", "Left" ], [ "c", "Center" ], [ "r", "Right" ] ], p.al)) + (p.t === "button" ? stField("Key", `<input type="text" data-prop="gk" value="${esc(p.k || "")}" maxlength="1" placeholder="A–Z">`) : "") : "") + stField("Background", `<input type="color" data-prop="gbg" value="#${p.bg}">`) + stField("Bg see-through", `<div class="st-row2"><input type="range" data-prop="gbt" min="0" max="1" step=".05" value="${p.bt}"><em>${Math.round(p.bt * 100)}%</em></div>`) + stField("Corners", stNum("gr", p.r, 1)) + stField("Position %", v2("gx", "gy", p.x, p.y)) + stField("Size %", v2("gw", "gh", p.w, p.h)) + stField("Anchor", stSel("gan", [ "Top left", "Top", "Top right", "Left", "Center", "Right", "Bottom left", "Bottom", "Bottom right" ].map((t, k) => [ k, t ]), p.an)) + stField("Visible", stCheck("gv", p.v)) + `<div class="st-row2" style="margin-top:8px"><button class="st-btn" data-act="dupgui">DUPLICATE</button><button class="st-btn del" data-act="delgui">DELETE</button></div>` + `<div class="st-note">Position and size are percent of the screen${g.pa ? " (or of the parent frame)" : ""}. Scripts reach it with <code>game.gui('${esc(g.n)}')</code>${p.t === "button" ? ` and <code>.on('click', player =&gt; …)</code>` : ""}. Use <code>player.gui('${esc(g.n)}')</code> to change it for one player only.</div>`;
+    h = `<div class="st-t">${stIcon("gui")}${esc(g.n)}</div>` + stField("Name", `<input type="text" data-prop="gn" value="${esc(g.n)}" maxlength="32">`) + stField("Class", stSel("gt", [ [ "frame", "Frame" ], [ "label", "TextLabel" ], [ "button", "TextButton" ], [ "image", "ImageLabel" ], [ "video", "VideoFrame" ] ], p.t)) + stField("Parent", stSel("gpa", [ [ "", "ScreenGUI" ], ...[ ...new Set(frames) ].map(n => [ n, n ]) ], g.pa || "")) + (p.t === "image" || p.t === "button" ? stField(p.t === "button" ? "Image (optional)" : "Image", stSel("gim", [ [ "", edImgs().length ? "None" : "None · upload in Images" ], ...edImgs().map(m => [ m.id, m.n ]) ], p.im || "")) : "") + (p.t === "video" ? stField("YouTube", `<input type="text" data-prop="gyt" value="${p.yt ? "https://youtu.be/" + p.yt : ""}" placeholder="Paste a YouTube link">`) : "") + (p.t !== "frame" && p.t !== "image" && p.t !== "video" ? stField("Text", `<input type="text" data-prop="gtx" value="${esc(p.tx)}" maxlength="500">`) + stField("Text size", stNum("gts", p.ts, 1)) + stField("Text color", `<input type="color" data-prop="gtc" value="#${p.tc}">`) + stField("Font", stSel("gf", [ [ "bold", "Bold" ], [ "round", "Rounded" ], [ "code", "Code" ] ], p.f)) + stField("Align", stSel("gal", [ [ "l", "Left" ], [ "c", "Center" ], [ "r", "Right" ] ], p.al)) + (p.t === "button" ? stField("Key", `<input type="text" data-prop="gk" value="${esc(p.k || "")}" maxlength="1" placeholder="A–Z">`) : "") : "") + stField("Background", `<input type="color" data-prop="gbg" value="#${p.bg}">`) + stField("Bg see-through", `<div class="st-row2"><input type="range" data-prop="gbt" min="0" max="1" step=".05" value="${p.bt}"><em>${Math.round(p.bt * 100)}%</em></div>`) + stField("Corners", stNum("gr", p.r, 1)) + stField("Position %", v2("gx", "gy", p.x, p.y)) + stField("Size %", v2("gw", "gh", p.w, p.h)) + stField("Anchor", stSel("gan", [ "Top left", "Top", "Top right", "Left", "Center", "Right", "Bottom left", "Bottom", "Bottom right" ].map((t, k) => [ k, t ]), p.an)) + stField("Visible", stCheck("gv", p.v)) + `<div class="st-row2" style="margin-top:8px"><button class="st-btn" data-act="dupgui">DUPLICATE</button><button class="st-btn del" data-act="delgui">DELETE</button></div>` + `<div class="st-note">Position and size are percent of the screen${g.pa ? " (or of the parent frame)" : ""}. Scripts reach it with <code>game.gui('${esc(g.n)}')</code>${p.t === "button" ? ` and <code>.on('click', player =&gt; …)</code>` : ""}. Use <code>player.gui('${esc(g.n)}')</code> to change it for one player only.</div>`;
   } else if (s.kind === "sc") {
     const sc = edScripts()[s.i];
     if (!sc) {
@@ -16783,7 +17673,7 @@ function renderScHelp() {
   $("scSide").classList.toggle("hidden", !ST.help);
   if (!ST.help) return;
   const ex = (t, c) => `<div class="sc-ex"><b>${t}</b><pre>${esc(c)}</pre><button class="st-mini" data-ins="${esc(c)}">INSERT</button></div>`;
-  $("scSide").innerHTML = `<div class="sc-oh">API</div>\n  <div class="sc-api">\n  <p><code>game.on(event, fn)</code> events: <code>start</code>, <code>tick</code> (dt), <code>playerJoined</code>, <code>playerLeft</code>, <code>playerDied</code>, <code>chat</code> (player, text)</p>\n  <p><code>game.part(name)</code> one named part · <code>game.parts(name)</code> all with that name</p>\n  <p>Part: <code>position</code> <code>rotation</code> <code>size</code> <code>color</code> <code>transparency</code> <code>canCollide</code> <code>anchored</code> <code>velocity</code> <code>visible</code> · <code>move(x,y,z)</code> <code>turn(x,y,z)</code> <code>destroy()</code> · <code>on('touched', fn)</code> <code>on('touchEnded', fn)</code> <code>on('clicked', fn)</code> · <code>text</code> (sign) <code>light</code> (range, 0 = off) <code>decal</code> (image id)</p>\n  <p>Player: <code>name</code> <code>position</code> <code>health</code> · <code>damage(n)</code> <code>heal(n)</code> <code>teleport(x,y,z)</code> <code>launch(x,y,z)</code> <code>kill()</code> · <code>look</code> <code>velocity</code> <code>speed</code> <code>lookAt(x,y,z)</code></p>\n  <p><code>game.players()</code> <code>game.message(text, sec)</code> <code>game.chat(text)</code> <code>game.spawn('crate', [x,y,z])</code> <code>game.zombie('runner', [x,y,z])</code> <code>game.explode([x,y,z], power)</code> <code>game.gravity</code> <code>game.time</code> <code>game.random(a,b)</code></p>\n  <p><code>print(...)</code> <code>await wait(sec)</code> <code>every(sec, fn)</code></p>\n  <p>ScreenGUI: <code>game.gui(name)</code> for everyone · <code>player.gui(name)</code> for one player · <code>text</code> <code>visible</code> <code>textColor</code> <code>background</code> <code>transparency</code> <code>position</code> [x%, y%] <code>size</code> [w%, h%] <code>textSize</code> · <code>show()</code> <code>hide()</code> · <code>on('click', player =&gt; …)</code></p>\n  <p>Make things: <code>game.create({ shape, size, position, rotation, color, material, anchored, canCollide, transparency, name })</code> returns a part · <code>part.clone()</code> · <code>part.destroy()</code> · <code>game.createGui({ type, name, text, position, size, anchor, textColor, background, parent, key })</code> · <code>key: 'F'</code> lets PC players press F for a button · <code>type: 'image'</code> with <code>image: id</code> · <code>type: 'video'</code> with <code>video: 'YouTube link'</code> · <code>game.images()</code> lists your image ids</p>\n  </div>\n  ${ex("Kill brick", "game.part('Lava').on('touched', p => p.kill())")}\n  ${ex("Moving platform", "const plat = game.part('Platform')\nconst start = plat.position\ngame.on('tick', () => {\n  plat.position = [start[0], start[1] + Math.sin(game.time) * 3, start[2]]\n})")}\n  ${ex("Spinner", "const spin = game.part('Spinner')\ngame.on('tick', dt => spin.turn(0, 90 * dt, 0))")}\n  ${ex("Button opens a door", "const door = game.part('Door')\ngame.part('Button').on('touched', async p => {\n  door.canCollide = false\n  door.transparency = 0.8\n  await wait(3)\n  door.canCollide = true\n  door.transparency = 0\n})")}\n  ${ex("Checkpoint", "game.part('Checkpoint').on('touched', p => {\n  game.message(p.name + ' reached the checkpoint!', 2)\n})")}\n  ${ex("Jump pad", "game.part('Pad').on('touched', p => p.launch(0, 25, 0))")}\n  ${ex("Zombie waves", "every(10, () => game.zombie('walker', [game.random(-20, 20), 1, -30]))")}\n  ${ex("Falling floor", "for (const tile of game.parts('Tile')) {\n  tile.on('touched', async () => {\n    tile.color = '#d93a3a'\n    await wait(0.6)\n    tile.anchored = false\n  })\n}")}\n  ${ex("GUI: coin counter", "const coins = {}\nfor (const c of game.parts('Coin')) {\n  c.on('touched', p => {\n    coins[p.id] = (coins[p.id] || 0) + 1\n    c.destroy()\n    const label = p.gui('Coins')\n    if (label) label.text = 'Coins: ' + coins[p.id]\n  })\n}")}\n  ${ex("GUI: heal button", "const btn = game.gui('HealButton')\nif (btn) btn.on('click', async p => {\n  p.heal(50)\n  p.gui('HealButton').hide()\n  await wait(10)\n  p.gui('HealButton').show()\n})")}\n  ${ex("Click a lamp to switch it", "const lamp = game.part('Lamp')\nlamp.on('clicked', p => {\n  lamp.light = lamp.light ? 0 : 20\n  lamp.text = lamp.light ? 'ON' : 'OFF'\n})")}\n  ${ex("Make a kickable ball", "const ball = game.create({ shape: 'ball', size: 2, position: [0, 6, 0], color: '#ffffff', anchored: false })\nball.on('touched', p => {\n  const a = ball.position, b = p.position\n  const dx = a[0] - b[0], dz = a[2] - b[2], len = Math.hypot(dx, dz) || 1\n  ball.velocity = [dx / len * 16, 5, dz / len * 16]\n})")}\n  ${ex("Build a staircase", "for (let i = 0; i < 10; i++) {\n  game.create({ size: [4, 1, 4], position: [i * 5, i * 1.5, 0], color: '#3aa655' })\n}")}\n  ${ex("GUI: countdown", "const timer = game.gui('Timer')\nlet left = 60\nevery(1, () => {\n  if (left <= 0) return\n  left--\n  timer.text = 'Time: ' + left\n  if (left <= 10) timer.textColor = '#ff4d4d'\n})")}`;
+  $("scSide").innerHTML = `<div class="sc-oh">API</div>\n  <div class="sc-api">\n  <p><code>game.on(event, fn)</code> events: <code>start</code>, <code>tick</code> (dt), <code>playerJoined</code>, <code>playerLeft</code>, <code>playerDied</code>, <code>chat</code> (player, text), <code>playerLoaded</code> (player, savedData)</p>\n  <p><code>game.part(name)</code> one named part · <code>game.parts(name)</code> all with that name</p>\n  <p>Part: <code>position</code> <code>rotation</code> <code>size</code> <code>color</code> <code>transparency</code> <code>canCollide</code> <code>anchored</code> <code>velocity</code> <code>visible</code> · <code>move(x,y,z)</code> <code>turn(x,y,z)</code> <code>destroy()</code> · <code>on('touched', fn)</code> <code>on('touchEnded', fn)</code> <code>on('clicked', fn)</code> · <code>text</code> (sign) <code>light</code> (range, 0 = off) <code>decal</code> (image id)</p>\n  <p>Player: <code>name</code> <code>position</code> <code>health</code> · <code>damage(n)</code> <code>heal(n)</code> <code>teleport(x,y,z)</code> <code>launch(x,y,z)</code> <code>kill()</code> · <code>look</code> <code>velocity</code> <code>speed</code> <code>lookAt(x,y,z)</code></p>\n  <p>Save data: <code>player.data</code> what was saved last time · <code>player.save({ coins: 5 })</code> keeps it for next time (8000 characters max) · wait for <code>playerLoaded</code> before saving</p>\n  <p>Tools: <code>const t = player.giveTool({ name: 'Sword', icon: 'sword' })</code> · icons: sword star bolt heart wand gun key flag rocket cube · <code>t.on('activated', p =&gt; …)</code> · <code>t.remove()</code> · <code>player.removeTools()</code></p>\n  <p><code>game.players()</code> <code>game.message(text, sec)</code> <code>game.chat(text)</code> <code>game.spawn('crate', [x,y,z])</code> <code>game.zombie('runner', [x,y,z])</code> <code>game.explode([x,y,z], power)</code> <code>game.gravity</code> <code>game.time</code> <code>game.random(a,b)</code></p>\n  <p><code>print(...)</code> <code>await wait(sec)</code> <code>every(sec, fn)</code></p>\n  <p>ScreenGUI: <code>game.gui(name)</code> for everyone · <code>player.gui(name)</code> for one player · <code>text</code> <code>visible</code> <code>textColor</code> <code>background</code> <code>transparency</code> <code>position</code> [x%, y%] <code>size</code> [w%, h%] <code>textSize</code> · <code>show()</code> <code>hide()</code> · <code>on('click', player =&gt; …)</code></p>\n  <p>Make things: <code>game.create({ shape, size, position, rotation, color, material, anchored, canCollide, transparency, name })</code> returns a part · <code>part.clone()</code> · <code>part.destroy()</code> · <code>game.createGui({ type, name, text, position, size, anchor, textColor, background, parent, key })</code> · <code>key: 'F'</code> lets PC players press F for a button · <code>type: 'image'</code> with <code>image: id</code> · <code>type: 'imagebutton'</code> is a clickable image · <code>type: 'video'</code> with <code>video: 'YouTube link'</code> · <code>game.images()</code> lists your image ids</p>\n  </div>\n  ${ex("Save coins", "game.createGui({ name: 'Coins', text: 'Coins: 0' })\ngame.on('playerLoaded', (p, data) => {\n  let coins = data.coins || 0\n  p.gui('Coins').text = 'Coins: ' + coins\n  every(5, () => {\n    coins++\n    p.gui('Coins').text = 'Coins: ' + coins\n    p.save({ coins })\n  })\n})")}\n  ${ex("Give a tool", "game.on('playerLoaded', p => {\n  const zap = p.giveTool({ name: 'Zapper', icon: 'bolt' })\n  zap.on('activated', pl => pl.launch(0, 20, 0))\n})")}\n  ${ex("Kill brick", "game.part('Lava').on('touched', p => p.kill())")}\n  ${ex("Moving platform", "const plat = game.part('Platform')\nconst start = plat.position\ngame.on('tick', () => {\n  plat.position = [start[0], start[1] + Math.sin(game.time) * 3, start[2]]\n})")}\n  ${ex("Spinner", "const spin = game.part('Spinner')\ngame.on('tick', dt => spin.turn(0, 90 * dt, 0))")}\n  ${ex("Button opens a door", "const door = game.part('Door')\ngame.part('Button').on('touched', async p => {\n  door.canCollide = false\n  door.transparency = 0.8\n  await wait(3)\n  door.canCollide = true\n  door.transparency = 0\n})")}\n  ${ex("Checkpoint", "game.part('Checkpoint').on('touched', p => {\n  game.message(p.name + ' reached the checkpoint!', 2)\n})")}\n  ${ex("Jump pad", "game.part('Pad').on('touched', p => p.launch(0, 25, 0))")}\n  ${ex("Zombie waves", "every(10, () => game.zombie('walker', [game.random(-20, 20), 1, -30]))")}\n  ${ex("Falling floor", "for (const tile of game.parts('Tile')) {\n  tile.on('touched', async () => {\n    tile.color = '#d93a3a'\n    await wait(0.6)\n    tile.anchored = false\n  })\n}")}\n  ${ex("GUI: coin counter", "const coins = {}\nfor (const c of game.parts('Coin')) {\n  c.on('touched', p => {\n    coins[p.id] = (coins[p.id] || 0) + 1\n    c.destroy()\n    const label = p.gui('Coins')\n    if (label) label.text = 'Coins: ' + coins[p.id]\n  })\n}")}\n  ${ex("GUI: heal button", "const btn = game.gui('HealButton')\nif (btn) btn.on('click', async p => {\n  p.heal(50)\n  p.gui('HealButton').hide()\n  await wait(10)\n  p.gui('HealButton').show()\n})")}\n  ${ex("Click a lamp to switch it", "const lamp = game.part('Lamp')\nlamp.on('clicked', p => {\n  lamp.light = lamp.light ? 0 : 20\n  lamp.text = lamp.light ? 'ON' : 'OFF'\n})")}\n  ${ex("Make a kickable ball", "const ball = game.create({ shape: 'ball', size: 2, position: [0, 6, 0], color: '#ffffff', anchored: false })\nball.on('touched', p => {\n  const a = ball.position, b = p.position\n  const dx = a[0] - b[0], dz = a[2] - b[2], len = Math.hypot(dx, dz) || 1\n  ball.velocity = [dx / len * 16, 5, dz / len * 16]\n})")}\n  ${ex("Build a staircase", "for (let i = 0; i < 10; i++) {\n  game.create({ size: [4, 1, 4], position: [i * 5, i * 1.5, 0], color: '#3aa655' })\n}")}\n  ${ex("GUI: countdown", "const timer = game.gui('Timer')\nlet left = 60\nevery(1, () => {\n  if (left <= 0) return\n  left--\n  timer.text = 'Time: ' + left\n  if (left <= 10) timer.textColor = '#ff4d4d'\n})")}`;
 }
 
 $("scSrc").addEventListener("input", scSync);
@@ -16980,6 +17870,767 @@ $("vidMenu").addEventListener("click", e => {
   if (e.target.id === "vidMenu" || e.target.closest("[data-vid='close']")) closeVideo();
 });
 
+const SOC = {
+  tab: "PEOPLE",
+  q: "",
+  rows: null,
+  prof: null,
+  club: null,
+  clubs: null,
+  mine: [],
+  following: new Set,
+  msg: "",
+  bad: false,
+  busy: false,
+  newClub: null,
+  lookT: new Map
+};
+
+const SOC_COLS = [ "f5a524", "e5484d", "3aa655", "2f6fd0", "8a4fd6", "e76fb3", "2fb3c9", "16161a" ];
+
+function socFriendly(e) {
+  const m = (e && e.message || String(e || "")).toLowerCase();
+  if (m.includes("relation") || m.includes("does not exist") || m.includes("schema cache") || m.includes("could not find")) return "This isn't switched on yet. The admin needs to run social-setup.sql.";
+  if (m.includes("duplicate") || m.includes("unique")) return "That name is already taken.";
+  if (m.includes("too many")) return "You're doing that too much. Try again later.";
+  if (m.includes("one club")) return "You can only own one club.";
+  if (m.includes("5 clubs") || m.includes("five clubs")) return "You can be in 5 clubs at most.";
+  if (m.includes("tag")) return "Tags are 2 to 4 letters or numbers.";
+  if (m.includes("row-level") || m.includes("permission")) return "You're not allowed to do that.";
+  if (m.includes("fetch") || m.includes("network")) return "Could not reach the server.";
+  return e && e.message || "Something went wrong.";
+}
+
+function socLookThumb(o) {
+  if (!o || !TEMPL.base) return "";
+  const k = JSON.stringify(o);
+  if (SOC.lookT.has(k)) return SOC.lookT.get(k);
+  let tr, url = "";
+  try {
+    tr = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: true,
+      preserveDrawingBuffer: true
+    });
+    tr.setSize(96, 128);
+    tr.setPixelRatio(1);
+    tr.outputColorSpace = THREE.SRGBColorSpace;
+    tr.toneMapping = THREE.ACESFilmicToneMapping;
+    const ts = new THREE.Scene;
+    ts.add(new THREE.HemisphereLight(16777215, 5592405, 1.6));
+    const dl = new THREE.DirectionalLight(16777215, 2.2);
+    dl.position.set(3, 5, 4);
+    ts.add(dl);
+    const tc = new THREE.PerspectiveCamera(30, 96 / 128, .05, 100);
+    const m = buildCustomModel({
+      o: avClean(o)
+    }), mx = new THREE.AnimationMixer(m);
+    mx.clipAction(TEMPL.base.clips.find(c => c.name === "Idle")).play();
+    mx.update(.8);
+    ts.add(m);
+    m.rotation.y = -.35;
+    tc.position.set(0, 1.55, 7.2);
+    tc.lookAt(0, 1.3, 0);
+    tr.render(ts, tc);
+    url = tr.domElement.toDataURL("image/png");
+  } catch (e) {}
+  if (tr) {
+    tr.dispose();
+    tr.forceContextLoss();
+  }
+  if (SOC.lookT.size > 40) SOC.lookT.clear();
+  SOC.lookT.set(k, url);
+  return url;
+}
+
+let profT = 0;
+
+async function profileSync() {
+  if (!user) return;
+  clearTimeout(profT);
+  profT = setTimeout(async () => {
+    try {
+      const s = await getSB();
+      const o = avClean(avOutfit());
+      if (String(o.hat).startsWith("u:")) o.hat = "none";
+      if (String(o.design).startsWith("u:")) o.design = "none";
+      await s.from("pz_profiles").upsert({
+        user_id: user.id,
+        username: user.name,
+        look: curAvatar.custom ? o : null,
+        updated_at: (new Date).toISOString()
+      }, {
+        onConflict: "user_id"
+      });
+    } catch (e) {}
+  }, 400);
+}
+
+async function socMine(force) {
+  if (!user) return;
+  try {
+    const s = await getSB();
+    const [a, b] = await Promise.all([ s.from("pz_club_members").select("club,role,pz_clubs(id,name,tag,color,members)").eq("user_id", user.id).limit(10), s.from("pz_follows").select("followee").eq("follower", user.id).limit(500) ]);
+    if (!a.error) SOC.mine = (a.data || []).filter(r => r.pz_clubs).map(r => Object.assign({
+      role: r.role
+    }, r.pz_clubs));
+    if (!b.error) SOC.following = new Set((b.data || []).map(r => r.followee));
+    const ct = SD.settings.ctag;
+    if (ct && !SOC.mine.some(c => c.tag === ct.t)) {
+      delete SD.settings.ctag;
+      persist();
+    }
+  } catch (e) {}
+}
+
+function socTag() {
+  const t = SD.settings.ctag;
+  return t && /^[A-Z0-9]{2,4}$/.test(t.t) ? t : null;
+}
+
+function openSoc(tab) {
+  audioInit();
+  SOC.tab = tab || "PEOPLE";
+  SOC.prof = null;
+  SOC.club = null;
+  SOC.msg = "";
+  SOC.newClub = null;
+  $("socMenu").classList.remove("hidden");
+  $("socQ").value = SOC.q;
+  socLoad();
+}
+
+function closeSoc() {
+  $("socMenu").classList.add("hidden");
+}
+
+function socSay(t, bad) {
+  SOC.msg = t;
+  SOC.bad = !!bad;
+  const el = $("socMsg");
+  if (el) {
+    el.textContent = t;
+    el.classList.toggle("bad", !!bad);
+  }
+}
+
+const socMsgHTML = () => `<p class="soc-msg ${SOC.bad ? "bad" : ""}" id="socMsg">${esc(SOC.msg || "")}</p>`;
+
+const socAv = (name, look) => {
+  const u = look ? socLookThumb(look) : "";
+  return u ? `<i class="av" style="background-image:url('${u}');background-size:180%;background-position:50% 8%"></i>` : `<i class="av">${esc((name || "?")[0].toUpperCase())}</i>`;
+};
+
+const socClubTag = c => `<span class="ctag" style="background:#${/^[0-9a-f]{6}$/.test(c.color) ? c.color : "f5a524"}">${esc(c.tag)}</span>`;
+
+async function socLoad() {
+  SOC.busy = true;
+  renderSoc();
+  try {
+    const s = await getSB();
+    if (SOC.prof) await socLoadProf(s); else if (SOC.club) await socLoadClub(s); else if (SOC.tab === "PEOPLE") {
+      const q = SOC.q.trim().toLowerCase().replace(/[^a-z0-9_]/g, "");
+      if (q) {
+        const {data: data, error: error} = await s.from("pz_profiles").select("user_id,username,bio,look").ilike("username", q.replace(/_/g, "\\_") + "%").order("username").limit(30);
+        if (error) throw error;
+        SOC.rows = data || [];
+      } else if (user) {
+        await socMine();
+        const ids = [ ...SOC.following ].slice(0, 100);
+        if (ids.length) {
+          const {data: data, error: error} = await s.from("pz_profiles").select("user_id,username,bio,look").in("user_id", ids).order("username");
+          if (error) throw error;
+          SOC.rows = data || [];
+        } else SOC.rows = [];
+      } else {
+        const {data: data, error: error} = await s.from("pz_profiles").select("user_id,username,bio,look").order("updated_at", {
+          ascending: false
+        }).limit(20);
+        if (error) throw error;
+        SOC.rows = data || [];
+      }
+    } else if (SOC.tab === "CLUBS") {
+      if (user) await socMine();
+      const q = SOC.q.trim().replace(/[%_\\]/g, "");
+      let r = s.from("pz_clubs").select("id,name,tag,descr,color,owner,owner_name,members");
+      if (q) r = r.ilike("name", "%" + q + "%");
+      const {data: data, error: error} = await r.order("members", {
+        ascending: false
+      }).limit(40);
+      if (error) throw error;
+      SOC.clubs = data || [];
+    } else if (SOC.tab === "ME" && user) {
+      await socMine();
+      const {data: data} = await s.from("pz_profiles").select("user_id,username,bio,look").eq("user_id", user.id).maybeSingle();
+      SOC.me = data || {
+        user_id: user.id,
+        username: user.name,
+        bio: ""
+      };
+      const [f1, f2] = await Promise.all([ s.from("pz_follows").select("follower", {
+        count: "exact",
+        head: true
+      }).eq("followee", user.id), s.from("pz_follows").select("followee", {
+        count: "exact",
+        head: true
+      }).eq("follower", user.id) ]);
+      SOC.me.fers = f1.count || 0;
+      SOC.me.fing = f2.count || 0;
+    }
+    if (SOC.msg && SOC.bad && /switched on/.test(SOC.msg)) SOC.msg = "";
+  } catch (e) {
+    socSay(socFriendly(e), true);
+    SOC.rows = SOC.rows || [];
+    SOC.clubs = SOC.clubs || [];
+  }
+  SOC.busy = false;
+  if (!$("socMenu").classList.contains("hidden")) renderSoc();
+}
+
+async function socLoadProf(s) {
+  const P = SOC.prof;
+  const pr = P.user_id ? s.from("pz_profiles").select("user_id,username,bio,look,created_at").eq("user_id", P.user_id).maybeSingle() : s.from("pz_profiles").select("user_id,username,bio,look,created_at").eq("username", P.username).maybeSingle();
+  const {data: data, error: error} = await pr;
+  if (error) throw error;
+  if (!data) {
+    P.missing = true;
+    return;
+  }
+  Object.assign(P, data);
+  const id = P.user_id;
+  const [f1, f2, cl, mp] = await Promise.all([ s.from("pz_follows").select("follower", {
+    count: "exact",
+    head: true
+  }).eq("followee", id), s.from("pz_follows").select("followee", {
+    count: "exact",
+    head: true
+  }).eq("follower", id), s.from("pz_club_members").select("role,pz_clubs(id,name,tag,color,members)").eq("user_id", id).limit(10), s.from("pz_workshop").select(WS_COLS).eq("author", id).order("updated_at", {
+    ascending: false
+  }).limit(12) ]);
+  P.fers = f1.count || 0;
+  P.fing = f2.count || 0;
+  P.clubs = (cl.data || []).filter(r => r.pz_clubs).map(r => r.pz_clubs);
+  P.maps = mp.data || [];
+  if (user) await socMine();
+  P.loaded = true;
+}
+
+async function socLoadClub(s) {
+  const C = SOC.club;
+  const [a, b] = await Promise.all([ s.from("pz_clubs").select("id,name,tag,descr,color,owner,owner_name,members,created_at").eq("id", C.id).maybeSingle(), s.from("pz_club_members").select("user_id,username,role").eq("club", C.id).order("joined_at").limit(100) ]);
+  if (a.error) throw a.error;
+  if (!a.data) {
+    C.missing = true;
+    return;
+  }
+  Object.assign(C, a.data);
+  C.list = b.data || [];
+  if (user) await socMine();
+  C.loaded = true;
+}
+
+function renderSoc() {
+  const tabs = [ "PEOPLE", "CLUBS", "ME" ];
+  $("socTabs").innerHTML = tabs.map(t => `<button class="tab ${t === SOC.tab && !SOC.prof && !SOC.club ? "on" : ""}" data-t="${t}">${t === "ME" ? "MY PROFILE" : t}</button>`).join("");
+  const showFind = !SOC.prof && !SOC.club && SOC.tab !== "ME" && !SOC.newClub;
+  $("socFind").classList.toggle("hidden", !showFind);
+  $("socQ").placeholder = SOC.tab === "CLUBS" ? "Search clubs" : "Search players";
+  const body = $("socBody");
+  let h = "";
+  if (SOC.prof) h = socProfHTML(); else if (SOC.club) h = socClubHTML(); else if (SOC.tab === "PEOPLE") h = socPeopleHTML(); else if (SOC.tab === "CLUBS") h = SOC.newClub ? socNewClubHTML() : socClubsHTML(); else h = socMeHTML();
+  const st = body.scrollTop;
+  body.innerHTML = h;
+  body.scrollTop = st;
+}
+
+function socPeopleHTML() {
+  const rows = SOC.rows;
+  const title = SOC.q.trim() ? "RESULTS" : user ? "PEOPLE YOU FOLLOW" : "RECENTLY ACTIVE";
+  let h = socMsgHTML() + `<div class="sec">${title}</div>`;
+  if (!rows) return h + '<div class="empty">Loading…</div>';
+  if (!rows.length) return h + `<div class="empty">${SOC.q.trim() ? "Nobody found with that name." : user ? "You don't follow anyone yet. Search for a player above." : "Nobody here yet."}</div>`;
+  return h + `<div class="soc-list">${rows.map(r => `<button class="soc-row" data-s="prof" data-id="${esc(r.user_id)}">${socAv(r.username, r.look)}<span class="tx"><b>${esc(r.username)}</b><small>${esc(r.bio || "No bio yet")}</small></span>${SOC.following.has(r.user_id) ? "<em>FOLLOWING</em>" : ""}</button>`).join("")}</div>`;
+}
+
+function socProfHTML() {
+  const P = SOC.prof;
+  let h = '<button class="sb" data-s="back">‹ BACK</button>';
+  if (P.missing) return h + `<div class="empty">${esc(P.username || "This player")} hasn't made a profile yet.</div>`;
+  if (!P.loaded) return h + '<div class="empty">Loading…</div>';
+  const me = user && user.id === P.user_id, fol = SOC.following.has(P.user_id);
+  const pic = P.look ? socLookThumb(P.look) : "";
+  h += `<div class="soc-prof"><i class="big" style="${pic ? `background-image:url('${pic}')` : ""}"></i><div><h3>${esc(P.username)}${P.username === ADMIN_NAME ? ' <span class="ctag" style="background:#f5a524">ADMIN</span>' : ""}</h3>
+    <p class="bio">${esc(P.bio || "No bio yet.")}</p>
+    <div class="soc-nums"><span><b>${P.fers}</b>followers</span><span><b>${P.fing}</b>following</span><span><b>${P.maps.length}</b>maps</span></div></div></div>
+    <div class="soc-btns">${user && !me ? `<button class="go ${fol ? "ghost" : ""}" data-s="${fol ? "unfollow" : "follow"}">${fol ? "UNFOLLOW" : "FOLLOW"}</button><button class="go ghost" data-s="report">REPORT</button>` : ""}${me ? '<button class="go ghost" data-s="editme">EDIT MY PROFILE</button>' : ""}${!user ? '<p class="foot">Log in to follow players.</p>' : ""}</div>
+    ${isAdmin() && !me ? '<div class="soc-btns"><button class="go ghost" data-s="aban" style="color:#d93a3a">BAN ACCOUNT</button><button class="go ghost" data-s="adban" style="color:#d93a3a">BAN DEVICE + ACCOUNT</button><button class="go ghost" data-s="aunban">UNBAN</button></div>' : ""}
+    ${socMsgHTML()}`;
+  h += `<div class="sec">CLUBS</div>` + (P.clubs.length ? `<div class="soc-list">${P.clubs.map(c => `<button class="soc-row" data-s="club" data-id="${esc(c.id)}">${socClubTag(c)}<span class="tx"><b>${esc(c.name)}</b><small>${c.members} member${c.members === 1 ? "" : "s"}</small></span></button>`).join("")}</div>` : '<div class="empty">Not in any clubs.</div>');
+  h += `<div class="sec">WORKSHOP MAPS</div>` + (P.maps.length ? `<div class="soc-maps">${P.maps.map(m => `<button class="soc-map" data-s="map" data-id="${esc(m.id)}"><i style="${m.thumb ? `background-image:url('${esc(m.thumb)}')` : ""}"></i><span>${esc(m.name)}</span></button>`).join("")}</div>` : '<div class="empty">No published maps yet.</div>');
+  return h;
+}
+
+function socClubsHTML() {
+  let h = socMsgHTML();
+  if (user) {
+    const owns = SOC.mine.some(c => c.role === "owner");
+    h += `<div class="sec">YOUR CLUBS</div>` + (SOC.mine.length ? `<div class="soc-list">${SOC.mine.map(c => `<button class="soc-row" data-s="club" data-id="${esc(c.id)}">${socClubTag(c)}<span class="tx"><b>${esc(c.name)}</b><small>${c.members} member${c.members === 1 ? "" : "s"}${c.role === "owner" ? " · you own it" : ""}</small></span></button>`).join("")}</div>` : '<div class="empty">You are not in a club yet. Join one below or make your own.</div>') + (owns ? "" : '<button class="go" data-s="newclub" style="margin-top:10px">CREATE A CLUB</button>');
+  } else h += '<p class="foot">Log in to join or create clubs.</p>';
+  h += `<div class="sec">${SOC.q.trim() ? "RESULTS" : "TOP CLUBS"}</div>`;
+  if (!SOC.clubs) return h + '<div class="empty">Loading…</div>';
+  if (!SOC.clubs.length) return h + `<div class="empty">${SOC.q.trim() ? "No clubs match that." : "No clubs yet. Be the first!"}</div>`;
+  return h + `<div class="soc-list">${SOC.clubs.map(c => `<button class="soc-row" data-s="club" data-id="${esc(c.id)}">${socClubTag(c)}<span class="tx"><b>${esc(c.name)}</b><small>${esc(c.descr || "by " + c.owner_name)}</small></span><em>${c.members} 👤</em></button>`).join("")}</div>`;
+}
+
+function socNewClubHTML() {
+  const N = SOC.newClub;
+  return `<button class="sb" data-s="back">‹ BACK</button><div class="sec">CREATE A CLUB</div>
+    <label class="fld">NAME<input id="ncName" maxlength="24" value="${esc(N.name)}" autocomplete="off"></label>
+    <label class="fld" style="margin-top:8px">TAG (2–4 LETTERS, SHOWS IN CHAT)<input id="ncTag" maxlength="4" value="${esc(N.tag)}" autocomplete="off" style="text-transform:uppercase"></label>
+    <label class="fld" style="margin-top:8px">DESCRIPTION<textarea id="ncDesc" maxlength="200" rows="3">${esc(N.descr)}</textarea></label>
+    <div class="sec">COLOR</div><div class="soc-cols">${SOC_COLS.map(c => `<button data-s="nccol" data-v="${c}" class="${N.color === c ? "on" : ""}" style="background:#${c}"></button>`).join("")}</div>
+    ${socMsgHTML()}<button class="go" data-s="mkclub" ${SOC.busy ? "disabled" : ""}>CREATE CLUB</button><p class="foot">You can own one club and be in up to 5.</p>`;
+}
+
+function socClubHTML() {
+  const C = SOC.club;
+  let h = '<button class="sb" data-s="back">‹ BACK</button>';
+  if (C.missing) return h + '<div class="empty">This club is gone.</div>';
+  if (!C.loaded) return h + '<div class="empty">Loading…</div>';
+  const mine = SOC.mine.find(c => c.id === C.id), owner = user && C.owner === user.id;
+  h += `<div class="soc-prof"><div><h3>${socClubTag(C)} ${esc(C.name)}</h3><p class="bio">${esc(C.descr || "No description.")}</p>
+    <div class="soc-nums"><span><b>${C.members}</b>member${C.members === 1 ? "" : "s"}</span><span>by <b style="font-size:15px">${esc(C.owner_name)}</b></span></div></div></div>
+    <div class="soc-btns">${user ? owner ? `<button class="go ghost" data-s="delclub" style="color:#d93a3a">${SOC.confirm === C.id ? "TAP AGAIN TO DELETE" : "DELETE CLUB"}</button>` : mine ? '<button class="go ghost" data-s="leave">LEAVE CLUB</button>' : '<button class="go" data-s="join">JOIN CLUB</button>' : '<p class="foot">Log in to join clubs.</p>'}${mine ? `<button class="go ghost" data-s="usetag">${(socTag() || {}).t === C.tag ? "TAG SHOWN IN CHAT ✓" : "SHOW TAG IN CHAT"}</button>` : ""}${user && !owner ? '<button class="go ghost" data-s="report">REPORT</button>' : ""}${isAdmin() && !owner ? `<button class="go ghost" data-s="delclub" style="color:#d93a3a">${SOC.confirm === C.id ? "TAP AGAIN" : "ADMIN DELETE"}</button>` : ""}</div>${socMsgHTML()}
+    <div class="sec">MEMBERS</div><div class="soc-list">${C.list.map(m => `<div class="soc-row" data-s="prof" data-id="${esc(m.user_id)}"><i class="av">${esc(m.username[0].toUpperCase())}</i><span class="tx"><b>${esc(m.username)}</b><small>${m.role === "owner" ? "Owner" : "Member"}</small></span>${owner && m.role !== "owner" ? `<button class="sb del" data-s="kick" data-id="${esc(m.user_id)}">KICK</button>` : ""}</div>`).join("") || '<div class="empty">No members.</div>'}</div>`;
+  return h;
+}
+
+function socMeHTML() {
+  if (!user) return '<div class="empty">Log in to make your profile.</div><button class="go" data-s="login">LOG IN</button>';
+  const M = SOC.me;
+  if (!M) return '<div class="empty">Loading…</div>';
+  const pic = curAvatar.custom ? thumbs.av_custom || "" : thumbs["av_" + curAvatar.id] || "";
+  const t = socTag();
+  return `<div class="soc-prof"><i class="big" style="${pic ? `background-image:url('${pic}')` : ""}"></i><div><h3>${esc(user.name)}</h3><div class="soc-nums"><span><b>${M.fers || 0}</b>followers</span><span><b>${M.fing || 0}</b>following</span></div><p class="foot" style="margin-top:6px">Your profile picture is your avatar. Change it in Avatar.</p></div></div>
+    <label class="fld" style="margin-top:12px">BIO<textarea id="socBio" maxlength="160" rows="3" placeholder="Say something about yourself">${esc(M.bio || "")}</textarea></label>
+    <button class="go" data-s="savebio">SAVE BIO</button>${socMsgHTML()}
+    <div class="sec">CLUB TAG IN CHAT</div><div class="chips">${[ `<button class="chip ${t ? "" : "on"}" data-s="tag" data-v="">NONE</button>`, ...SOC.mine.map(c => `<button class="chip ${t && t.t === c.tag ? "on" : ""}" data-s="tag" data-v="${esc(c.tag)}" data-c="${esc(c.color)}">${esc(c.tag)}</button>`) ].join("")}</div>
+    ${SOC.mine.length ? "" : '<p class="foot">Join a club to show its tag next to your name.</p>'}
+    <button class="go ghost" data-s="viewme" style="margin-top:12px">SEE MY PUBLIC PROFILE</button>`;
+}
+
+function socOpenProf(id, name) {
+  if (!id && !name) return;
+  SOC.prof = {
+    user_id: id || null,
+    username: name || ""
+  };
+  SOC.club = null;
+  SOC.msg = "";
+  $("socBody").scrollTop = 0;
+  socLoad();
+}
+
+async function socAct(a, b) {
+  const s = await getSB();
+  switch (a) {
+   case "back":
+    if (SOC.newClub) SOC.newClub = null; else if (SOC.prof) SOC.prof = null; else SOC.club = null;
+    SOC.msg = "";
+    SOC.confirm = null;
+    socLoad();
+    return;
+
+   case "prof":
+    socOpenProf(b.dataset.id);
+    return;
+
+   case "club":
+    SOC.club = {
+      id: b.dataset.id
+    };
+    SOC.prof = null;
+    SOC.msg = "";
+    SOC.confirm = null;
+    $("socBody").scrollTop = 0;
+    socLoad();
+    return;
+
+   case "map":
+    {
+      const row = (SOC.prof && SOC.prof.maps || []).find(m => m.id === b.dataset.id);
+      if (!row || $("wsBtn").disabled) return;
+      closeSoc();
+      openWorkshop("menu");
+      WS.detail = row;
+      renderWs();
+      return;
+    }
+
+   case "follow":
+   case "unfollow":
+    {
+      if (!user) return;
+      const id = SOC.prof.user_id;
+      const r = a === "follow" ? await s.from("pz_follows").insert({
+        follower: user.id,
+        followee: id
+      }) : await s.from("pz_follows").delete().eq("follower", user.id).eq("followee", id);
+      if (r.error && !String(r.error.message).includes("duplicate")) throw r.error;
+      if (a === "follow") SOC.following.add(id); else SOC.following.delete(id);
+      SOC.prof.fers = Math.max(0, SOC.prof.fers + (a === "follow" ? 1 : -1));
+      renderSoc();
+      return;
+    }
+
+   case "report":
+    if (SOC.prof) openReport("user", SOC.prof.user_id, SOC.prof.username); else if (SOC.club) openReport("club", SOC.club.id, SOC.club.name);
+    return;
+
+   case "aban":
+   case "adban":
+   case "aunban":
+    {
+      if (!isAdmin()) return;
+      const u = SOC.prof.username;
+      if (a === "aunban") {
+        const r = await s.rpc("pz_unban", {
+          uname: u
+        });
+        if (r.error) {
+          const r2 = await s.from("pz_bans").delete().eq("username", u);
+          if (r2.error) throw r2.error;
+        }
+        socSay(u + " can play again.");
+      } else if (a === "adban") {
+        const r = await s.rpc("pz_ban_devices", {
+          uname: u,
+          why: "Banned by an admin"
+        });
+        if (r.error) throw r.error;
+        socSay(`${u} is banned on ${r.data || 0} device${r.data === 1 ? "" : "s"} and their account.`);
+        for (const Rm of NET.peers.values()) if (Rm.u === u) await admKick(Rm, false);
+      } else {
+        const r = await s.from("pz_bans").upsert({
+          username: u,
+          reason: "Banned by an admin"
+        });
+        if (r.error) throw r.error;
+        socSay(u + " is banned.");
+        for (const Rm of NET.peers.values()) if (Rm.u === u) await admKick(Rm, false);
+      }
+      return;
+    }
+
+   case "editme":
+   case "login":
+    if (a === "login") {
+      closeSoc();
+      $("lerr").textContent = "";
+      $("mainMenu").classList.add("hidden");
+      $("loginMenu").classList.remove("hidden");
+      return;
+    }
+    SOC.prof = null;
+    SOC.tab = "ME";
+    socLoad();
+    return;
+
+   case "viewme":
+    socOpenProf(user.id);
+    return;
+
+   case "savebio":
+    {
+      if (!user) return;
+      const bio = ($("socBio").value || "").trim().slice(0, 160);
+      const {error: error} = await s.from("pz_profiles").upsert({
+        user_id: user.id,
+        username: user.name,
+        bio: bio
+      }, {
+        onConflict: "user_id"
+      });
+      if (error) throw error;
+      if (SOC.me) SOC.me.bio = bio;
+      socSay("Saved!");
+      return;
+    }
+
+   case "tag":
+    if (b.dataset.v) SD.settings.ctag = {
+      t: b.dataset.v,
+      c: b.dataset.c || "f5a524"
+    }; else delete SD.settings.ctag;
+    persist();
+    renderSoc();
+    return;
+
+   case "usetag":
+    {
+      const C = SOC.club, t = socTag();
+      if (t && t.t === C.tag) delete SD.settings.ctag; else SD.settings.ctag = {
+        t: C.tag,
+        c: C.color
+      };
+      persist();
+      renderSoc();
+      return;
+    }
+
+   case "newclub":
+    SOC.newClub = {
+      name: "",
+      tag: "",
+      descr: "",
+      color: "f5a524"
+    };
+    SOC.msg = "";
+    renderSoc();
+    return;
+
+   case "nccol":
+    socReadNew();
+    SOC.newClub.color = b.dataset.v;
+    renderSoc();
+    return;
+
+   case "mkclub":
+    {
+      socReadNew();
+      const N = SOC.newClub;
+      N.tag = N.tag.toUpperCase();
+      if (N.name.trim().length < 3) {
+        socSay("Club names need at least 3 letters.", true);
+        return;
+      }
+      if (!/^[A-Z0-9]{2,4}$/.test(N.tag)) {
+        socSay("Tags are 2 to 4 letters or numbers.", true);
+        return;
+      }
+      SOC.busy = true;
+      const {data: data, error: error} = await s.from("pz_clubs").insert({
+        name: N.name.trim().slice(0, 24),
+        tag: N.tag,
+        descr: N.descr.trim().slice(0, 200),
+        color: N.color
+      }).select("id").maybeSingle();
+      SOC.busy = false;
+      if (error) throw error;
+      SOC.newClub = null;
+      SD.settings.ctag = {
+        t: N.tag,
+        c: N.color
+      };
+      persist();
+      SOC.club = {
+        id: data && data.id
+      };
+      SOC.msg = "Club created!";
+      SOC.bad = false;
+      if (!SOC.club.id) SOC.club = null;
+      socLoad();
+      return;
+    }
+
+   case "join":
+    {
+      const {error: error} = await s.from("pz_club_members").insert({
+        club: SOC.club.id,
+        user_id: user.id,
+        username: user.name
+      });
+      if (error) throw error;
+      SOC.msg = "You joined " + SOC.club.name + "!";
+      SOC.bad = false;
+      socLoad();
+      return;
+    }
+
+   case "leave":
+    {
+      const {error: error} = await s.from("pz_club_members").delete().eq("club", SOC.club.id).eq("user_id", user.id);
+      if (error) throw error;
+      const t = socTag();
+      if (t && t.t === SOC.club.tag) {
+        delete SD.settings.ctag;
+        persist();
+      }
+      SOC.msg = "You left the club.";
+      SOC.bad = false;
+      socLoad();
+      return;
+    }
+
+   case "kick":
+    {
+      const {error: error} = await s.from("pz_club_members").delete().eq("club", SOC.club.id).eq("user_id", b.dataset.id);
+      if (error) throw error;
+      socLoad();
+      return;
+    }
+
+   case "delclub":
+    {
+      if (SOC.confirm !== SOC.club.id) {
+        SOC.confirm = SOC.club.id;
+        renderSoc();
+        return;
+      }
+      const {error: error} = await s.from("pz_clubs").delete().eq("id", SOC.club.id);
+      if (error) throw error;
+      const t = socTag();
+      if (t && t.t === SOC.club.tag) {
+        delete SD.settings.ctag;
+        persist();
+      }
+      SOC.club = null;
+      SOC.confirm = null;
+      SOC.msg = "Club deleted.";
+      SOC.bad = false;
+      socLoad();
+      return;
+    }
+  }
+}
+
+function socReadNew() {
+  const N = SOC.newClub;
+  if (!N || !$("ncName")) return;
+  N.name = $("ncName").value;
+  N.tag = $("ncTag").value.toUpperCase().replace(/[^A-Z0-9]/g, "");
+  N.descr = $("ncDesc").value;
+}
+
+$("socClose").innerHTML = icon("close");
+
+$("socClose").addEventListener("click", closeSoc);
+
+$("socMenu").addEventListener("pointerdown", e => {
+  if (e.target.id === "socMenu") closeSoc();
+});
+
+$("socTabs").addEventListener("click", e => {
+  const t = e.target.closest(".tab");
+  if (!t) return;
+  SOC.tab = t.dataset.t;
+  SOC.prof = null;
+  SOC.club = null;
+  SOC.newClub = null;
+  SOC.msg = "";
+  SOC.rows = null;
+  SOC.clubs = null;
+  SOC.q = "";
+  $("socQ").value = "";
+  socLoad();
+});
+
+const socSearch = () => {
+  SOC.q = $("socQ").value.slice(0, 24);
+  SOC.rows = null;
+  SOC.clubs = null;
+  socLoad();
+};
+
+$("socGo").addEventListener("click", socSearch);
+
+$("socQ").addEventListener("keydown", e => {
+  e.stopPropagation();
+  if (e.key === "Enter") {
+    e.preventDefault();
+    socSearch();
+    $("socQ").blur();
+  }
+});
+
+$("socBody").addEventListener("click", e => {
+  const b = e.target.closest("[data-s]");
+  if (!b || b.disabled) return;
+  e.stopPropagation();
+  socAct(b.dataset.s, b).catch(err => {
+    SOC.busy = false;
+    console.warn(err);
+    renderSoc();
+    socSay(socFriendly(err), true);
+  });
+});
+
+$("socBody").addEventListener("keydown", e => e.stopPropagation());
+
+const REP = {
+  kind: "",
+  target: "",
+  name: "",
+  why: ""
+};
+
+const REP_WHY = [ "Cheating", "Bad words", "Bullying", "Inappropriate", "Scam", "Spam", "Other" ];
+
+function openReport(kind, target, name) {
+  if (!user) {
+    toast("Log in to report", 2e3);
+    return;
+  }
+  Object.assign(REP, {
+    kind: kind,
+    target: String(target || "").slice(0, 64),
+    name: String(name || "").slice(0, 64),
+    why: ""
+  });
+  $("repTitle").textContent = "REPORT " + (kind === "map" ? "MAP" : kind === "club" ? "CLUB" : "PLAYER");
+  $("repTxt").value = "";
+  $("repErr").textContent = "";
+  repWhy();
+  $("repMenu").classList.remove("hidden");
+  if (document.pointerLockElement) {
+    suppressPause = true;
+    document.exitPointerLock();
+  }
+}
+
+function repWhy() {
+  $("repWhy").innerHTML = `<p class="foot" style="width:100%;margin:0">Reporting <b>${esc(REP.name || "this")}</b> for:</p>` + REP_WHY.map(w => `<button class="avchip ${REP.why === w ? "on" : ""}" data-why="${w}">${w}</button>`).join("");
+}
+
+$("repWhy").addEventListener("click", e => {
+  const b = e.target.closest("[data-why]");
+  if (!b) return;
+  REP.why = b.dataset.why;
+  repWhy();
+});
+
+$("repTxt").addEventListener("keydown", e => e.stopPropagation());
+
+$("repCancel").onclick = () => $("repMenu").classList.add("hidden");
+
+$("repMenu").addEventListener("pointerdown", e => {
+  if (e.target.id === "repMenu") $("repMenu").classList.add("hidden");
+});
+
+$("repSend").onclick = async () => {
+  const t = ($("repTxt").value || "").trim();
+  if (!REP.why) {
+    $("repErr").textContent = "Pick a reason.";
+    return;
+  }
+  $("repSend").disabled = true;
+  try {
+    const s = await getSB();
+    const {error: error} = await s.from("pz_reports").insert({
+      kind: REP.kind,
+      target: REP.target,
+      target_name: REP.name,
+      reason: (REP.why + (t ? ": " + t : "")).slice(0, 300)
+    });
+    if (error) throw error;
+    $("repMenu").classList.add("hidden");
+    toast("Report sent to the admin. Thanks!", 2600);
+  } catch (e) {
+    $("repErr").textContent = socFriendly(e);
+  }
+  $("repSend").disabled = false;
+};
+
 function renderHubMe() {
   const el = $("hubMe");
   if (!el) return;
@@ -17050,6 +18701,14 @@ function hubGo(g) {
 
    case "admin":
     openAdmin("menu");
+    break;
+
+   case "people":
+    openSoc("PEOPLE");
+    break;
+
+   case "clubs":
+    openSoc("CLUBS");
     break;
   }
 }
